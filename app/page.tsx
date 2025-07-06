@@ -80,8 +80,8 @@ export default function HomePage() {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer"
               >
-                <div className="w-16 h-16 mx-auto mb-2 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <span className="text-xs">photo</span>
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <img className="text-xs" src={'/categories/subcategories/shirts.png'} />
                 </div>
                 <span className="text-sm font-medium">{category}</span>
               </motion.div>
