@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { categories } from "@/lib/data"
+import { categories } from "@/lib/categoryData"
 
 export function MobileCategoryNav() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -46,9 +46,8 @@ export function MobileCategoryNav() {
                 <div className="flex flex-col items-center space-y-2 p-2 rounded-xl hover:bg-gray-50 transition-colors min-w-[80px] touch-manipulation">
                   {/* Icon container */}
                   <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm border border-blue-100">
-                    <span className="text-2xl" role="img" aria-label={category.name}>
-                      {category.icon}
-                    </span>
+                    <img className="text-2xl" role="img" src={category.image} aria-label={category.name}>
+                    </img>
                   </div>
 
                   {/* Category name */}

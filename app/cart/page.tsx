@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
+import { redirect } from "next/navigation"
 
 export default function CartPage() {
   const { items, total, loading, updateQuantity, removeFromCart } = useCart()
@@ -172,7 +173,7 @@ export default function CartPage() {
                       )}
                       Remove
                     </Button>
-                    <Button size="sm">Buy Now</Button>
+                    <Button size="sm" onClick={() => redirect("/checkout")}>Buy Now</Button>
                   </div>
                 </div>
               </CardContent>
@@ -181,7 +182,7 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
+      <div className="fixed bottom-0 max-sm:hidden left-0 right-0 bg-white border-t p-4">
         <div className="container mx-auto flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">Total: ₹{total}</span>

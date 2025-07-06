@@ -7,7 +7,8 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
-import { products, categories } from "@/lib/data"
+import { categories } from "@/lib/categoryData"
+import { products } from "@/lib/productData"
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)

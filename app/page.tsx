@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { ProductGrid } from "@/components/product-grid"
-import { bannerImages, products } from "@/lib/data"
+import { products } from "@/lib/productData"
 
 export default function HomePage() {
   return (

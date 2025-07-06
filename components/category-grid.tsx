@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { categories } from "@/lib/data"
+import { categories } from "@/lib/categoryData"
 
 export function CategoryGrid() {
   return (

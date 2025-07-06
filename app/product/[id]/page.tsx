@@ -8,7 +8,7 @@ import { ArrowLeft, Star, Heart, Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { products } from "@/lib/data"
+import { products } from "@/lib/productData"
 import { AddToCartButton } from "@/components/add-to-cart-button"
 
 export default function ProductPage({ params }: { params: { id: string } }) {
@@ -63,9 +63,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`h-5 w-5 ${
-                      i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                    }`}
+                    className={`h-5 w-5 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                      }`}
                   />
                 ))}
               </div>

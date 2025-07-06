@@ -124,61 +124,84 @@ export default function CheckoutPage() {
               </Button>
             </div>
           ) : (
-            <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
-              <DialogTrigger asChild>
-                <Button className="w-full">Select Delivery Address</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle className="flex items-center justify-between">
-                    Select Delivery Address
-                    <Button variant="ghost" size="sm" onClick={() => setIsAddressDialogOpen(false)}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </DialogTitle>
-                </DialogHeader>
-
-                <div className="space-y-4">
-                  <div className="text-sm font-medium">+ ADD NEW DELIVERY ADDRESS</div>
-
-                  <div className="space-y-3">
-                    <div>
-                      <Label htmlFor="name">Customer Name</Label>
-                      <Input
-                        id="name"
-                        value={newAddress.name}
-                        onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
-                        placeholder="Enter your name"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="address">Full Address</Label>
-                      <Input
-                        id="address"
-                        value={newAddress.address}
-                        onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
-                        placeholder="Enter your full address"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        value={newAddress.phone}
-                        onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
-                        placeholder="Enter your phone number"
-                      />
-                    </div>
-
-                    <Button onClick={handleAddressSubmit} className="w-full">
-                      Deliver to this Address
-                    </Button>
-                  </div>
+            <div className="space-y-4">
+              {/* Show existing user address if available */}
+              {authState.user?.address && (
+                <div className="p-4 bg-blue-50 rounded-lg border">
+                  <h4 className="font-semibold mb-2">Your Saved Address</h4>
+                  <p className="text-sm text-gray-700 mb-3">{authState.user.address}</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setDeliveryAddress(authState?.user?.address || "")
+                      setIsAddressDialogOpen(false)
+                    }}
+                  >
+                    Use This Address
+                  </Button>
                 </div>
-              </DialogContent>
-            </Dialog>
+              )}
+
+              {/* Add new address section */}
+              <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="w-full">
+                    {authState.user?.address ? "Add New Address" : "Select Delivery Address"}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center justify-between">
+                      Select Delivery Address
+                      <Button variant="ghost" size="sm" onClick={() => setIsAddressDialogOpen(false)}>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </DialogTitle>
+                  </DialogHeader>
+
+                  <div className="space-y-4">
+                    <div className="text-sm font-medium">+ ADD NEW DELIVERY ADDRESS</div>
+
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="name">Customer Name</Label>
+                        <Input
+                          id="name"
+                          value={newAddress.name}
+                          onChange={(e) => setNewAddress({ ...newAddress, name: e.target.value })}
+                          placeholder="Enter your name"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="address">Full Address</Label>
+                        <Input
+                          id="address"
+                          value={newAddress.address}
+                          onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
+                          placeholder="Enter your full address"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          value={newAddress.phone}
+                          onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
+                          placeholder="Enter your phone number"
+                        />
+                      </div>
+
+                      <Button onClick={handleAddressSubmit} className="w-full">
+                        Deliver to this Address
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
           )}
         </CardContent>
       </Card>
