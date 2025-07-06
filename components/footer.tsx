@@ -11,7 +11,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">ShopEase</h3>
+            <h3 className="text-xl font-bold mb-4">WishWell</h3>
             <p className="text-gray-400 mb-4">Your one-stop destination for quality products at affordable prices.</p>
             <div className="flex space-x-4">
               <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
@@ -80,7 +80,7 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">support@shopease.com</span>
+                <span className="text-gray-400">support@WishWell.com</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
@@ -95,7 +95,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">© 2024 ShopEase. All rights reserved.</p>
+          <p className="text-gray-400">© 2024 WishWell. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>

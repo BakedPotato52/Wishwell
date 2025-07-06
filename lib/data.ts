@@ -1,5 +1,5 @@
 import type { Product, Category } from "./types"
-import { Timestamp, FieldValue } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 
 export const categories: Category[] = [
   {
@@ -308,22 +308,52 @@ export const products: Product[] = [
 export const bannerImages = [
   {
     id: 1,
-    image: "/download.png?height=500&width=1200",
+    image: "/assets/banner1.png?height=500&width=1200",
     alt: "Banner Image 1",
   },
   {
     id: 2,
-    image: "/download.png?height=500&width=1200",
+    image: "/assets/banner2.png?height=500&width=1200",
     alt: "Banner Image 2",
   },
   {
     id: 3,
-    image: "/download.png?height=500&width=1200",
+    image: "/assets/banner3.png?height=500&width=1200",
     alt: "Banner Image 3",
   },
   {
     id: 4,
-    image: "/download.png?height=500&width=1200",
+    image: "/assets/banner4.png?height=500&width=1200",
     alt: "Banner Image 4",
+  },
+  {
+    id: 5,
+    image: "/assets/banner5.png?height=500&width=1200",
+    alt: "Banner Image 5",
+  },
+  {
+    id: 6,
+    image: "/assets/banner6.png?height=500&width=1200",
+    alt: "Banner Image 6",
+  },
+  {
+    id: 7,
+    image: "/assets/banner7.png?height=500&width=1200",
+    alt: "Banner Image 7",
+  },
+  {
+    id: 8,
+    image: "/assets/banner8.png?height=500&width=1200",
+    alt: "Banner Image 8",
+  },
+  {
+    id: 9,
+    image: "/assets/banner9.png?height=500&width=1200",
+    alt: "Banner Image 9",
+  },
+  {
+    id: 10,
+    image: "/assets/banner10.png?height=500&width=1200",
+    alt: "Banner Image 10",
   },
 ]

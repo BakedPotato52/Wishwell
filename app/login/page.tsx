@@ -99,7 +99,7 @@ export default function LoginPage() {
     >
       <Card>
         <CardHeader>
-          <CardTitle className="text-center">{showWelcomeMessage ? "Welcome back!" : "Login to ShopEase"}</CardTitle>
+          <CardTitle className="text-center">{showWelcomeMessage ? "Welcome back!" : "Login to WishWell"}</CardTitle>
         </CardHeader>
         <CardContent>
           {showWelcomeMessage && (

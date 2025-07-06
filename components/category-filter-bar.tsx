@@ -57,14 +57,30 @@ export function CategoryFilterBar({
               <List className="h-4 w-4" />
             </Button>
           </div>
+          {/* Sort dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="flex-shrink-0 bg-transparent">
+                <SortAsc className="h-4 w-4 mr-2" />
+                Sort
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => handleSortChange("featured")}>Featured</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleSortChange("price-low")}>Price: Low to High</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleSortChange("price-high")}>Price: High to Low</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleSortChange("rating")}>Customer Rating</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleSortChange("newest")}>Newest First</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Filters and Sort */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between overflow-x-scroll scrollbar-hide">
           {/* Subcategories - horizontal scroll on mobile */}
           {subcategories.length > 0 && (
             <div className="flex-1 mr-4">
-              <div className="flex overflow-x-auto scrollbar-hide gap-2 pb-1">
+              <div className="flex  gap-2 pb-1">
                 <Button
                   variant={selectedSubcategory === null ? "default" : "outline"}
                   size="sm"
@@ -88,22 +104,7 @@ export function CategoryFilterBar({
             </div>
           )}
 
-          {/* Sort dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="flex-shrink-0 bg-transparent">
-                <SortAsc className="h-4 w-4 mr-2" />
-                Sort
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleSortChange("featured")}>Featured</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("price-low")}>Price: Low to High</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("price-high")}>Price: High to Low</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("rating")}>Customer Rating</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("newest")}>Newest First</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
         </div>
       </div>
     </div>

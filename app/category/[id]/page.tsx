@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, use } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -9,12 +9,13 @@ import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { products, categories } from "@/lib/data"
 
-export default function CategoryPage({ params }: { params: { id: string } }) {
+export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params)
   const [view, setView] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState("featured")
   const [loading, setLoading] = useState(false)
 
-  const category = categories.find((c) => c.id === params.id)
+  const category = categories.find((c) => c.id === resolvedParams.id)
   const categoryProducts = products.filter((p) => p.category.toLowerCase() === category?.name.toLowerCase())
 
   // Sort products based on selected sort option

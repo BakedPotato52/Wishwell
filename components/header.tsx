@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,7 +25,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold text-blue-600">
-              ShopEase
+              <Image src='/logo.png' alt="logo" width={90} height={15} />
             </motion.div>
           </Link>
 
@@ -41,7 +42,7 @@ export function Header() {
               />
             </div>
 
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => window.open("https://wa.me/919876543210", "_blank")}>
               <MessageCircle className="h-4 w-4 mr-2" />
               Chat
             </Button>

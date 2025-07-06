@@ -10,13 +10,13 @@ import { AuthProvider } from "@/contexts/auth-context"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ShopEase - Your Ultimate Shopping Destination",
+  title: "WishWell - Your Ultimate Shopping Destination",
   description:
     "Discover amazing products at unbeatable prices. Shop fashion, electronics, home goods and more with fast delivery and secure checkout.",
   keywords: "ecommerce, shopping, fashion, electronics, home goods, online store",
-  authors: [{ name: "ShopEase Team" }],
+  authors: [{ name: "WishWell Team" }],
   openGraph: {
-    title: "ShopEase - Your Ultimate Shopping Destination",
+    title: "WishWell - Your Ultimate Shopping Destination",
     description: "Discover amazing products at unbeatable prices",
     type: "website",
     locale: "en_US",

@@ -120,7 +120,7 @@ export default function RegisterPage() {
           <CardContent className="pt-6">
             <div className="text-center">
               <CheckCircle className="mx-auto h-16 w-16 text-green-600 mb-4" />
-              <h2 className="text-2xl font-bold text-green-600 mb-2">Welcome to ShopEase!</h2>
+              <h2 className="text-2xl font-bold text-green-600 mb-2">Welcome to WishWell!</h2>
               <p className="text-gray-600 mb-4">
                 Your account has been created successfully. A verification email has been sent to your email address.
               </p>
@@ -141,7 +141,7 @@ export default function RegisterPage() {
       <Card>
         <CardHeader>
           <CardTitle className="text-center">
-            {showWelcomeMessage ? "Join ShopEase!" : "Register for ShopEase"}
+            {showWelcomeMessage ? "Join WishWell!" : "Register for WishWell"}
           </CardTitle>
         </CardHeader>
         <CardContent>
