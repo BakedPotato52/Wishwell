@@ -9,7 +9,6 @@ import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
 import { products } from "@/lib/productData"
-
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
   const [view, setView] = useState<"grid" | "list">("grid")
@@ -74,7 +73,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       {/* Filter Bar */}
       <CategoryFilterBar
         categoryName={category.name}
-        subcategories={category.subcategories.map(sub => sub.name)}
+        subcategories={category.subcategories}
         totalProducts={sortedProducts.length}
         onSortChange={handleSortChange}
         onViewChange={setView}

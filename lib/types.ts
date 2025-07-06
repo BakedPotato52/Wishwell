@@ -61,10 +61,7 @@ export interface Category {
   name: string
   image: string
   icon?: string
-  subcategories: {
-    name: string
-    image: string
-  }[]
+  subcategories?: string[]
 }
 
 // Legacy types for compatibility

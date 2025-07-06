@@ -1,18 +1,64 @@
 "use client"
 
 import { useState } from "react"
-import { SortAsc, Grid3X3, List } from "lucide-react"
 import { motion } from "framer-motion"
+import { SortAsc, Grid3X3, List } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface CategoryFilterBarProps {
   categoryName: string
-  subcategories?: Array<{ name: string; image: string }> | string[]
+  subcategories?: string[]
   totalProducts: number
   onSortChange: (sort: string) => void
   onViewChange: (view: "grid" | "list") => void
+  onSubcategoryChange?: (subcategory: string | null) => void
   currentView: "grid" | "list"
+}
+
+// Subcategory icons mapping
+const subcategoryIcons: Record<string, string> = {
+  // Men's subcategories
+  Jackets: "🧥",
+  Jeans: "👖",
+  "Hoodies & Sweatshirts": "👕",
+  Bottoms: "👖",
+  "T-Shirts": "/categories/subcategory/shirts.png", // Placeholder for T-Shirts icon
+  "Formal Wear": "👔",
+
+  // Women's subcategories
+  Midi: "👗",
+  "Cargos & Joggers": "👖",
+  Shirts: "👚",
+  Dresses: "👗",
+  Tops: "👚",
+
+  // Kids subcategories
+  Boys: "👦",
+  Girls: "👧",
+  Infants: "👶",
+  "School Wear": "🎒",
+
+  // Beauty subcategories
+  Skincare: "🧴",
+  Makeup: "💄",
+  "Hair Care": "💇",
+  Fragrances: "🌸",
+
+  // Accessories subcategories
+  Bags: "👜",
+  Jewelry: "💍",
+  Watches: "⌚",
+  Sunglasses: "🕶️",
+
+  // Footwear subcategories
+  Sneakers: "👟",
+  "Formal Shoes": "👞",
+  Sandals: "👡",
+  Boots: "🥾",
+
+  // Default fallback
+  default: "📦",
 }
 
 export function CategoryFilterBar({
@@ -21,27 +67,31 @@ export function CategoryFilterBar({
   totalProducts,
   onSortChange,
   onViewChange,
+  onSubcategoryChange,
   currentView,
 }: CategoryFilterBarProps) {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
   const [sortBy, setSortBy] = useState("featured")
-
 
   const handleSortChange = (sort: string) => {
     setSortBy(sort)
     onSortChange(sort)
   }
 
+  const handleSubcategorySelect = (subcategory: string | null) => {
+    setSelectedSubcategory(subcategory)
+    onSubcategoryChange?.(subcategory)
+  }
+
   return (
-    <div className="bg-white border-b sticky top-[140px] md:top-[72px] z-30 py-3">
+    <div className="bg-white border-b sticky top-[140px] md:top-[72px] z-30 py-4">
       <div className="container mx-auto px-4">
         {/* Category info */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-xl font-bold">{categoryName}</h1>
             <p className="text-sm text-gray-600">{totalProducts} products</p>
           </div>
-
 
           {/* View toggle - desktop only */}
           <div className="hidden md:flex items-center space-x-2">
@@ -60,6 +110,30 @@ export function CategoryFilterBar({
               <List className="h-4 w-4" />
             </Button>
           </div>
+        </div>
+
+
+
+        {/* Sort Section */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            {selectedSubcategory && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-200"
+              >
+                <span className="text-sm font-medium text-blue-700">{selectedSubcategory}</span>
+                <button
+                  onClick={() => handleSubcategorySelect(null)}
+                  className="text-blue-500 hover:text-blue-700 ml-1"
+                >
+                  ×
+                </button>
+              </motion.div>
+            )}
+          </div>
+
           {/* Sort dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -76,9 +150,8 @@ export function CategoryFilterBar({
               <DropdownMenuItem onClick={() => handleSortChange("newest")}>Newest First</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
         </div>
-        {/* Filters and Sort */}
+        {/* Subcategories Section */}
         {subcategories.length > 0 && (
           <div className="mb-4">
             <motion.h3
@@ -98,6 +171,7 @@ export function CategoryFilterBar({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="cursor-pointer"
+                onClick={() => handleSubcategorySelect(null)}
               >
                 <div
                   className={`flex flex-col items-center p-3 rounded-lg transition-all duration-200 ${selectedSubcategory === null
@@ -122,13 +196,14 @@ export function CategoryFilterBar({
               {/* Individual Subcategories */}
               {subcategories.map((subcategory, index) => (
                 <motion.div
-                  key={typeof subcategory === "string" ? subcategory : subcategory.name}
+                  key={subcategory}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: (index + 1) * 0.05 }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="cursor-pointer"
+                  onClick={() => handleSubcategorySelect(subcategory)}
                 >
                   <div
                     className={`flex flex-col items-center p-3 rounded-lg transition-all duration-200 ${selectedSubcategory === subcategory
@@ -137,20 +212,15 @@ export function CategoryFilterBar({
                       }`}
                   >
                     <div className="w-12 h-12 mb-2 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm">
-                      <img
-                        src={typeof subcategory === "string"
-                          ? `/categories/subcategories/${subcategory.toLowerCase()}.svg`
-                          : subcategory.image || "/placeholder.svg"}
-                        alt={typeof subcategory === "string" ? subcategory : subcategory.name}
-                        className="object-cover w-8 h-8"
-                      />
+                      <span className="text-xl" role="img" aria-label={subcategory}>
+                        {subcategoryIcons[subcategory] || subcategoryIcons.default}
+                      </span>
                     </div>
                     <span
                       className={`text-xs text-center font-medium leading-tight max-w-[60px] line-clamp-2 ${selectedSubcategory === subcategory ? "text-blue-700" : "text-gray-700"
                         }`}
                     >
-
-                      {typeof subcategory === "string" ? subcategory : subcategory.name}
+                      {subcategory}
                     </span>
                   </div>
                 </motion.div>
@@ -158,7 +228,6 @@ export function CategoryFilterBar({
             </div>
           </div>
         )}
-
       </div>
     </div>
   )
