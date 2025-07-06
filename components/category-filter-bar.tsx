@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import { SortAsc, Grid3X3, List } from "lucide-react"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface CategoryFilterBarProps {
   categoryName: string
-  subcategories?: string[]
+  subcategories?: Array<{ name: string; image: string }> | string[]
   totalProducts: number
   onSortChange: (sort: string) => void
   onViewChange: (view: "grid" | "list") => void
@@ -25,6 +26,7 @@ export function CategoryFilterBar({
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
   const [sortBy, setSortBy] = useState("featured")
 
+
   const handleSortChange = (sort: string) => {
     setSortBy(sort)
     onSortChange(sort)
@@ -39,6 +41,7 @@ export function CategoryFilterBar({
             <h1 className="text-xl font-bold">{categoryName}</h1>
             <p className="text-sm text-gray-600">{totalProducts} products</p>
           </div>
+
 
           {/* View toggle - desktop only */}
           <div className="hidden md:flex items-center space-x-2">
@@ -73,39 +76,89 @@ export function CategoryFilterBar({
               <DropdownMenuItem onClick={() => handleSortChange("newest")}>Newest First</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
 
+        </div>
         {/* Filters and Sort */}
-        <div className="flex items-center justify-between overflow-x-scroll scrollbar-hide">
-          {/* Subcategories - horizontal scroll on mobile */}
-          {subcategories.length > 0 && (
-            <div className="flex-1 mr-4">
-              <div className="flex  gap-2 pb-1">
-                <Button
-                  variant={selectedSubcategory === null ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedSubcategory(null)}
-                  className="flex-shrink-0"
+        {subcategories.length > 0 && (
+          <div className="mb-4">
+            <motion.h3
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-lg font-semibold mb-3"
+            >
+              Shop by Category
+            </motion.h3>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+              {/* All Categories Option */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="cursor-pointer"
+              >
+                <div
+                  className={`flex flex-col items-center p-3 rounded-lg transition-all duration-200 ${selectedSubcategory === null
+                    ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+                    : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent"
+                    }`}
                 >
-                  All
-                </Button>
-                {subcategories.map((sub) => (
-                  <Button
-                    key={sub}
-                    variant={selectedSubcategory === sub ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedSubcategory(sub)}
-                    className="flex-shrink-0"
+                  <div className="w-12 h-12 mb-2 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm">
+                    <span className="text-xl" role="img" aria-label="All Categories">
+                      🛍️
+                    </span>
+                  </div>
+                  <span
+                    className={`text-xs text-center font-medium leading-tight ${selectedSubcategory === null ? "text-blue-700" : "text-gray-700"
+                      }`}
                   >
-                    {sub}
-                  </Button>
-                ))}
-              </div>
+                    All
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Individual Subcategories */}
+              {subcategories.map((subcategory, index) => (
+                <motion.div
+                  key={typeof subcategory === "string" ? subcategory : subcategory.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: (index + 1) * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="cursor-pointer"
+                >
+                  <div
+                    className={`flex flex-col items-center p-3 rounded-lg transition-all duration-200 ${selectedSubcategory === subcategory
+                      ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+                      : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent"
+                      }`}
+                  >
+                    <div className="w-12 h-12 mb-2 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm">
+                      <img
+                        src={typeof subcategory === "string"
+                          ? `/categories/subcategories/${subcategory.toLowerCase()}.svg`
+                          : subcategory.image || "/placeholder.svg"}
+                        alt={typeof subcategory === "string" ? subcategory : subcategory.name}
+                        className="object-cover w-8 h-8"
+                      />
+                    </div>
+                    <span
+                      className={`text-xs text-center font-medium leading-tight max-w-[60px] line-clamp-2 ${selectedSubcategory === subcategory ? "text-blue-700" : "text-gray-700"
+                        }`}
+                    >
+
+                      {typeof subcategory === "string" ? subcategory : subcategory.name}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          )}
+          </div>
+        )}
 
-
-        </div>
       </div>
     </div>
   )

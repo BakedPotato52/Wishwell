@@ -74,7 +74,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       {/* Filter Bar */}
       <CategoryFilterBar
         categoryName={category.name}
-        subcategories={category.subcategories}
+        subcategories={category.subcategories.map(sub => sub.name)}
         totalProducts={sortedProducts.length}
         onSortChange={handleSortChange}
         onViewChange={setView}
