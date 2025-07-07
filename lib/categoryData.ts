@@ -6,14 +6,14 @@ export const categories: Category[] = [
         name: "Men",
         image: "/categories/man.svg?height=60&width=60",
         icon: "👔",
-        subcategories: ["Jackets", "Jeans", "Hoodies & Sweatshirts", "Bottoms", "T-Shirts", "Formal Wear"],
+        subcategories: ["Jackets", "Jeans", "Hoodies", "Pants", "T-Shirts", "Sweaters", "Shorts", "Shirts"],
     },
     {
         id: "2",
         name: "Women",
         image: "/categories/women.svg?height=60&width=60",
         icon: "👗",
-        subcategories: ["Midi", "Cargos & Joggers", "Shirts", "Jackets", "Dresses", "Tops"],
+        subcategories: ["Accessories", "Pants", "Sweaters", "Skirts", "Activewear", "Bags", "Shoes", "Jeans", "Shirts", "Jackets", "Dresses", "Tops"],
     },
 
     {
@@ -28,14 +28,14 @@ export const categories: Category[] = [
         name: "Beauty & Personal care",
         image: "/categories/beauty.svg?height=60&width=60",
         icon: "💄",
-        subcategories: ["Skincare", "Makeup", "Hair Care", "Fragrances"],
+        subcategories: ["Skincare", "Lips", "Eyes", "Nails", "Body Care", "Sun Care", "Fragrances"],
     },
     {
         id: "5",
         name: "Accessories",
         image: "/categories/accessories.svg?height=60&width=60",
         icon: "👜",
-        subcategories: ["Bags", "Jewelry", "Watches", "Sunglasses"],
+        subcategories: ["Eyewear", "Scarves", "Bags", "Jewelry", "Watches", "Sunglasses", "Hats", "Belts", "Wallets"],
     },
     {
         id: "6",
@@ -84,6 +84,6 @@ export const categories: Category[] = [
         name: "Snacks & Drinks",
         image: "/categories/snacks.svg?height=60&width=60",
         icon: "🍿",
-        subcategories: ["Beverages", "Snacks", "Healthy Options", "Party Packs"],
+        subcategories: ["Drinks", "Bars", "Nuts", "Cookies", "Tea", "Chips", "Coffee", "Crackers", "Popcorn", "Cakes", "Fruits"],
     },
 ]
