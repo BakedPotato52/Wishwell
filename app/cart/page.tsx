@@ -87,7 +87,7 @@ export default function CartPage() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container mx-auto px-4 py-6">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container mx-auto px-4 py-6 overflow-hidden">
       <div className="flex items-center mb-6">
         <Link href="/">
           <Button variant="ghost" size="sm">
@@ -159,22 +159,24 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col space-y-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleRemoveItem(item.product.id)}
-                      disabled={updatingItems.has(item.product.id)}
-                    >
-                      {updatingItems.has(item.product.id) ? (
-                        <Loader2 className="h-4 w-4 animate-spin mr-1" />
-                      ) : (
-                        <Trash2 className="h-4 w-4 mr-1" />
-                      )}
-                      Remove
-                    </Button>
-                    <Button size="sm" onClick={() => redirect("/checkout")}>Buy Now</Button>
-                  </div>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleRemoveItem(item.product.id)}
+                    disabled={updatingItems.has(item.product.id)}
+                  >
+                    {updatingItems.has(item.product.id) ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                    ) : (
+                      <Trash2 className="h-4 w-4 mr-1" />
+                    )}
+                    Remove
+                  </Button>
+                  <Link href="/checkout">
+                    <Button size="sm">Buy Now</Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -182,7 +184,7 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="fixed bottom-0 max-sm:hidden left-0 right-0 bg-white border-t p-4">
+      <div className="fixed max-sm:bottom-16 left-0 right-0 bg-white border-t p-4">
         <div className="container mx-auto flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">Total: ₹{total}</span>

@@ -1,7 +1,6 @@
 import type { Product } from "./types"
 import { Timestamp } from "firebase/firestore"
 
-
 // Add more products for different categories
 export const products: Product[] = [
     // Men's products

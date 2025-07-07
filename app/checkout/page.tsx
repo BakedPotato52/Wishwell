@@ -231,7 +231,7 @@ export default function CheckoutPage() {
       </Card>
 
       {/* Action Buttons */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
+      <div className="fixed max-sm:bottom-16 left-0 right-0 bg-white border-t p-4">
         <div className="container mx-auto">
           {step === 1 ? (
             <Button

@@ -6,7 +6,7 @@ import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react"
 
 export function Footer() {
   return (
-    <motion.footer initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-900 max-sm:hidden text-white py-12">
+    <motion.footer initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-900 max-md:hidden text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}

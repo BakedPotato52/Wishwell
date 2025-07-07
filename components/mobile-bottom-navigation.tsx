@@ -41,7 +41,7 @@ export function MobileBottomNav() {
             label: "Cart",
             icon: <ShoppingCart className="h-5 w-5" />,
             href: "/cart",
-            badge: cartState.items?.length || 0,
+            badge: cartState.items.length > 0 ? cartState.items.length : undefined,
         },
         {
             id: "profile",

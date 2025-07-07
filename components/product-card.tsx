@@ -46,9 +46,8 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-4 w-4 ${
-                        i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                      }`}
+                      className={`h-4 w-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                        }`}
                     />
                   ))}
                 </div>
@@ -83,7 +82,6 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
             height={300}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          <QuickAddButton product={product} />
           {!product.inStock && <Badge className="absolute top-2 left-2 bg-red-500">Out of Stock</Badge>}
         </div>
 
@@ -96,9 +94,8 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 ${
-                    i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                  }`}
+                  className={`h-4 w-4 ${i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
+                    }`}
                 />
               ))}
             </div>

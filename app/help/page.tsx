@@ -1,9 +1,10 @@
+'use client';
 import { useState } from 'react';
 import { FaArrowLeft, FaPaperPlane, FaCheckCircle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export default function Help() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [topic, setTopic] = useState('');
     const [desc, setDesc] = useState('');
     const [success, setSuccess] = useState(false);
@@ -37,7 +38,7 @@ export default function Help() {
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
                 <button
-                    onClick={() => navigate(-1)}
+                    onClick={() => router.back()}
                     className="p-2 rounded-full bg-sky-100 hover:bg-sky-200 transition"
                 >
                     <FaArrowLeft className="text-sky-600" />

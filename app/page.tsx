@@ -24,7 +24,7 @@ export default function HomePage() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
       {/* Hero Carousel */}
       <section className="container mx-auto px-4 py-6">
-        <div className="max-md:h-64 rounded-lg overflow-hidden">
+        <div className="rounded-lg overflow-hidden">
           <Carousel />
         </div>
       </section>
@@ -61,7 +61,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories - Desktop only, mobile has horizontal nav */}
-      <div className="hidden md:block">
+      <div className="">
         <CategoryGrid />
       </div>
 
