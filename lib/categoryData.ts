@@ -6,14 +6,14 @@ export const categories: Category[] = [
         name: "Men",
         image: "/categories/man.svg?height=60&width=60",
         icon: "👔",
-        subcategories: ["Jackets", "Jeans", "Hoodies", "Pants", "T-Shirts", "Sweaters", "Shorts", "Shirts"],
+        subcategories: ["Shirts", "Topwear", "Bottomwear", "Innerwear", "Ethnic & Fusion Wear", "Graphic T-Shirts", "Accessories", "Footwear"],
     },
     {
         id: "2",
         name: "Women",
         image: "/categories/women.svg?height=60&width=60",
         icon: "👗",
-        subcategories: ["Accessories", "Pants", "Sweaters", "Skirts", "Activewear", "Bags", "Shoes", "Jeans", "Shirts", "Jackets", "Dresses", "Tops"],
+        subcategories: ["Top-wear", "Bottom-wear", "Dresses", "Co-ords & Sleepwear", "Ethnic & Fusion Wear", "Athleisure", "Accessories", "Footwear"],
     },
 
     {
@@ -21,69 +21,107 @@ export const categories: Category[] = [
         name: "Kids",
         image: "/categories/kids.svg?height=60&width=60",
         icon: "👶",
-        subcategories: ["Boys", "Girls", "Infants", "School Wear"],
+        subcategories: ["Boys", "Girls", "Infants", "Ethnicwear", "Partywear", "Toys", "Character Shop", "Footwear", "Accessories",],
     },
     {
         id: "4",
         name: "Beauty & Personal care",
         image: "/categories/beauty.svg?height=60&width=60",
         icon: "💄",
-        subcategories: ["Skincare", "Lips", "Eyes", "Nails", "Body Care", "Sun Care", "Fragrances"],
+        subcategories: ["Bath & Body",
+            "Hair Care",
+            "Skincare",
+            "Makeup",
+            "Oral Care",
+            "Grooming",
+            "Baby Care",
+            "Fragrances",
+            "Protein & Supplements",
+            "Feminine Hygiene",
+            "Sexual Wellness",
+            "Health & Pharma"
+        ],
     },
     {
         id: "5",
         name: "Accessories",
         image: "/categories/accessories.svg?height=60&width=60",
         icon: "👜",
-        subcategories: ["Eyewear", "Scarves", "Bags", "Jewelry", "Watches", "Sunglasses", "Hats", "Belts", "Wallets"],
+        subcategories: [
+            "For Him",
+            "For Her"
+        ],
+        subsubcategories: {
+            "For Him": ["Necklaces", "Bracelets", "Sunglasses", "Watches", "Earrings", "Wallets", "Belts"],
+            "For Her": ["Earrings", "Necklace and Chains", "Jewellery Sets", "Handbags & Wallets", "Rings", "Bracelets", "Sunglasses", "Watches"]
+        }
     },
     {
         id: "6",
         name: "Footwear",
         image: "/categories/footwear.svg?height=60&width=60",
         icon: "👟",
-        subcategories: ["Sneakers", "Formal Shoes", "Sandals", "Boots"],
+        subcategories: [
+            "For Him",
+            "For Her"
+        ],
+        subsubcategories: {
+            "For Him": ["Casual Shoes", "Formal Shoes", "Sandals and Floaters", "Flip Flops & Slippers"],
+            "For Her": ["Heels", "Flats", "Casual Shoes"]
+        }
     },
     {
         id: "7",
         name: "Grocery & Kitchen",
         image: "/categories/grocery.svg?height=60&width=60",
         icon: "🍎",
-        subcategories: ["Fresh Produce", "Pantry", "Kitchen Tools", "Appliances"],
+        subcategories: ["Fresh Vegetables",
+            "Fresh Fruits",
+            "Dairy, Bread & Eggs",
+            "Cereals & Breakfast",
+            "Atta, Rice & Dal",
+            "Oils & Ghee",
+            "Masalas",
+            "Dry Fruits & Seeds",
+            "Biscuits & Cakes",
+            "Tea, Coffee & Milk Drinks",
+            "Sauces & Spreads",
+            "Meat & Seafood"
+        ],
     },
     {
         id: "8",
         name: "Household Essentials",
         image: "/categories/households.svg?height=60&width=60",
         icon: "🏠",
-        subcategories: ["Cleaning", "Storage", "Decor", "Furniture"],
+        subcategories: ["Home & Furnishing",
+            "Kitchen & Dining",
+            "Cleaning Essentials",
+            "Clothing",
+            "Mobiles & Electronics",
+            "Appliances",
+            "Books & Stationery",
+            "Jewellery & Accessories",
+            "Puja Items",
+            "Toys & Games",
+            "Sports & Fitness",
+            "Pet Supplies"
+        ],
     },
+
     {
         id: "9",
-        name: "Electronics",
-        image: "/categories/electronics.svg?height=60&width=60",
-        icon: "📱",
-        subcategories: ["Phones", "Laptops", "Audio", "Gaming"],
-    },
-    {
-        id: "10",
-        name: "Sports & Fitness",
-        image: "/categories/sports.svg?height=60&width=60",
-        icon: "⚽",
-        subcategories: ["Gym Equipment", "Sports Wear", "Outdoor", "Yoga"],
-    },
-    {
-        id: "11",
-        name: "Books & Media",
-        image: "/categories/books.svg?height=60&width=60",
-        icon: "📚",
-        subcategories: ["Fiction", "Non-Fiction", "Educational", "Comics"],
-    },
-    {
-        id: "12",
         name: "Snacks & Drinks",
         image: "/categories/snacks.svg?height=60&width=60",
         icon: "🍿",
-        subcategories: ["Drinks", "Bars", "Nuts", "Cookies", "Tea", "Chips", "Coffee", "Crackers", "Popcorn", "Cakes", "Fruits"],
+        subcategories: ["Cold Drinks and Juices",
+            "Ice Creams and Frozen Desserts",
+            "Chips and Namkeens",
+            "Chocolates",
+            "Noodles, Pasta, Vermicelli",
+            "Frozen Food",
+            "Sweets",
+            "Paan Corner"
+        ],
     },
 ]

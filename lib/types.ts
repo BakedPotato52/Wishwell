@@ -8,6 +8,7 @@ export interface Product {
   image: string
   category: string
   subcategory: string
+  subsubcategory?: string
   inStock: boolean
   rating: number
   reviews: number
@@ -63,6 +64,7 @@ export interface Category {
   image: string
   icon?: string
   subcategories?: string[]
+  subsubcategories?: { [key: string]: string[] }
 }
 
 // Legacy types for compatibility
