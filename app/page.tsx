@@ -23,14 +23,14 @@ export default function HomePage() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
       {/* Hero Carousel */}
-      <section className="container mx-auto px-4 py-6">
+      <section className="container mx-auto px-4 pt-4 pb-2">
         <div className="rounded-lg overflow-hidden">
           <Carousel />
         </div>
       </section>
 
       {/* Advertisement Section */}
-      <section className="container mx-auto px-4 py-4">
+      <section className="container mx-auto px-4 ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,66 +61,12 @@ export default function HomePage() {
       </section>
 
       {/* Categories - Desktop only, mobile has horizontal nav */}
-      <div className="">
-        <CategoryGrid />
-      </div>
+      <CategoryGrid />
 
       {/* Featured Products */}
       <ProductGrid products={products.slice(0, 8)} title="Featured Products" />
 
-      {/* Top Searched Categories for Men */}
-      <section className="py-8 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-6">
-            Top Searched Categories in Men
-          </motion.h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Jackets", "Jeans", "Hoodies & Sweatshirts", "Bottoms"].map((category, index) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <img className="text-xs" src={'/categories/subcategories/shirts.png'} />
-                </div>
-                <span className="text-sm font-medium">{category}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Top Searched Categories for Women */}
-      <section className="py-8">
-        <div className="container mx-auto px-4">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-6">
-            Top Searched Categories in Women
-          </motion.h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Midi", "Cargos & Joggers", "Shirts", "Jackets"].map((category, index) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-4 rounded-lg shadow-sm text-center cursor-pointer"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-lg flex items-center justify-center">
-                  <img className="text-xs" src={'/categories/subcategories/shirts.png'} />
-                </div>
-                <span className="text-sm font-medium">{category}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </motion.div>
   )
 }

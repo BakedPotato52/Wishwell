@@ -11,12 +11,12 @@ export function CategoryGrid() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section className="py-8">
+    <section className="pt-4 pb-2">
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl font-bold mb-6 text-center"
+          className="text-2xl font-bold mb-4 text-center"
         >
           Categories
         </motion.h2>
@@ -72,7 +72,7 @@ export function CategoryGrid() {
                 className="flex-shrink-0"
               >
                 <Link href={`/category/${category.id}`}>
-                  <div className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex flex-col items-center p-2 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                       <Image
                         src={category.image || "/placeholder.svg"}
