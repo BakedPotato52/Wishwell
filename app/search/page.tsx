@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import Link from "next/link"
@@ -12,7 +12,7 @@ import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { products } from "@/lib/productData"
 import type { Product } from "@/lib/types"
 
-export default function SearchPage() {
+function SearchPageContent() {
     const searchParams = useSearchParams()
     const query = searchParams.get("q") || ""
 
@@ -180,5 +180,13 @@ export default function SearchPage() {
             {/* Results */}
             <EnhancedProductGrid products={searchResults} view="grid" loading={loading} />
         </motion.div>
+    )
+}
+
+export default function SearchPage() {
+    return (
+        <Suspense fallback={<div>Loading search...</div>}>
+            <SearchPageContent />
+        </Suspense>
     )
 }
