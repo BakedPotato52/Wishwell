@@ -108,7 +108,7 @@ export function CategoryFilterBar({
   /*  now shows an <Image /> pulled from the map above.                     */
   /* ---------------------------------------------------------------------- */
   return (
-    <div className="bg-white border-b sticky top-[140px] md:top-[72px] z-30 py-4">
+    <div className="bg-white border-b  z-30 py-4">
       <div className="container mx-auto px-4">
         {/* Category header */}
         <div className="flex items-center justify-between mb-4">

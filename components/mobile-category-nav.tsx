@@ -21,7 +21,7 @@ export function MobileCategoryNav() {
   }
 
   return (
-    <section className="py-4 bg-white z-40 border-b md:hidden mb-2">
+    <section className="py-4 bg-white border-b md:hidden mb-2">
       <div className="relative">
         {/* Scroll container */}
         <div

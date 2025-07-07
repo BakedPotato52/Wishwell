@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,8 +25,26 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold text-blue-600">
-              ShopEase
+              <Image src={'/logo.png'} alt="WishWell" width={120} height={40} />
             </motion.div>
+          </Link>
+          <Link
+            href="https://wa.me/918798634773"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
+              size="sm">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Chat
+            </Button>
+          </Link>
+          <Link href="/help" className="hidden md:flex items-center">
+            <Button variant="ghost" size="sm">
+              <HelpCircle className="h-4 w-4 mr-2" />
+              Help
+            </Button>
           </Link>
 
           {/* Desktop Navigation */}
@@ -69,10 +88,6 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
         </div>
 
         {/* Mobile Search */}
@@ -92,40 +107,8 @@ export function Header() {
 
 
 
-      <div className="container mx-auto px-4">
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden mt-4 pb-4 border-t pt-4 mb-20" // Added mb-20 for bottom nav space
-          >
-            <div className="flex flex-col space-y-3">
-              <Button variant="ghost" className="justify-start">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Chat
-              </Button>
-              <Button variant="ghost" className="justify-start">
-                <HelpCircle className="h-4 w-4 mr-2" />
-                Help
-              </Button>
-              <Link href="/cart">
-                <Button variant="ghost" className="justify-start w-full">
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Cart ({cartState.items ? cartState.items.length : 0})
-                </Button>
-              </Link>
-              <Link href={authState.isAuthenticated ? "/account" : "/login"}>
-                <Button variant="ghost" className="justify-start w-full">
-                  <User className="h-4 w-4 mr-2" />
-                  {authState.isAuthenticated ? "My Account" : "Login"}
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </div>
+
+
     </motion.header>
   )
 }
