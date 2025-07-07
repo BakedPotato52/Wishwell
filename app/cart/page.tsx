@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -16,7 +16,9 @@ export default function CartPage() {
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set())
   const [deliveryAddress, setDeliveryAddress] = useState("")
 
-  setDeliveryAddress("aharta")
+  useEffect(() => {
+    setDeliveryAddress("aharta")
+  }, [])
 
   const handleUpdateQuantity = async (productId: string, quantity: number) => {
     setUpdatingItems((prev) => new Set(prev).add(productId))
