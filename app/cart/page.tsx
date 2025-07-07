@@ -9,13 +9,14 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
-import { redirect } from "next/navigation"
 
 export default function CartPage() {
   const { items, total, loading, updateQuantity, removeFromCart } = useCart()
   const { firebaseUser } = useAuth()
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set())
-  const [deliveryAddress, setDeliveryAddress] = useState("Ramnagar 5")
+  const [deliveryAddress, setDeliveryAddress] = useState("")
+
+  setDeliveryAddress("aharta")
 
   const handleUpdateQuantity = async (productId: string, quantity: number) => {
     setUpdatingItems((prev) => new Set(prev).add(productId))

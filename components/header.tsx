@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Search, ShoppingCart, User, Menu, X, MessageCircle, HelpCircle } from "lucide-react"
+import { Search, ShoppingCart, User, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -12,9 +12,9 @@ import { useAuth } from "@/contexts/auth-context"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { FaWhatsapp } from "react-icons/fa";
+import { SearchBar } from "./search-bar"
 
 export function Header() {
-  const [searchQuery, setSearchQuery] = useState("")
   const { state: cartState } = useCart()
   const { state: authState } = useAuth()
   const pathname = usePathname()
@@ -59,16 +59,9 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full"
-              />
+          <div className="hidden md:flex items-center space-x-6 ">
+            <div className="relative flex-1 max-w-md mx-4">
+              <SearchBar />
             </div>
 
             <Link
@@ -121,21 +114,10 @@ export function Header() {
         {/* Mobile Search */}
         <div className="md:hidden mt-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full"
-            />
+            <SearchBar />
           </div>
         </div>
       </div>
-
-
-
-
 
     </motion.header>
   )
