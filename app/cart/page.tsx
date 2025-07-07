@@ -9,15 +9,17 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
+import { auth } from "@/lib/firebase/config"
 
 export default function CartPage() {
   const { items, total, loading, updateQuantity, removeFromCart } = useCart()
   const { firebaseUser } = useAuth()
+  const { state: authState } = useAuth()
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set())
   const [deliveryAddress, setDeliveryAddress] = useState("")
 
   useEffect(() => {
-    setDeliveryAddress("aharta")
+    setDeliveryAddress(authState?.user?.address || "123 Main St, City, Country")
   }, [])
 
   const handleUpdateQuantity = async (productId: string, quantity: number) => {
@@ -186,8 +188,21 @@ export default function CartPage() {
           </motion.div>
         ))}
       </div>
+      <div className="relative max-md:hidden left-0 right-0 bg-white border-t p-4">
+        <div className="container mx-auto flex items-center justify-between">
+          <div>
+            <span className="text-lg font-bold">Total: ₹{total}</span>
+            <p className="text-sm text-gray-600">{items.length} item(s)</p>
+          </div>
+          <Link href="/checkout">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700" disabled={loading}>
+              Proceed to Checkout
+            </Button>
+          </Link>
+        </div>
+      </div>
 
-      <div className="fixed max-sm:bottom-16 left-0 right-0 bg-white border-t p-4">
+      <div className="fixed hidden max-md:bottom-16 left-0 right-0 bg-white border-t p-4">
         <div className="container mx-auto flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">Total: ₹{total}</span>

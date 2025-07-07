@@ -229,6 +229,24 @@ export default function CheckoutPage() {
           </div>
         </CardContent>
       </Card>
+      <div className="relative max-md:hidden left-0 right-0 bg-white border-t p-4">
+        <div className="container mx-auto">
+          {step === 1 ? (
+            <Button
+              size="lg"
+              className="w-full bg-blue-600 hover:bg-blue-700"
+              onClick={() => setStep(2)}
+              disabled={!deliveryAddress}
+            >
+              Proceed to Payment
+            </Button>
+          ) : (
+            <Button size="lg" className="w-full bg-green-600 hover:bg-green-700">
+              Place Order
+            </Button>
+          )}
+        </div>
+      </div>
 
       {/* Action Buttons */}
       <div className="fixed max-sm:bottom-16 left-0 right-0 bg-white border-t p-4">

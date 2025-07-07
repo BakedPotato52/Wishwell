@@ -111,9 +111,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   </Button>
                 </div>
 
-                <Button variant="outline" className="w-full bg-transparent" disabled={!product.inStock}>
-                  Buy Now
-                </Button>
+                <Link href={'/checkout'}>
+                  <Button variant="outline" className="w-full bg-transparent" disabled={!product.inStock}>
+                    Buy Now
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>
