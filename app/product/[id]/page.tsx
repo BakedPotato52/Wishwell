@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -11,10 +11,11 @@ import { Badge } from "@/components/ui/badge"
 import { products } from "@/lib/productData"
 import { AddToCartButton } from "@/components/add-to-cart-button"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const [quantity, setQuantity] = useState(1)
 
-  const product = products.find((p) => p.id === params.id)
+  const product = products.find((p) => p.id === id)
 
   if (!product) {
     return (

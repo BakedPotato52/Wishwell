@@ -21,7 +21,7 @@ export default function Help() {
         );
 
         // Open user's email app
-        const mailtoLink = `mailto:sujanali9812@gmail.com?subject=${subject}&body=${body}`;
+        const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=customerservicewishwell@gmail.com&su=${subject}&body=${body}`;
         window.open(mailtoLink, '_blank');
 
         // Show success and clear form
