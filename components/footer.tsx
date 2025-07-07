@@ -6,18 +6,14 @@ import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react"
 
 export function Footer() {
   return (
-    <motion.footer initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-900 text-white py-12">
+    <motion.footer initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-900 max-sm:hidden text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <h3 className="text-xl font-bold mb-4">WishWell</h3>
             <p className="text-gray-400 mb-4">Your one-stop destination for quality products at affordable prices.</p>
-            <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Instagram className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-            </div>
+
           </div>
 
           {/* Quick Links */}
@@ -80,7 +76,7 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">support@WishWell.com</span>
+                <span className="text-gray-400">customerservicewishwell@gmail.com</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
@@ -88,14 +84,14 @@ export function Footer() {
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">Mumbai, India</span>
+                <span className="text-gray-400">Tripura, India</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">© 2024 WishWell. All rights reserved.</p>
+          <p className="text-gray-400">© 2025 WishWell. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>

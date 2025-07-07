@@ -87,6 +87,27 @@
   }
 }
 
+/* Safe area support for mobile devices */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Ensure content doesn't get hidden behind bottom nav on mobile */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Enhanced mobile bottom navigation */
+.mobile-nav-item {
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Enhanced mobile navigation styles */
 @media (max-width: 768px) {
   .mobile-category-nav {
@@ -109,6 +130,12 @@
   .touch-target {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Bottom navigation specific styles */
+  .bottom-nav-item {
+    min-height: 60px;
+    min-width: 60px;
   }
 }
 

@@ -7,6 +7,7 @@ export interface Product {
   price: number
   image: string
   category: string
+  subcategory: string
   inStock: boolean
   rating: number
   reviews: number

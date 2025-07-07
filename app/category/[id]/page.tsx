@@ -9,19 +9,31 @@ import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
 import { products } from "@/lib/productData"
+import { MobileCategoryNav } from "@/components/mobile-category-nav"
+
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
+
+  /* ------------------------- NEW local state -------------------------- */
+  const [selectedSub, setSelectedSub] = useState<string | null>(null)
   const [view, setView] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState("featured")
   const [loading, setLoading] = useState(false)
 
   const category = categories.find((c) => c.id === resolvedParams.id)
-  const categoryProducts = products.filter((p) => p.category.toLowerCase() === category?.name.toLowerCase())
 
-  // Sort products based on selected sort option
+  /* -------- filter products by category AND (optionally) sub‑category -------- */
+  const baseProducts = useMemo(() => {
+    return products.filter(
+      (p) =>
+        p.category.toLowerCase() === category?.name.toLowerCase() &&
+        (selectedSub ? p.subcategory === selectedSub : true),
+    )
+  }, [category?.name, selectedSub])
+
+  /* ------------------------- sort after filtering --------------------------- */
   const sortedProducts = useMemo(() => {
-    const sorted = [...categoryProducts]
-
+    const sorted = [...baseProducts]
     switch (sortBy) {
       case "price-low":
         return sorted.sort((a, b) => a.price - b.price)
@@ -32,19 +44,18 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       case "newest":
         return sorted.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
       default:
-        return sorted
+        return sorted         // “featured” keeps original order
     }
-  }, [categoryProducts, sortBy])
+  }, [baseProducts, sortBy])
 
+  /* -------------------------------- UI --------------------------------- */
   if (!category) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Category Not Found</h1>
-          <Link href="/">
-            <Button>Back to Home</Button>
-          </Link>
-        </div>
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Category Not Found</h1>
+        <Link href="/">
+          <Button>Back to Home</Button>
+        </Link>
       </div>
     )
   }
@@ -52,8 +63,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   const handleSortChange = (sort: string) => {
     setLoading(true)
     setSortBy(sort)
-    // Simulate loading delay
-    setTimeout(() => setLoading(false), 300)
+    setTimeout(() => setLoading(false), 300)   // sim delay
   }
 
   return (
@@ -67,23 +77,26 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
               Back
             </Button>
           </Link>
+          {/* Mobile Category Navigation - outside the main container */}
+          <MobileCategoryNav />
         </div>
       </div>
 
-      {/* Filter Bar */}
+      {/* Filter / Sort / View bar */}
       <CategoryFilterBar
         categoryName={category.name}
         subcategories={category.subcategories}
         totalProducts={sortedProducts.length}
-        onSortChange={handleSortChange}
-        onViewChange={setView}
         currentView={view}
+        onViewChange={setView}
+        onSortChange={handleSortChange}
+        onSubcategoryChange={setSelectedSub}
       />
 
-      {/* Products Grid */}
+      {/* Product grid */}
       <EnhancedProductGrid products={sortedProducts} view={view} loading={loading} />
 
-      {/* Load More Button - for pagination */}
+      {/* (Optional) Load‑more button */}
       {sortedProducts.length > 0 && (
         <div className="container mx-auto px-4 py-8 text-center">
           <Button variant="outline" size="lg">

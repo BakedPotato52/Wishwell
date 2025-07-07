@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
-import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -25,7 +24,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold text-blue-600">
-              <Image src='/logo.png' alt="logo" width={90} height={15} />
+              ShopEase
             </motion.div>
           </Link>
 
@@ -42,7 +41,7 @@ export function Header() {
               />
             </div>
 
-            <Button variant="ghost" size="sm" onClick={() => window.open("https://wa.me/919876543210", "_blank")}>
+            <Button variant="ghost" size="sm">
               <MessageCircle className="h-4 w-4 mr-2" />
               Chat
             </Button>
@@ -91,8 +90,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Category Navigation - outside the main container */}
-      <MobileCategoryNav />
+
 
       <div className="container mx-auto px-4">
         {/* Mobile Menu */}
@@ -101,7 +99,7 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden mt-4 pb-4 border-t pt-4"
+            className="md:hidden mt-4 pb-4 border-t pt-4 mb-20" // Added mb-20 for bottom nav space
           >
             <div className="flex flex-col space-y-3">
               <Button variant="ghost" className="justify-start">

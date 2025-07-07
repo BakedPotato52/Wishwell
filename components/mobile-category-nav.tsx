@@ -21,7 +21,7 @@ export function MobileCategoryNav() {
   }
 
   return (
-    <section className="py-4 bg-white sticky top-[72px] z-40 border-b md:hidden">
+    <section className="py-4 bg-white z-40 border-b md:hidden mb-2">
       <div className="relative">
         {/* Scroll container */}
         <div
@@ -46,8 +46,9 @@ export function MobileCategoryNav() {
                 <div className="flex flex-col items-center space-y-2 p-2 rounded-xl hover:bg-gray-50 transition-colors min-w-[80px] touch-manipulation">
                   {/* Icon container */}
                   <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm border border-blue-100">
-                    <img className="text-2xl" role="img" src={category.image} aria-label={category.name}>
-                    </img>
+                    <span className="text-2xl" role="img" aria-label={category.name}>
+                      {category.icon}
+                    </span>
                   </div>
 
                   {/* Category name */}
