@@ -16,6 +16,7 @@ export const subcategoryImages: Record<string, string> = {
     "Co-ords & Sleepwear": "/categories/subcategory/coords-sleepwear.png",
     "Athleisure": "/categories/subcategory/athleisure.png",
 
+
     /*  Kids  */
     "Boys": "/categories/subcategory/boys.png",
     "Girls": "/categories/subcategory/girls.png",
