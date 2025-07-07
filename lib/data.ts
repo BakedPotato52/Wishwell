@@ -52,3 +52,31 @@ export const bannerImages = [
     alt: "Banner Image 10",
   },
 ]
+
+export const adImages = [
+  {
+    id: 1,
+    image: "/assets/ad1.png?height=500&width=1200",
+    alt: "Ad Image 1",
+  },
+  {
+    id: 2,
+    image: "/assets/ad2.png?height=500&width=1200",
+    alt: "Ad Image 2",
+  },
+  {
+    id: 3,
+    image: "/assets/ad3.png?height=500&width=1200",
+    alt: "Ad Image 3",
+  },
+  {
+    id: 4,
+    image: "/assets/ad4.png?height=500&width=1200",
+    alt: "Ad Image 4",
+  },
+  {
+    id: 5,
+    image: "/assets/ad5.png?height=500&width=1200",
+    alt: "Ad Image 5",
+  },
+]

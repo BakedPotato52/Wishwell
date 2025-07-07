@@ -11,6 +11,7 @@ import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { FaWhatsapp } from "react-icons/fa";
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -28,23 +29,24 @@ export function Header() {
               <Image src={'/logo.png'} alt="WishWell" width={120} height={40} />
             </motion.div>
           </Link>
-          <div className="sm:hidden flex items-center  sm:gap-4 space-x-6">
+          <div className="sm:hidden flex items-center  sm:gap-4 ">
             <Link
               href="https://wa.me/918798634773"
               target="_blank"
               rel="noopener noreferrer"
+              className="flex items-center gap-1.5  bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
             >
               <Button
-                className="flex items-center gap-1.5 px-2.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
+                variant="ghost"
                 size="sm">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Chat
+                Buy on
+                <FaWhatsapp className="h-4 w-4 mr-2" />
               </Button>
             </Link>
 
             <Link
               href="/help"
-              className={`flex items-center gap-1.5 px-2.5 rounded-full shadow-sm text-xs sm:text-sm transition-all duration-300 ${pathname === '/help'
+              className={`flex items-center gap-1.5  rounded-full shadow-sm text-xs sm:text-sm transition-all duration-300 ${pathname === '/help'
                 ? 'bg-green-600 text-white font-semibold'
                 : 'bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-700'
                 }`}
@@ -76,9 +78,10 @@ export function Header() {
               className="flex items-center gap-1.5 px-2.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
             >
               <Button
+                variant="ghost"
                 size="sm">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Chat
+                Buy on
+                <FaWhatsapp className="h-4 w-4 mr-2" />
               </Button>
             </Link>
 
