@@ -52,7 +52,7 @@ export const categories: Category[] = [
             "For Her"
         ],
         subsubcategories: {
-            "For Him": ["Necklaces", "Bracelets", "Sunglasses", "Watches", "Earrings", "Wallets", "Belts"],
+            "For Him": ["Necklaces", "Bracelets", "Sunglasses", "Watches", "Earrings", "Wallets", "Belts", "Ties"],
             "For Her": ["Earrings", "Necklace and Chains", "Jewellery Sets", "Handbags & Wallets", "Rings", "Bracelets", "Sunglasses", "Watches"]
         }
     },
