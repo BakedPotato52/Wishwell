@@ -11,7 +11,7 @@ export default function HomePage() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
       {/* Hero Carousel */}
       <section className="container mx-auto px-4 py-6">
-        <div className="h-64 md:h-96 rounded-lg overflow-hidden">
+        <div className="max-md:h-64 rounded-lg overflow-hidden">
           <Carousel />
         </div>
       </section>

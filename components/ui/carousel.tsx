@@ -17,7 +17,7 @@ export function Carousel() {
   }, [bannerImages.length])
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden shadow-lg">
       {bannerImages.map((slide, index) => (
         <div
           key={slide.id}

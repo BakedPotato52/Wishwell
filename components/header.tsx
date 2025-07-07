@@ -9,14 +9,14 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
-import { MobileCategoryNav } from "@/components/mobile-category-nav"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const { state: cartState } = useCart()
   const { state: authState } = useAuth()
+  const pathname = usePathname()
 
   return (
     <motion.header initial={{ y: -100 }} animate={{ y: 0 }} className="sticky top-0 z-50 bg-white shadow-md">
@@ -28,24 +28,33 @@ export function Header() {
               <Image src={'/logo.png'} alt="WishWell" width={120} height={40} />
             </motion.div>
           </Link>
-          <Link
-            href="https://wa.me/918798634773"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
-              size="sm">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Chat
-            </Button>
-          </Link>
-          <Link href="/help" className="hidden md:flex items-center">
-            <Button variant="ghost" size="sm">
-              <HelpCircle className="h-4 w-4 mr-2" />
-              Help
-            </Button>
-          </Link>
+          <div className="sm:hidden flex items-center  sm:gap-4 space-x-6">
+            <Link
+              href="https://wa.me/918798634773"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                className="flex items-center gap-1.5 px-2.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
+                size="sm">
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Chat
+              </Button>
+            </Link>
+
+            <Link
+              href="/help"
+              className={`flex items-center gap-1.5 px-2.5 rounded-full shadow-sm text-xs sm:text-sm transition-all duration-300 ${pathname === '/help'
+                ? 'bg-green-600 text-white font-semibold'
+                : 'bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-700'
+                }`}
+            >
+              <Button variant="ghost" size="sm">
+                <HelpCircle className="h-4 w-4 mr-2" />
+                Help
+              </Button>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
@@ -60,15 +69,31 @@ export function Header() {
               />
             </div>
 
-            <Button variant="ghost" size="sm">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Chat
-            </Button>
+            <Link
+              href="https://wa.me/918798634773"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-2.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
+            >
+              <Button
+                size="sm">
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Chat
+              </Button>
+            </Link>
 
-            <Button variant="ghost" size="sm">
-              <HelpCircle className="h-4 w-4 mr-2" />
-              Help
-            </Button>
+            <Link
+              href="/help"
+              className={`flex items-center gap-1.5 px-2.5 rounded-full shadow-sm text-xs sm:text-sm transition-all duration-300 ${pathname === '/help'
+                ? 'bg-green-600 text-white font-semibold'
+                : 'bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-700'
+                }`}
+            >
+              <Button variant="ghost" size="sm">
+                <HelpCircle className="h-4 w-4 mr-2" />
+                Help
+              </Button>
+            </Link>
 
             <Link href="/cart">
               <Button variant="ghost" size="sm" className="relative">
