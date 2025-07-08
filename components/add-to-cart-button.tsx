@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ShoppingCart, Check, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -33,7 +33,21 @@ export function AddToCartButton({
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { addToCart } = useCart()
-  const { requireAuth } = useAuthGuard()
+  const { requireAuth, buildAuthUrl } = useAuthGuard()
+
+  // Listen for post-login add to cart events
+  useEffect(() => {
+    const handleAddToCartAfterLogin = (event: CustomEvent) => {
+      if (event.detail.productId === product.id) {
+        handleAddToCart()
+      }
+    }
+
+    window.addEventListener("addToCartAfterLogin", handleAddToCartAfterLogin as EventListener)
+    return () => {
+      window.removeEventListener("addToCartAfterLogin", handleAddToCartAfterLogin as EventListener)
+    }
+  }, [product.id])
 
   const handleAddToCart = async () => {
     if (disabled || !product.inStock) return
@@ -42,7 +56,6 @@ export function AddToCartButton({
 
     const success = await requireAuth(
       async () => {
-        // This function will only execute if user is authenticated
         setIsAdding(true)
 
         try {
@@ -60,13 +73,10 @@ export function AddToCartButton({
       },
       {
         onAuthRequired: () => setShowAuthModal(true),
+        productId: product.id,
+        productName: product.name,
       },
     )
-
-    if (!success) {
-      // User is not authenticated, modal will be shown
-      return
-    }
   }
 
   const buttonContent = () => {
@@ -116,7 +126,8 @@ export function AddToCartButton({
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         productName={product.name}
-        returnUrl={typeof window !== "undefined" ? window.location.pathname : ""}
+        loginUrl={buildAuthUrl("login", { productId: product.id, productName: product.name })}
+        registerUrl={buildAuthUrl("register", { productId: product.id, productName: product.name })}
       />
     </>
   )

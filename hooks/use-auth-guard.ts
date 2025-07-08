@@ -8,6 +8,8 @@ interface AuthGuardOptions {
   redirectTo?: string
   returnUrl?: string
   onAuthRequired?: () => void
+  productId?: string
+  productName?: string
 }
 
 export function useAuthGuard() {
@@ -16,14 +18,19 @@ export function useAuthGuard() {
   const pathname = usePathname()
 
   const requireAuth = useCallback(
-    (action: () => void | Promise<void>, options: AuthGuardOptions = {}) => {
+    async (action: () => void | Promise<void>, options: AuthGuardOptions = {}) => {
       if (firebaseUser) {
         // User is authenticated, execute the action
-        const result = action()
-        if (result instanceof Promise) {
-          return result.then(() => true).catch(() => false)
+        try {
+          const result = action()
+          if (result instanceof Promise) {
+            await result
+          }
+          return true
+        } catch (error) {
+          console.error("Error executing authenticated action:", error)
+          return false
         }
-        return true
       } else {
         // User is not authenticated, handle auth requirement
         const returnUrl = options.returnUrl || pathname
@@ -31,10 +38,17 @@ export function useAuthGuard() {
         if (options.onAuthRequired) {
           options.onAuthRequired()
         } else {
-          // Store the return URL and redirect to login
-          sessionStorage.setItem("returnUrl", returnUrl)
-          sessionStorage.setItem("pendingAction", "addToCart")
-          router.push(options.redirectTo || "/login")
+          // Build redirect URL with parameters
+          const params = new URLSearchParams()
+          if (returnUrl !== "/") params.set("returnUrl", returnUrl)
+          if (options.productId) {
+            params.set("action", "addToCart")
+            params.set("productId", options.productId)
+          }
+          if (options.productName) params.set("productName", options.productName)
+
+          const redirectUrl = `${options.redirectTo || "/login"}${params.toString() ? `?${params.toString()}` : ""}`
+          router.push(redirectUrl)
         }
         return false
       }
@@ -45,18 +59,37 @@ export function useAuthGuard() {
   const executeAfterAuth = useCallback(
     (action: () => void | Promise<void>) => {
       if (firebaseUser) {
-        action()
-        // Clear any pending actions
-        sessionStorage.removeItem("pendingAction")
-        sessionStorage.removeItem("returnUrl")
+        try {
+          action()
+        } catch (error) {
+          console.error("Error executing post-auth action:", error)
+        }
       }
     },
     [firebaseUser],
   )
 
+  const buildAuthUrl = useCallback(
+    (type: "login" | "register", options: AuthGuardOptions = {}) => {
+      const params = new URLSearchParams()
+      const returnUrl = options.returnUrl || pathname
+
+      if (returnUrl !== "/") params.set("returnUrl", returnUrl)
+      if (options.productId) {
+        params.set("action", "addToCart")
+        params.set("productId", options.productId)
+      }
+      if (options.productName) params.set("productName", options.productName)
+
+      return `/${type}${params.toString() ? `?${params.toString()}` : ""}`
+    },
+    [pathname],
+  )
+
   return {
     requireAuth,
     executeAfterAuth,
+    buildAuthUrl,
     isAuthenticated: !!firebaseUser,
   }
 }

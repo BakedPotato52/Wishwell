@@ -11,10 +11,17 @@ interface AuthPromptModalProps {
   isOpen: boolean
   onClose: () => void
   productName?: string
-  returnUrl?: string
+  loginUrl?: string
+  registerUrl?: string
 }
 
-export function AuthPromptModal({ isOpen, onClose, productName, returnUrl }: AuthPromptModalProps) {
+export function AuthPromptModal({
+  isOpen,
+  onClose,
+  productName,
+  loginUrl = "/login",
+  registerUrl = "/register",
+}: AuthPromptModalProps) {
   const [isClosing, setIsClosing] = useState(false)
 
   const handleClose = () => {
@@ -25,33 +32,13 @@ export function AuthPromptModal({ isOpen, onClose, productName, returnUrl }: Aut
     }, 200)
   }
 
-  const handleLogin = () => {
-    if (returnUrl) {
-      sessionStorage.setItem("returnUrl", returnUrl)
-      sessionStorage.setItem("pendingAction", "addToCart")
-      if (productName) {
-        sessionStorage.setItem("pendingProductName", productName)
-      }
-    }
-  }
-
-  const handleRegister = () => {
-    if (returnUrl) {
-      sessionStorage.setItem("returnUrl", returnUrl)
-      sessionStorage.setItem("pendingAction", "addToCart")
-      if (productName) {
-        sessionStorage.setItem("pendingProductName", productName)
-      }
-    }
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center space-x-2">
             <ShoppingCart className="h-5 w-5 text-blue-600" />
-            <span>Login Required</span>
+            <span>Sign in to continue</span>
           </DialogTitle>
         </DialogHeader>
 
@@ -76,7 +63,7 @@ export function AuthPromptModal({ isOpen, onClose, productName, returnUrl }: Aut
               </div>
 
               <div className="space-y-3">
-                <Link href="/login" onClick={handleLogin}>
+                <Link href={loginUrl} onClick={handleClose}>
                   <Button className="w-full bg-blue-600 hover:bg-blue-700">
                     <User className="h-4 w-4 mr-2" />
                     Sign In
@@ -84,7 +71,7 @@ export function AuthPromptModal({ isOpen, onClose, productName, returnUrl }: Aut
                   </Button>
                 </Link>
 
-                <Link href="/register" onClick={handleRegister}>
+                <Link href={registerUrl} onClick={handleClose}>
                   <Button variant="outline" className="w-full bg-transparent">
                     Create New Account
                   </Button>
