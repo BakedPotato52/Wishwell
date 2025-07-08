@@ -74,26 +74,31 @@ export function CategoryFilterBar({
     }
 
     // Check if this subcategory has sub-subcategories
-    const hasSubSubcategories = subsubcategories[subcategory]?.length > 0
+    const hasSubSubcategories = subsubcategories && subsubcategories[subcategory]?.length > 0
 
     if (hasSubSubcategories) {
-      // Navigate to sub-subcategories level
-      const newLevel: NavigationLevel = {
-        type: "subsubcategory",
+      setSelectedSubcategory(subcategory)
+      setSelectedSubSubcategory(null)
+      setNavigationHistory((prev) => [...prev, currentLevel]) // Save current level to history
+      setCurrentLevel({
+        type: "subsubcategory", // ← This is where it changes to "subsubcategory"
         parent: subcategory,
         items: subsubcategories[subcategory],
         title: subcategory,
-      }
-
-      setNavigationHistory([...navigationHistory, currentLevel])
-      setCurrentLevel(newLevel)
-      setSelectedSubcategory(subcategory)
-      setSelectedSubSubcategory(null)
+      })
+      // Add these missing callback calls:
       onSubcategoryChange?.(subcategory)
+      onSubSubcategoryChange?.(subcategory, null)
     } else {
       // Direct selection without sub-subcategories
       setSelectedSubcategory(subcategory)
       setSelectedSubSubcategory(null)
+      setCurrentLevel({
+        type: "main",
+        items: subcategories,
+        title: categoryName,
+      })
+      setNavigationHistory([])
       onSubcategoryChange?.(subcategory)
       onSubSubcategoryChange?.(subcategory, null)
     }
@@ -111,10 +116,9 @@ export function CategoryFilterBar({
       setNavigationHistory(navigationHistory.slice(0, -1))
 
       if (previousLevel.type === "main") {
-        setSelectedSubcategory(null)
+        // Going back to main level - reset subcategory selection but keep it for filtering
         setSelectedSubSubcategory(null)
-        onSubcategoryChange?.(null)
-        onSubSubcategoryChange?.(null, null)
+        onSubSubcategoryChange?.(selectedSubcategory, null)
       }
     }
   }
@@ -279,13 +283,23 @@ export function CategoryFilterBar({
                 WebkitOverflowScrolling: "touch",
               }}
             >
-              {/* All categories card - only show at main level */}
-              {currentLevel.type === "main" && (
+              {/* All categories card - show at main level and sub-subcategory level */}
+              {(currentLevel.type === "main" || currentLevel.type === "subsubcategory") && (
                 <CategoryCard
-                  label="All"
-                  selected={!selectedSubcategory && !selectedSubSubcategory}
+                  label={currentLevel.type === "main" ? "All" : `All ${currentLevel.title}`}
+                  selected={
+                    currentLevel.type === "main"
+                      ? !selectedSubcategory && !selectedSubSubcategory
+                      : selectedSubcategory === currentLevel.parent && !selectedSubSubcategory
+                  }
                   image={subcategoryImages["All"]}
-                  onClick={() => handleSubcategorySelect(null)}
+                  onClick={() => {
+                    if (currentLevel.type === "main") {
+                      handleSubcategorySelect(null)
+                    } else {
+                      handleSubSubcategorySelect(null)
+                    }
+                  }}
                   delay={0}
                   hasSubItems={false}
                 />
@@ -294,7 +308,8 @@ export function CategoryFilterBar({
               {/* Dynamic category items */}
               <AnimatePresence mode="wait">
                 {currentLevel.items.map((item, i) => {
-                  const hasSubItems = currentLevel.type === "main" && subsubcategories[item]?.length > 0
+                  const hasSubItems =
+                    currentLevel.type === "main" && subsubcategories && subsubcategories[item]?.length > 0
                   const isSelected =
                     currentLevel.type === "main" ? selectedSubcategory === item : selectedSubSubcategory === item
 
@@ -351,8 +366,8 @@ function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: C
     >
       <div
         className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
-            ? "bg-blue-50 border-2 border-blue-200 shadow-md"
-            : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+          ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+          : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
           }`}
       >
         <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
