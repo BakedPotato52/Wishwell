@@ -1,37 +1,73 @@
-"use client"
+"use client";
 
-import { useRef, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { SortAsc, Grid3X3, List, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import Image from "next/image"
-import { subcategoryImages } from "@/lib/subcategoryImages"
-import type { Category } from "@/lib/types"
+import {
+  useRef,
+  useState,
+  useEffect,
+} from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  SortAsc,
+  Grid3X3,
+  List,
+  ChevronRight,
+  ChevronDown,
+  ArrowLeft,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
-interface CategoryFilterBarProps {
-  categoryName: string
-  category?: Category
-  subcategories?: string[]
-  subsubcategories?: Record<string, string[]>
-  totalProducts: number
-  onSortChange: (sort: string) => void
-  onViewChange: (view: "grid" | "list") => void
-  onSubcategoryChange?: (subcategory: string | null) => void
-  onSubSubcategoryChange?: (subcategory: string | null, subsubcategory: string | null) => void
-  currentView: "grid" | "list"
-}
+import { subcategoryImages } from "@/lib/subcategoryImages";
+import type { Category } from "@/lib/types";
+
+/* -------------------------------------------------------------------------- */
+/*                              🔖  Type helpers                              */
+/* -------------------------------------------------------------------------- */
+
+const LEVELS = {
+  MAIN: "main",
+  SUBCATEGORY: "subcategory",
+  SUBSUBCATEGORY: "subsubcategory",
+} as const;
+type LevelType = (typeof LEVELS)[keyof typeof LEVELS];
 
 interface NavigationLevel {
-  type: "main" | "subcategory" | "subsubcategory"
-  parent?: string
-  items: string[]
-  title: string
+  type: LevelType;
+  /** parent label for SUBCATEGORY / SUBSUBCATEGORY levels */
+  parent?: string;
+  items: string[];
+  /** Shown in heading/breadcrumb */
+  title: string;
 }
+
+interface CategoryFilterBarProps {
+  categoryName: string;
+  category?: Category;
+  subcategories?: string[];
+  subsubcategories?: Record<string, string[]>;
+  totalProducts: number;
+  onSortChange: (sort: string) => void;
+  onViewChange: (view: "grid" | "list") => void;
+  onSubcategoryChange?: (subcategory: string | null) => void;
+  onSubSubcategoryChange?: (
+    subcategory: string | null,
+    subsubcategory: string | null,
+  ) => void;
+  currentView: "grid" | "list";
+}
+
+/* -------------------------------------------------------------------------- */
+/*                           📚  Filter‑bar component                         */
+/* -------------------------------------------------------------------------- */
 
 export function CategoryFilterBar({
   categoryName,
-  category,
   subcategories = [],
   subsubcategories = {},
   totalProducts,
@@ -41,122 +77,115 @@ export function CategoryFilterBar({
   onSubSubcategoryChange,
   currentView,
 }: CategoryFilterBarProps) {
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
-  const [selectedSubSubcategory, setSelectedSubSubcategory] = useState<string | null>(null)
+  /* -------------------------------- State -------------------------------- */
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+    null,
+  );
+  const [selectedSubSubcategory, setSelectedSubSubcategory] =
+    useState<string | null>(null);
+
   const [currentLevel, setCurrentLevel] = useState<NavigationLevel>({
-    type: "main",
+    type: LEVELS.MAIN,
     items: subcategories,
     title: categoryName,
-  })
-  const [navigationHistory, setNavigationHistory] = useState<NavigationLevel[]>([])
-  const [sortBy, setSortBy] = useState("featured")
-  const scrollRef = useRef<HTMLDivElement>(null)
+  });
+  const [navigationHistory, setNavigationHistory] = useState<
+    NavigationLevel[]
+  >([]);
 
+  const [sortBy, setSortBy] = useState("featured");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  /* --------------------------- Keep scroller tidy ------------------------- */
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ left: 0, behavior: "smooth" });
+  }, [currentLevel]);
+
+  /* -------------------------------- Handlers ----------------------------- */
   const handleSortChange = (sort: string) => {
-    setSortBy(sort)
-    onSortChange(sort)
-  }
+    setSortBy(sort);
+    onSortChange(sort);
+  };
 
+  /** User picked / cleared a 1st‑level sub‑category (“For Him”) */
   const handleSubcategorySelect = (subcategory: string | null) => {
     if (!subcategory) {
-      // Reset to main level
-      setSelectedSubcategory(null)
-      setSelectedSubSubcategory(null)
+      // Reset to MAIN
+      setSelectedSubcategory(null);
+      setSelectedSubSubcategory(null);
       setCurrentLevel({
-        type: "main",
+        type: LEVELS.MAIN,
         items: subcategories,
         title: categoryName,
-      })
-      setNavigationHistory([])
-      onSubcategoryChange?.(null)
-      onSubSubcategoryChange?.(null, null)
-      return
+      });
+      setNavigationHistory([]);
+      onSubcategoryChange?.(null);
+      onSubSubcategoryChange?.(null, null);
+      return;
     }
 
-    // Check if this subcategory has sub-subcategories
-    const hasSubSubcategories = subsubcategories && subsubcategories[subcategory]?.length > 0
+    const hasChildren = !!subsubcategories?.[subcategory]?.length;
 
-    if (hasSubSubcategories) {
-      setSelectedSubcategory(subcategory)
-      setSelectedSubSubcategory(null)
-      setNavigationHistory((prev) => [...prev, currentLevel]) // Save current level to history
+    if (hasChildren) {
+      /* Drill into SUBCATEGORY level */
+      setNavigationHistory((prev) => [...prev, currentLevel]);
+      setSelectedSubcategory(subcategory);
+      setSelectedSubSubcategory(null);
       setCurrentLevel({
-        type: "subsubcategory", // ← This is where it changes to "subsubcategory"
+        type: LEVELS.SUBCATEGORY,
         parent: subcategory,
-        items: subsubcategories[subcategory],
+        items: subsubcategories![subcategory],
         title: subcategory,
-      })
-      // Add these missing callback calls:
-      onSubcategoryChange?.(subcategory)
-      onSubSubcategoryChange?.(subcategory, null)
+      });
+      onSubcategoryChange?.(subcategory);
+      onSubSubcategoryChange?.(subcategory, null);
     } else {
-      // Direct selection without sub-subcategories
-      setSelectedSubcategory(subcategory)
-      setSelectedSubSubcategory(null)
-      setCurrentLevel({
-        type: "main",
-        items: subcategories,
-        title: categoryName,
-      })
-      setNavigationHistory([])
-      onSubcategoryChange?.(subcategory)
-      onSubSubcategoryChange?.(subcategory, null)
+      /* Leaf under MAIN */
+      setSelectedSubcategory(subcategory);
+      setSelectedSubSubcategory(null);
+      onSubcategoryChange?.(subcategory);
+      onSubSubcategoryChange?.(subcategory, null);
     }
-  }
+  };
 
+  /** User picked / cleared a 2nd‑level sub‑category (“Casual Shoes”) */
   const handleSubSubcategorySelect = (subsubcategory: string | null) => {
-    setSelectedSubSubcategory(subsubcategory)
-    onSubSubcategoryChange?.(selectedSubcategory, subsubcategory)
-  }
+    setSelectedSubSubcategory(subsubcategory);
+    onSubSubcategoryChange?.(selectedSubcategory, subsubcategory);
+  };
 
   const navigateBack = () => {
-    if (navigationHistory.length > 0) {
-      const previousLevel = navigationHistory[navigationHistory.length - 1]
-      setCurrentLevel(previousLevel)
-      setNavigationHistory(navigationHistory.slice(0, -1))
+    if (!navigationHistory.length) return;
+    const prev = navigationHistory.at(-1)!;
+    setCurrentLevel(prev);
+    setNavigationHistory((h) => h.slice(0, -1));
 
-      if (previousLevel.type === "main") {
-        // Going back to main level - reset subcategory selection but keep it for filtering
-        setSelectedSubSubcategory(null)
-        onSubSubcategoryChange?.(selectedSubcategory, null)
-      }
+    if (prev.type === LEVELS.MAIN) {
+      setSelectedSubSubcategory(null);
+      onSubSubcategoryChange?.(selectedSubcategory, null);
     }
-  }
+  };
 
-  const clearAllSelections = () => {
-    setSelectedSubcategory(null)
-    setSelectedSubSubcategory(null)
-    setCurrentLevel({
-      type: "main",
-      items: subcategories,
-      title: categoryName,
-    })
-    setNavigationHistory([])
-    onSubcategoryChange?.(null)
-    onSubSubcategoryChange?.(null, null)
-  }
-
+  /* -------------------------------- Helpers ------------------------------ */
   const getBreadcrumbs = () => {
-    const breadcrumbs = [categoryName]
-    if (selectedSubcategory) breadcrumbs.push(selectedSubcategory)
-    if (selectedSubSubcategory) breadcrumbs.push(selectedSubSubcategory)
-    return breadcrumbs
-  }
+    const crumbs = [categoryName];
+    if (selectedSubcategory) crumbs.push(selectedSubcategory);
+    if (selectedSubSubcategory) crumbs.push(selectedSubSubcategory);
+    return crumbs;
+  };
 
-  const getActiveSelectionText = () => {
-    if (selectedSubSubcategory) {
-      return `${selectedSubcategory} > ${selectedSubSubcategory}`
-    }
-    if (selectedSubcategory) {
-      return selectedSubcategory
-    }
-    return "All Categories"
-  }
+  const getActiveSelectionText = () =>
+    selectedSubSubcategory
+      ? `${selectedSubcategory} > ${selectedSubSubcategory}`
+      : selectedSubcategory ?? "All Categories";
 
+  /* ----------------------------------------------------------------------- */
+  /*                                 ✨ UI                                   */
+  /* ----------------------------------------------------------------------- */
   return (
     <div className="bg-white border-b z-30 py-4">
       <div className="container mx-auto px-4">
-        {/* Category header */}
+        {/* ---------- Header / breadcrumbs ---------- */}
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center space-x-2 mb-1">
@@ -165,7 +194,7 @@ export function CategoryFilterBar({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={clearAllSelections}
+                  onClick={() => handleSubcategorySelect(null)}
                   className="text-blue-600 hover:text-blue-800 text-xs"
                 >
                   Clear filters
@@ -173,12 +202,15 @@ export function CategoryFilterBar({
               )}
             </div>
 
-            {/* Breadcrumb navigation */}
             <div className="flex items-center space-x-1 text-sm text-gray-600 mb-1">
-              {getBreadcrumbs().map((crumb, index) => (
+              {getBreadcrumbs().map((crumb, i, arr) => (
                 <div key={crumb} className="flex items-center">
-                  {index > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
-                  <span className={index === getBreadcrumbs().length - 1 ? "font-medium text-gray-900" : ""}>
+                  {i > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
+                  <span
+                    className={
+                      i === arr.length - 1 ? "font-medium text-gray-900" : ""
+                    }
+                  >
                     {crumb}
                   </span>
                 </div>
@@ -188,7 +220,7 @@ export function CategoryFilterBar({
             <p className="text-sm text-gray-600">{totalProducts} products</p>
           </div>
 
-          {/* View toggle */}
+          {/* ---------- View toggle ---------- */}
           <div className="hidden md:flex items-center space-x-2">
             <Button
               variant={currentView === "grid" ? "default" : "outline"}
@@ -207,9 +239,8 @@ export function CategoryFilterBar({
           </div>
         </div>
 
-        {/* Sort and active selection display */}
+        {/* ---------- Sort + active‑tag ---------- */}
         <div className="flex items-center justify-between mb-4">
-          {/* Active selection tag */}
           <div className="flex items-center space-x-2">
             {(selectedSubcategory || selectedSubSubcategory) && (
               <motion.div
@@ -217,38 +248,52 @@ export function CategoryFilterBar({
                 animate={{ opacity: 1, x: 0 }}
                 className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-200"
               >
-                <span className="text-sm font-medium text-blue-700">{getActiveSelectionText()}</span>
-                <button onClick={clearAllSelections} className="text-blue-500 hover:text-blue-700 ml-1">
+                <span className="text-sm font-medium text-blue-700">
+                  {getActiveSelectionText()}
+                </span>
+                <button
+                  onClick={() => handleSubcategorySelect(null)}
+                  className="text-blue-500 hover:text-blue-700 ml-1"
+                >
                   ×
                 </button>
               </motion.div>
             )}
           </div>
 
-          {/* Sort dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="flex-shrink-0 bg-transparent">
+              <Button variant="outline" size="sm" className="bg-transparent">
                 <SortAsc className="h-4 w-4 mr-2" />
                 Sort
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleSortChange("featured")}>Featured</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("price-low")}>Price: Low to High</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("price-high")}>Price: High to Low</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("rating")}>Customer Rating</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("newest")}>Newest First</DropdownMenuItem>
+              {[
+                ["featured", "Featured"],
+                ["price-low", "Price: Low to High"],
+                ["price-high", "Price: High to Low"],
+                ["rating", "Customer Rating"],
+                ["newest", "Newest First"],
+              ].map(([val, label]) => (
+                <DropdownMenuItem
+                  key={val}
+                  onClick={() => handleSortChange(val)}
+                >
+                  {label}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
 
-        {/* Dynamic category navigation */}
+        {/* ---------- Dynamic nav rail ---------- */}
         {currentLevel.items.length > 0 && (
           <div className="mb-4">
+            {/* Heading + Back button */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2">
-                {navigationHistory.length > 0 && (
+                {!!navigationHistory.length && (
                   <Button
                     variant="ghost"
                     size="sm"
@@ -265,10 +310,10 @@ export function CategoryFilterBar({
                   animate={{ opacity: 1, y: 0 }}
                   className="text-lg font-semibold"
                 >
-                  {currentLevel.type === "main"
+                  {currentLevel.type === LEVELS.MAIN
                     ? "Shop by Category"
-                    : currentLevel.type === "subsubcategory"
-                      ? `${currentLevel.title} Categories`
+                    : currentLevel.type === LEVELS.SUBCATEGORY
+                      ? `${currentLevel.title} Styles`
                       : currentLevel.title}
                 </motion.h3>
               </div>
@@ -283,53 +328,61 @@ export function CategoryFilterBar({
                 WebkitOverflowScrolling: "touch",
               }}
             >
-              {/* All categories card - show at main level and sub-subcategory level */}
-              {(currentLevel.type === "main" || currentLevel.type === "subsubcategory") && (
-                <CategoryCard
-                  label={currentLevel.type === "main" ? "All" : `All ${currentLevel.title}`}
-                  selected={
-                    currentLevel.type === "main"
-                      ? !selectedSubcategory && !selectedSubSubcategory
-                      : selectedSubcategory === currentLevel.parent && !selectedSubSubcategory
-                  }
-                  image={subcategoryImages["All"]}
-                  onClick={() => {
-                    if (currentLevel.type === "main") {
-                      handleSubcategorySelect(null)
-                    } else {
-                      handleSubSubcategorySelect(null)
+              {/* “All …” card */}
+              {(currentLevel.type === LEVELS.MAIN ||
+                currentLevel.type === LEVELS.SUBCATEGORY) && (
+                  <CategoryCard
+                    label={
+                      currentLevel.type === LEVELS.MAIN
+                        ? "All"
+                        : `All ${currentLevel.title}`
                     }
-                  }}
-                  delay={0}
-                  hasSubItems={false}
-                />
-              )}
+                    selected={
+                      currentLevel.type === LEVELS.MAIN
+                        ? !selectedSubcategory && !selectedSubSubcategory
+                        : selectedSubcategory === currentLevel.parent &&
+                        !selectedSubSubcategory
+                    }
+                    image={subcategoryImages["All"] ?? "/placeholder.svg"}
+                    onClick={() =>
+                      currentLevel.type === LEVELS.MAIN
+                        ? handleSubcategorySelect(null)
+                        : handleSubSubcategorySelect(null)
+                    }
+                    delay={0}
+                    hasSubItems={false}
+                  />
+                )}
 
-              {/* Dynamic category items */}
+              {/* Actual items */}
               <AnimatePresence mode="wait">
                 {currentLevel.items.map((item, i) => {
-                  const hasSubItems =
-                    currentLevel.type === "main" && subsubcategories && subsubcategories[item]?.length > 0
+                  const hasChildren =
+                    currentLevel.type === LEVELS.MAIN &&
+                    !!subsubcategories?.[item]?.length;
+
                   const isSelected =
-                    currentLevel.type === "main" ? selectedSubcategory === item : selectedSubSubcategory === item
+                    currentLevel.type === LEVELS.MAIN
+                      ? selectedSubcategory === item
+                      : selectedSubSubcategory === item;
 
                   return (
                     <CategoryCard
                       key={`${currentLevel.type}-${item}`}
                       label={item}
                       selected={isSelected}
-                      image={subcategoryImages[item] || subcategoryImages.default}
-                      onClick={() => {
-                        if (currentLevel.type === "main") {
-                          handleSubcategorySelect(item)
-                        } else {
-                          handleSubSubcategorySelect(item)
-                        }
-                      }}
+                      image={
+                        subcategoryImages[item] ?? "/placeholder.svg"
+                      }
+                      onClick={() =>
+                        currentLevel.type === LEVELS.MAIN
+                          ? handleSubcategorySelect(item)
+                          : handleSubSubcategorySelect(item)
+                      }
                       delay={(i + 1) * 0.05}
-                      hasSubItems={hasSubItems}
+                      hasSubItems={hasChildren}
                     />
-                  )
+                  );
                 })}
               </AnimatePresence>
             </div>
@@ -337,22 +390,30 @@ export function CategoryFilterBar({
         )}
       </div>
     </div>
-  )
+  );
 }
 
 /* -------------------------------------------------------------------------- */
-/*                        🟦 Enhanced card component                         */
+/*                        🟦  Small card component                            */
 /* -------------------------------------------------------------------------- */
+
 interface CategoryCardProps {
-  label: string
-  selected: boolean
-  image: string
-  onClick: () => void
-  delay: number
-  hasSubItems: boolean
+  label: string;
+  selected: boolean;
+  image: string;
+  onClick: () => void;
+  delay: number;
+  hasSubItems: boolean;
 }
 
-function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: CategoryCardProps) {
+function CategoryCard({
+  label,
+  selected,
+  image,
+  onClick,
+  delay,
+  hasSubItems,
+}: CategoryCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -361,8 +422,8 @@ function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: C
       transition={{ delay }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="cursor-pointer relative"
       onClick={onClick}
+      className="cursor-pointer relative"
     >
       <div
         className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
@@ -371,9 +432,14 @@ function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: C
           }`}
       >
         <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
-          <Image src={image || "/placeholder.svg"} alt={label} width={48} height={48} className="object-contain" />
+          <Image
+            src={image ?? "/placeholder.svg"}
+            alt={label}
+            width={48}
+            height={48}
+            className="object-contain"
+          />
 
-          {/* Indicator for items with sub-items */}
           {hasSubItems && (
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
               <ChevronRight className="h-2 w-2 text-white" />
@@ -388,13 +454,15 @@ function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: C
           {label}
         </span>
 
-        {/* Expand indicator for items with sub-items */}
         {hasSubItems && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-1">
-            <ChevronDown className={`h-3 w-3 ${selected ? "text-blue-600" : "text-gray-400"}`} />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ChevronDown
+              className={`h-3 w-3 ${selected ? "text-blue-600" : "text-gray-400"
+                }`}
+            />
           </motion.div>
         )}
       </div>
     </motion.div>
-  )
+  );
 }
