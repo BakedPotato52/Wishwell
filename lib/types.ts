@@ -64,7 +64,7 @@ export interface Category {
   image: string
   icon?: string
   subcategories?: string[]
-  subsubcategories?: { [key: string]: string[] }
+  subsubcategories?: Record<string, string[]>
 }
 
 // Legacy types for compatibility
