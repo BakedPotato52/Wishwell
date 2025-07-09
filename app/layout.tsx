@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import { Toaster } from "sonner"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
   },
+  manifest: "/manifest.ts",
   generator: 'Kanak Acharjee'
 }
 
@@ -40,6 +42,7 @@ export default function RootLayout({
               <main className="flex-1 bg-background">{children}</main>
               <Footer />
               <MobileBottomNav />
+              <Toaster position="top-center" richColors closeButton duration={4000} />
             </div>
           </CartProvider>
         </AuthProvider>
