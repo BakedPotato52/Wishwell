@@ -202,7 +202,7 @@ export default function CartPage() {
         </div>
       </div>
 
-      <div className="fixed hidden max-md:bottom-16 left-0 right-0 bg-white border-t p-4">
+      <div className="fixed md:hidden max-md:bottom-16 left-0 right-0 bg-white border-t p-4">
         <div className="container mx-auto flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">Total: ₹{total}</span>
