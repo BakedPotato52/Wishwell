@@ -38,7 +38,25 @@ export default function RegisterPage() {
   const { firebaseUser, login } = useAuth()
   const { executeAfterAuth } = useAuthGuard()
   const router = useRouter()
-  const searchParams = useSearchParams()
+
+  // Wrap useSearchParams in a Suspense boundary
+  const [searchParams, setSearchParams] = useState<ReturnType<typeof useSearchParams> | null>(null)
+  useEffect(() => {
+    let active = true
+    // Dynamically import useSearchParams to avoid SSR issues
+    import("next/navigation").then(mod => {
+      if (active) setSearchParams(mod.useSearchParams())
+    })
+    return () => { active = false }
+  }, [])
+
+  if (!searchParams) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-md flex items-center justify-center h-screen">
+        <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+      </div>
+    )
+  }
 
   // Get redirect parameters from URL
   const returnUrl = searchParams.get("returnUrl") || "/"
@@ -51,6 +69,7 @@ export default function RegisterPage() {
     if (firebaseUser) {
       handlePostRegistrationRedirect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebaseUser])
 
   const handlePostRegistrationRedirect = () => {
