@@ -25,7 +25,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
       >
         <Link href={`/product/${product.id}`}>
           <div className="flex">
-            <div className="relative w-32 h-32 flex-shrink-0">
+            <div className="relative aspect-auto flex-shrink-0">
               <Image
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}

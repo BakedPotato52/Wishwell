@@ -4,172 +4,22 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
-import { Bell, BellOff, Download, Smartphone } from "lucide-react"
+import { Download, Smartphone } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { ProductGrid } from "@/components/product-grid"
 import { products } from "@/lib/productData"
 import { adImages } from "@/lib/data"
-import { subscribeUser, unsubscribeUser, sendNotification } from "./actions"
 
-function urlBase64ToUint8Array(base64String: string) {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4)
-  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/")
-  const rawData = window.atob(base64)
-  const outputArray = new Uint8Array(rawData.length)
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i)
-  }
-  return outputArray
-}
-
-function PushNotificationManager() {
-  const [isSupported, setIsSupported] = useState(false)
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null)
-  const [message, setMessage] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    if ("serviceWorker" in navigator && "PushManager" in window) {
-      setIsSupported(true)
-      registerServiceWorker()
-    }
-  }, [])
-
-  async function registerServiceWorker() {
-    try {
-      const registration = await navigator.serviceWorker.register("/sw.js", {
-        scope: "/",
-        updateViaCache: "none",
-      })
-      const sub = await registration.pushManager.getSubscription()
-      setSubscription(sub)
-    } catch (error) {
-      console.error("Service worker registration failed:", error)
-      toast.error("Failed to register service worker")
-    }
-  }
-
-  async function subscribeToPush() {
-    setIsLoading(true)
-    try {
-      const registration = await navigator.serviceWorker.ready
-      const sub = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!),
-      })
-      setSubscription(sub)
-      const serializedSub = JSON.parse(JSON.stringify(sub))
-      await subscribeUser(serializedSub)
-      toast.success("Successfully subscribed to notifications!")
-    } catch (error) {
-      console.error("Push subscription failed:", error)
-      toast.error("Failed to subscribe to notifications")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  async function unsubscribeFromPush() {
-    setIsLoading(true)
-    try {
-      await subscription?.unsubscribe()
-      setSubscription(null)
-      await unsubscribeUser()
-      toast.success("Successfully unsubscribed from notifications")
-    } catch (error) {
-      console.error("Unsubscribe failed:", error)
-      toast.error("Failed to unsubscribe from notifications")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  async function sendTestNotification() {
-    if (!message.trim()) {
-      toast.error("Please enter a message")
-      return
-    }
-
-    setIsLoading(true)
-    try {
-      await sendNotification(message)
-      toast.success("Test notification sent!")
-      setMessage("")
-    } catch (error) {
-      console.error("Send notification failed:", error)
-      toast.error("Failed to send notification")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  if (!isSupported) {
-    return null
-  }
-
-  return (
-    <Card className="mb-4">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Bell className="w-4 h-4" />
-          <h3 className="font-semibold">Push Notifications</h3>
-        </div>
-
-        {subscription ? (
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-green-600">
-              <Bell className="w-4 h-4" />
-              <span>You're subscribed to notifications</span>
-            </div>
-
-            <div className="flex gap-2">
-              <Input
-                type="text"
-                placeholder="Enter test message..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="flex-1"
-              />
-              <Button onClick={sendTestNotification} disabled={isLoading} size="sm">
-                Send Test
-              </Button>
-            </div>
-
-            <Button
-              variant="outline"
-              onClick={unsubscribeFromPush}
-              disabled={isLoading}
-              size="sm"
-              className="w-full bg-transparent"
-            >
-              <BellOff className="w-4 h-4 mr-2" />
-              Unsubscribe
-            </Button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">Get notified about new products and offers</p>
-            <Button onClick={subscribeToPush} disabled={isLoading} size="sm" className="w-full">
-              <Bell className="w-4 h-4 mr-2" />
-              Subscribe to Notifications
-            </Button>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  )
-}
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
   const [isInstallable, setIsInstallable] = useState(false)
+  const [hasReloaded, setHasReloaded] = useState(false)
 
   useEffect(() => {
     setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream)
@@ -185,6 +35,10 @@ function InstallPrompt() {
       setDeferredPrompt(null)
       setIsInstallable(false)
       toast.success("App installed successfully!")
+      if (!hasReloaded) {
+        setHasReloaded(true)
+        window.location.reload()
+      }
     }
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
@@ -194,7 +48,8 @@ function InstallPrompt() {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
       window.removeEventListener("appinstalled", handleAppInstalled)
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasReloaded])
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
@@ -232,50 +87,43 @@ function InstallPrompt() {
 
   return (
     <div>
-      <Button
-        onClick={() => setIsInstallable(true)}
-        size="sm"
-        className="w-full mb-2"
-        variant="outline"
-      >
-        <Download className="w-4 h-4 mr-2" />
-        Install App
-      </Button>
       {/* Modal for install prompt */}
       <Dialog open={isInstallable} onOpenChange={setIsInstallable}>
+        <DialogTitle asChild>
+          <span className="sr-only">Install App</span>
+        </DialogTitle>
         <DialogContent className="max-w-sm">
           <div className="flex items-center gap-2 mb-3">
             <Smartphone className="w-4 h-4" />
             <h3 className="font-semibold">Install App</h3>
           </div>
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-              Install our app for a better experience with offline access and push notifications
-            </p>
-            <Button
-              onClick={handleInstallClick}
-              size="sm"
-              className="w-full"
-              variant="default"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              {isIOS && !deferredPrompt ? "Add to Home Screen" : "Install App"}
-            </Button>
-            {isIOS && !deferredPrompt && (
-              <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                <p className="font-medium mb-1">iOS Installation:</p>
-                <p>
-                  1. Tap the Share button <span className="font-mono">⎋</span>
-                </p>
-                <p>
-                  2. Select "Add to Home Screen" <span className="font-mono">➕</span>
-                </p>
-              </div>
-            )}
-          </div>
+          <div className="space-y-3"></div>
+          <p className="text-sm text-muted-foreground">
+            Install our app for a better experience. You can access it directly from your home screen, just like a native app.
+          </p>
+          <Button
+            onClick={handleInstallClick}
+            size="sm"
+            className="w-full"
+            variant="default"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            {isIOS && !deferredPrompt ? "Add to Home Screen" : "Install App"}
+          </Button>
+          {isIOS && !deferredPrompt && (
+            <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+              <p className="font-medium mb-1">iOS Installation:</p>
+              <p>
+                1. Tap the Share button <span className="font-mono">⎋</span>
+              </p>
+              <p>
+                2. Select "Add to Home Screen" <span className="font-mono">➕</span>
+              </p>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   )
 }
 
@@ -294,7 +142,6 @@ export default function HomePage() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
       {/* PWA Components */}
       <div className="container mx-auto px-4 pt-4">
-        <PushNotificationManager />
         <InstallPrompt />
       </div>
 

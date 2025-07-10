@@ -32,7 +32,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container mx-auto px-4 py-6">
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-2">
         <Link href="/">
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -48,7 +48,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             src={product.image || "/placeholder.svg"}
             alt={product.name}
             width={500}
-            height={500}
+            height={250}
             className="w-full rounded-lg object-cover"
           />
         </motion.div>
