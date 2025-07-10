@@ -66,11 +66,7 @@ export default function CategoriesPage() {
                                 <Link href={`/category/${category.id}`}>
                                     <div className="flex flex-col items-center p-4 rounded-lg bg-white hover:shadow-md transition-all duration-200 border border-gray-100">
                                         <div className="w-16 h-16 mb-3 rounded-full overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm">
-                                            {category.icon ? (
-                                                <span className="text-2xl" role="img" aria-label={category.name}>
-                                                    {category.icon}
-                                                </span>
-                                            ) : (
+                                            {category.image ? (
                                                 <Image
                                                     src={category.image || "/placeholder.svg"}
                                                     alt={category.name}
@@ -78,6 +74,10 @@ export default function CategoriesPage() {
                                                     height={64}
                                                     className="object-cover"
                                                 />
+                                            ) : (
+                                                <span className="text-2xl" role="img" aria-label={category.name}>
+                                                    {category.icon}
+                                                </span>
                                             )}
                                         </div>
                                         <span className="text-sm text-center font-medium text-gray-800 line-clamp-2">{category.name}</span>

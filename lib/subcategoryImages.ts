@@ -7,7 +7,7 @@ export const subcategoryImages: Record<string, string> = {
     All: "/categories/subcategory/all.png",
 
     // Men's subcategories
-    Shirts: "/categories/subcategory/men-shirts.png",
+    Shirts: "/categories/subcategory/shirts.png",
     Topwear: "/categories/subcategory/men-topwear.png",
     Bottomwear: "/categories/subcategory/men-bottomwear.png",
     Innerwear: "/categories/subcategory/men-innerwear.png",
