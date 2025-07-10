@@ -8,6 +8,7 @@ import { Bell, BellOff, Download, Smartphone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { ProductGrid } from "@/components/product-grid"
@@ -230,42 +231,51 @@ function InstallPrompt() {
   }
 
   return (
-    <Card className="mb-4">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Smartphone className="w-4 h-4" />
-          <h3 className="font-semibold">Install App</h3>
-        </div>
-
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Install our app for a better experience with offline access and push notifications
-          </p>
-
-          <Button
-            onClick={handleInstallClick}
-            size="sm"
-            className="w-full"
-            variant={isInstallable ? "default" : "outline"}
-          >
-            <Download className="w-4 h-4 mr-2" />
-            {isInstallable ? "Install App" : "Add to Home Screen"}
-          </Button>
-
-          {isIOS && !isInstallable && (
-            <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-              <p className="font-medium mb-1">iOS Installation:</p>
-              <p>
-                1. Tap the Share button <span className="font-mono">⎋</span>
-              </p>
-              <p>
-                2. Select "Add to Home Screen" <span className="font-mono">➕</span>
-              </p>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+    <div>
+      <Button
+        onClick={() => setIsInstallable(true)}
+        size="sm"
+        className="w-full mb-2"
+        variant="outline"
+      >
+        <Download className="w-4 h-4 mr-2" />
+        Install App
+      </Button>
+      {/* Modal for install prompt */}
+      <Dialog open={isInstallable} onOpenChange={setIsInstallable}>
+        <DialogContent className="max-w-sm">
+          <div className="flex items-center gap-2 mb-3">
+            <Smartphone className="w-4 h-4" />
+            <h3 className="font-semibold">Install App</h3>
+          </div>
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              Install our app for a better experience with offline access and push notifications
+            </p>
+            <Button
+              onClick={handleInstallClick}
+              size="sm"
+              className="w-full"
+              variant="default"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              {isIOS && !deferredPrompt ? "Add to Home Screen" : "Install App"}
+            </Button>
+            {isIOS && !deferredPrompt && (
+              <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
+                <p className="font-medium mb-1">iOS Installation:</p>
+                <p>
+                  1. Tap the Share button <span className="font-mono">⎋</span>
+                </p>
+                <p>
+                  2. Select "Add to Home Screen" <span className="font-mono">➕</span>
+                </p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }
 
