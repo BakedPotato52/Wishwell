@@ -13,11 +13,40 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable any"
+        },
+        {
+            "src": "/apple-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "icon0.png",
+            "sizes": "64x64",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "icon1.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "icon0.svg",
+            "sizes": "64x64",
+            "type": "image/svg+xml",
+            "purpose": "maskable any"
         }
     ],
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
+    "description": "WishWell is your ultimate shopping destination, offering a wide range of products at unbeatable prices. Enjoy a seamless shopping experience with our user-friendly interface and secure payment options.",
+    "lang": "en-US",
+    "dir": "ltr",
+    "scope": "/",
+    "prefer_related_applications": false,
     "orientation": "portrait-primary"
 }

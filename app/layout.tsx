@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     "Discover amazing products at unbeatable prices. Shop fashion, electronics, home goods and more with fast delivery and secure checkout.",
   keywords: "ecommerce, shopping, fashion, electronics, home goods, online store",
-  authors: [{ name: "WishWell Team" }],
+  authors: [{ name: "Kanak Acharjee" }],
   openGraph: {
     title: "WishWell - Your Ultimate Shopping Destination",
     description: "Discover amazing products at unbeatable prices",
@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-  generator: 'Kanak Acharjee'
 }
 
 export default function RootLayout({
