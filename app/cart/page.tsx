@@ -179,7 +179,7 @@ export default function CartPage() {
                     )}
                     Remove
                   </Button>
-                  <Link href="/checkout" className='justify-end'>
+                  <Link href="/checkout" className='flex justify-end'>
                     <Button size="sm">Buy Now</Button>
                   </Link>
                 </div>
