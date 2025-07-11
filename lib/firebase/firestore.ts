@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore"
 import { db } from "./config"
 import type { Product, CartItem, Order } from "@/lib/types"
+import { products } from "../productData"
 
 // Products Collection
 export const getProducts = async (): Promise<Product[]> => {
@@ -233,45 +234,11 @@ export const updateOrderStatus = async (orderId: string, status: Order["status"]
 // Initialize sample data (run once)
 export const initializeSampleData = async (): Promise<void> => {
   try {
-    const sampleProducts: Omit<Product, "id">[] = [
-      {
-        name: "Premium Cotton T-Shirt",
-        description: "Comfortable and stylish cotton t-shirt perfect for everyday wear",
-        price: 150,
-        image: "/placeholder.svg?height=300&width=300",
-        category: "Men",
-        inStock: true,
-        rating: 4.5,
-        reviews: 128,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      },
-      {
-        name: "Designer Jeans",
-        description: "High-quality denim jeans with modern fit",
-        price: 150,
-        image: "/placeholder.svg?height=300&width=300",
-        category: "Men",
-        inStock: true,
-        rating: 4.3,
-        reviews: 89,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      },
-      {
-        name: "Elegant Midi Dress",
-        description: "Beautiful midi dress for special occasions",
-        price: 150,
-        image: "/placeholder.svg?height=300&width=300",
-        category: "Women",
-        inStock: true,
-        rating: 4.7,
-        reviews: 156,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      },
-      // Add more sample products...
-    ]
+    const sampleProducts: Omit<Product, "id">[] = products.map((product) => ({
+      ...product,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }))
 
     const batch = writeBatch(db)
     sampleProducts.forEach((product) => {

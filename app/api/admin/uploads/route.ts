@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
         const formData = await request.formData()
         const files = formData.getAll("files") as File[]
-        const folder = (formData.get("folder") as string) || "shopease/products"
+        const folder = (formData.get("folder") as string) || "products"
 
         if (files.length === 0) {
             return NextResponse.json({ error: "No files provided" }, { status: 400 })

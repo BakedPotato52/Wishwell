@@ -2,6 +2,7 @@ import { v2 as cloudinary } from "cloudinary"
 
 cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    upload_preset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
@@ -15,7 +16,7 @@ export interface CloudinaryUploadResult {
     resource_type: string
 }
 
-export const uploadToCloudinary = async (file: File, folder = "shopease"): Promise<CloudinaryUploadResult> => {
+export const uploadToCloudinary = async (file: File, folder = "products"): Promise<CloudinaryUploadResult> => {
     try {
         const arrayBuffer = await file.arrayBuffer()
         const buffer = Buffer.from(arrayBuffer)
@@ -48,7 +49,7 @@ export const uploadToCloudinary = async (file: File, folder = "shopease"): Promi
 
 export const uploadMultipleToCloudinary = async (
     files: File[],
-    folder = "shopease",
+    folder = "products",
 ): Promise<CloudinaryUploadResult[]> => {
     try {
         const uploadPromises = files.map((file) => uploadToCloudinary(file, folder))

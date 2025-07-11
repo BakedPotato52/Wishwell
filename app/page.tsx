@@ -187,7 +187,10 @@ export default function HomePage() {
       <CategoryGrid />
 
       {/* Featured Products */}
-      <ProductGrid products={products.slice(0, 8)} title="Featured Products" />
+      <ProductGrid
+        products={products.filter((p) => p.category === "groceries")}
+        title="Daily essentials"
+      />
     </motion.div>
   )
 }

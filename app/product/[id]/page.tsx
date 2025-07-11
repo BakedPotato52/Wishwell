@@ -121,19 +121,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </CardContent>
           </Card>
 
-          {/* Product Features */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="font-semibold mb-3">Product Features</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• High-quality materials</li>
-                <li>• Comfortable fit</li>
-                <li>• Easy care instructions</li>
-                <li>• Available in multiple sizes</li>
-                <li>• 30-day return policy</li>
-              </ul>
-            </CardContent>
-          </Card>
+
         </motion.div>
       </div>
     </motion.div>
