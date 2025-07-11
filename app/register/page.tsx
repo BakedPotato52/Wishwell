@@ -50,19 +50,13 @@ export default function RegisterPage() {
     return () => { active = false }
   }, [])
 
-  if (!searchParams) {
-    return (
-      <div className="container mx-auto px-4 py-8 max-w-md flex items-center justify-center h-screen">
-        <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-      </div>
-    )
-  }
+
 
   // Get redirect parameters from URL
-  const returnUrl = searchParams.get("returnUrl") || "/"
-  const action = searchParams.get("action")
-  const productId = searchParams.get("productId")
-  const productName = searchParams.get("productName")
+  const returnUrl = searchParams?.get("returnUrl") || "/"
+  const action = searchParams?.get("action")
+  const productId = searchParams?.get("productId")
+  const productName = searchParams?.get("productName")
 
   useEffect(() => {
     // Redirect if already logged in
@@ -164,11 +158,11 @@ export default function RegisterPage() {
     if (action === "addToCart" && productName) {
       return {
         title: "Create account to continue",
-        message: `Join ShopEase to add "${productName}" to your cart and start shopping!`,
+        message: `Join WishWell to add "${productName}" to your cart and start shopping!`,
       }
     }
     return {
-      title: "Join ShopEase Today",
+      title: "Join WishWell Today",
       message: "Create your account to start shopping and enjoy exclusive benefits.",
     }
   }
@@ -186,7 +180,7 @@ export default function RegisterPage() {
           <CardContent className="pt-6">
             <div className="text-center">
               <CheckCircle className="mx-auto h-16 w-16 text-green-600 mb-4" />
-              <h2 className="text-2xl font-bold text-green-600 mb-2">Welcome to ShopEase!</h2>
+              <h2 className="text-2xl font-bold text-green-600 mb-2">Welcome to WishWell!</h2>
               <p className="text-gray-600 mb-4">
                 Your account has been created successfully. A verification email has been sent to your email address.
               </p>
