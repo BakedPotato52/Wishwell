@@ -4,13 +4,14 @@ import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Upload, X, Loader2 } from "lucide-react"
+import { Upload, X, Loader2, AlertCircle } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useDropzone } from "react-dropzone"
 import Image from "next/image"
 import type { Product } from "@/lib/types"
@@ -20,6 +21,7 @@ const productSchema = z.object({
     description: z.string().min(1, "Description is required"),
     price: z.number().min(0, "Price must be positive"),
     category: z.string().min(1, "Category is required"),
+    subcategory: z.string().optional(),
     inStock: z.boolean(),
     rating: z.number().min(0).max(5),
     reviews: z.number().min(0),
@@ -38,6 +40,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
     const [uploading, setUploading] = useState(false)
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [imagePreview, setImagePreview] = useState<string>("")
+    const [uploadError, setUploadError] = useState<string | null>(null)
 
     const {
         register,
@@ -53,6 +56,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
             description: "",
             price: 0,
             category: "",
+            subcategory: "",
             inStock: true,
             rating: 4.5,
             reviews: 0,
@@ -68,6 +72,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                 description: product.description,
                 price: product.price,
                 category: product.category,
+                subcategory: product.subcategory || "",
                 inStock: product.inStock,
                 rating: product.rating,
                 reviews: product.reviews,
@@ -79,6 +84,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                 description: "",
                 price: 0,
                 category: "",
+                subcategory: "",
                 inStock: true,
                 rating: 4.5,
                 reviews: 0,
@@ -86,11 +92,26 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
             setImagePreview("")
         }
         setImageFile(null)
+        setUploadError(null)
     }, [product, reset])
 
     const onDrop = (acceptedFiles: File[]) => {
         const file = acceptedFiles[0]
         if (file) {
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                setUploadError("File size must be less than 10MB")
+                return
+            }
+
+            // Validate file type
+            const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+            if (!allowedTypes.includes(file.type)) {
+                setUploadError("Only JPEG, PNG, and WebP images are allowed")
+                return
+            }
+
+            setUploadError(null)
             setImageFile(file)
             const reader = new FileReader()
             reader.onload = () => setImagePreview(reader.result as string)
@@ -111,36 +132,53 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
             return product?.image || ""
         }
 
-        const formData = new FormData()
-        formData.append("files", imageFile)
-        formData.append("folder", "products")
+        try {
+            const formData = new FormData()
+            formData.append("files", imageFile)
+            formData.append("folder", "shopease/products")
 
-        const response = await fetch("/api/admin/upload", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_ADMIN_SECRET_TOKEN}`,
-            },
-            body: formData,
-        })
+            const response = await fetch("/api/admin/upload", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ADMIN_SECRET_TOKEN}`,
+                },
+                body: formData,
+            })
 
-        if (!response.ok) {
-            throw new Error("Failed to upload image")
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.error || "Failed to upload image")
+            }
+
+            const data = await response.json()
+            return data.result.secure_url
+        } catch (error) {
+            console.error("Image upload error:", error)
+            throw new Error(error instanceof Error ? error.message : "Failed to upload image")
         }
-
-        const data = await response.json()
-        return data.result.secure_url
     }
 
     const onSubmit = async (data: ProductFormData) => {
         try {
             setUploading(true)
+            setUploadError(null)
 
             // Upload image if new file selected
-            const imageUrl = await uploadImage()
+            let imageUrl = product?.image || ""
+
+            if (imageFile) {
+                try {
+                    imageUrl = await uploadImage()
+                } catch (error) {
+                    setUploadError(error instanceof Error ? error.message : "Failed to upload image")
+                    return
+                }
+            }
 
             const productData = {
                 ...data,
                 image: imageUrl,
+                subcategory: data.subcategory || data.category, // Fallback to category if subcategory is empty
             }
 
             const url = product ? `/api/admin/products/${product.id}` : "/api/admin/products"
@@ -155,25 +193,40 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                 body: JSON.stringify(productData),
             })
 
-            if (response.ok) {
-                onSave()
-            } else {
-                throw new Error("Failed to save product")
+            if (!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.error || "Failed to save product")
             }
+
+            onSave()
         } catch (error) {
             console.error("Error saving product:", error)
-            alert("Failed to save product. Please try again.")
+            setUploadError(error instanceof Error ? error.message : "Failed to save product")
         } finally {
             setUploading(false)
         }
     }
 
+    const handleClose = () => {
+        if (!uploading) {
+            setUploadError(null)
+            onClose()
+        }
+    }
+
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+        <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{product ? "Edit Product" : "Add New Product"}</DialogTitle>
                 </DialogHeader>
+
+                {uploadError && (
+                    <Alert className="border-red-200 bg-red-50">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription className="text-red-800">{uploadError}</AlertDescription>
+                    </Alert>
+                )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     {/* Image Upload */}
@@ -213,6 +266,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                                     <p className="mt-2 text-sm text-gray-600">
                                         {isDragActive ? "Drop the image here" : "Drag & drop an image, or click to select"}
                                     </p>
+                                    <p className="text-xs text-gray-500 mt-1">JPEG, PNG, WebP up to 10MB</p>
                                 </div>
                             )}
                         </div>
@@ -245,6 +299,16 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                                 <option value="Snacks & Drinks">Snacks & Drinks</option>
                             </select>
                             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
+                        </div>
+
+                        <div>
+                            <Label htmlFor="subcategory">Subcategory (Optional)</Label>
+                            <Input
+                                id="subcategory"
+                                {...register("subcategory")}
+                                className="mt-1"
+                                placeholder="e.g., T-Shirts, Jeans"
+                            />
                         </div>
 
                         <div>
@@ -284,11 +348,11 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                             />
                             {errors.reviews && <p className="text-red-500 text-sm mt-1">{errors.reviews.message}</p>}
                         </div>
+                    </div>
 
-                        <div className="flex items-center space-x-2">
-                            <Switch id="inStock" checked={inStock} onCheckedChange={(checked) => setValue("inStock", checked)} />
-                            <Label htmlFor="inStock">In Stock</Label>
-                        </div>
+                    <div className="flex items-center space-x-2">
+                        <Switch id="inStock" checked={inStock} onCheckedChange={(checked) => setValue("inStock", checked)} />
+                        <Label htmlFor="inStock">In Stock</Label>
                     </div>
 
                     <div>
@@ -305,7 +369,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
 
                     {/* Actions */}
                     <div className="flex justify-end space-x-2">
-                        <Button type="button" variant="outline" onClick={onClose} disabled={uploading}>
+                        <Button type="button" variant="outline" onClick={handleClose} disabled={uploading}>
                             Cancel
                         </Button>
                         <Button type="submit" disabled={uploading}>
