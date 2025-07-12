@@ -1,68 +1,153 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { adminGetProducts, adminCreateProduct, adminBulkCreateProducts } from "@/lib/firebase/admin"
+import { collection, addDoc, getDocs, query, orderBy, where, limit, serverTimestamp } from "firebase/firestore"
+import { db } from "@/lib/firebase/config"
+import type { Product } from "@/lib/types"
 
-// Middleware to check admin access
-async function checkAdminAccess(request: NextRequest) {
-    try {
-        const authHeader = request.headers.get("authorization")
-        if (!authHeader?.startsWith("Bearer ")) {
-            return false
-        }
+// Admin authentication middleware
+function verifyAdminToken(request: NextRequest): boolean {
+    const authHeader = request.headers.get("authorization")
+    const adminToken = request.headers.get("x-admin-token")
 
-        const token = authHeader.split("Bearer ")[1]
-        // In a real app, verify the token and check admin role
-        // For now, we'll use a simple check
-        return token === process.env.ADMIN_SECRET_TOKEN
-    } catch (error) {
+    const expectedToken = process.env.NEXT_PUBLIC_ADMIN_SECRET_TOKEN
+
+    if (!expectedToken) {
+        console.error("ADMIN_SECRET_TOKEN not configured")
         return false
     }
+
+    // Check Authorization header
+    if (authHeader?.startsWith("Bearer ")) {
+        const token = authHeader.split("Bearer ")[1]
+        return token === expectedToken
+    }
+
+    // Check x-admin-token header
+    if (adminToken === expectedToken) {
+        return true
+    }
+
+    console.log("Token verification failed:", { authHeader, adminToken, expectedToken })
+    return false
 }
 
 export async function GET(request: NextRequest) {
     try {
-        const isAdmin = await checkAdminAccess(request)
-        if (!isAdmin) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+        const { searchParams } = new URL(request.url)
+        const category = searchParams.get("category")
+        const pageSize = Number.parseInt(searchParams.get("limit") || "20")
+
+        let q = query(collection(db, "products"), orderBy("createdAt", "desc"))
+
+        if (category) {
+            q = query(q, where("category", "==", category))
         }
 
-        const { searchParams } = new URL(request.url)
-        const pageSize = Number.parseInt(searchParams.get("pageSize") || "20")
-        const category = searchParams.get("category") || undefined
-        const inStock = searchParams.get("inStock") ? searchParams.get("inStock") === "true" : undefined
-        const searchTerm = searchParams.get("search") || undefined
+        q = query(q, limit(pageSize))
 
-        const result = await adminGetProducts(pageSize, null, {
-            category,
-            inStock,
-            searchTerm,
+        const snapshot = await getDocs(q)
+        const products = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        })) as Product[]
+
+        return NextResponse.json({
+            success: true,
+            products,
+            total: products.length,
         })
-
-        return NextResponse.json(result)
     } catch (error) {
-        console.error("Error in GET /api/admin/products:", error)
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+        console.error("Error fetching products:", error)
+        return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 })
     }
 }
 
 export async function POST(request: NextRequest) {
     try {
+        console.log("POST /api/admin/products - Starting request")
+
+        // Verify admin authentication
+        if (!verifyAdminToken(request)) {
+            console.log("Admin token verification failed")
+            return NextResponse.json({ error: "Unauthorized: Invalid admin token" }, { status: 401 })
+        }
+
+        console.log("Admin token verified successfully")
 
         const body = await request.json()
+        console.log("Request body received:", body)
 
-        if (Array.isArray(body.products)) {
-            // Bulk create
-            const productIds = await adminBulkCreateProducts(body.products)
-            return NextResponse.json({ success: true, productIds })
-        } else {
-            // Single create
-            const productId = await adminCreateProduct(body)
-            return NextResponse.json({ success: true, productId })
+        // Validate required fields
+        const requiredFields = ["name", "description", "price", "category"]
+        for (const field of requiredFields) {
+            if (!body[field]) {
+                console.log(`Missing required field: ${field}`)
+                return NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 })
+            }
         }
+
+        // Validate price
+        if (typeof body.price !== "number" || body.price <= 0) {
+            console.log("Invalid price:", body.price)
+            return NextResponse.json({ error: "Price must be a positive number" }, { status: 400 })
+        }
+
+        // Prepare product data
+        const productData = {
+            name: body.name,
+            description: body.description,
+            price: body.price,
+            category: body.category,
+            subcategory: body.subcategory || body.category,
+            image: body.image || "/placeholder.svg?height=300&width=300",
+            images: body.images || [body.image || "/placeholder.svg?height=300&width=300"],
+            inStock: body.inStock !== false, // Default to true
+            rating: body.rating || 0,
+            reviews: body.reviews || 0,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        }
+
+        console.log("Prepared product data:", productData)
+        console.log("Attempting to add to Firestore...")
+
+        // Add to Firestore
+        const docRef = await addDoc(collection(db, "products"), productData)
+        console.log("Product created successfully with ID:", docRef.id)
+
+        return NextResponse.json({
+            success: true,
+            productId: docRef.id,
+            message: "Product created successfully",
+        })
     } catch (error) {
         console.error("Error in POST /api/admin/products:", error)
-        if (error instanceof Error) {
-            return NextResponse.json({ error: error.message }, { status: 400 })
+
+        // Check if it's a Firebase error
+        if (error && typeof error === "object" && "code" in error) {
+            const firebaseError = error as any
+            console.error("Firebase error details:", {
+                code: firebaseError.code,
+                message: firebaseError.message,
+                details: firebaseError,
+            })
+
+            if (firebaseError.code === "permission-denied") {
+                return NextResponse.json(
+                    {
+                        error: "Permission denied: Check Firebase security rules",
+                        details: "The current user does not have permission to write to the products collection",
+                    },
+                    { status: 403 },
+                )
+            }
         }
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+
+        return NextResponse.json(
+            {
+                error: "Internal server error",
+                details: error instanceof Error ? error.message : "Unknown error",
+            },
+            { status: 500 },
+        )
     }
 }
