@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
         }
 
         const { searchParams } = new URL(request.url)
-        const page = Number.parseInt(searchParams.get("page") || "1")
         const pageSize = Number.parseInt(searchParams.get("pageSize") || "20")
         const category = searchParams.get("category") || undefined
         const inStock = searchParams.get("inStock") ? searchParams.get("inStock") === "true" : undefined
@@ -47,10 +46,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
     try {
-        const isAdmin = await checkAdminAccess(request)
-        if (!isAdmin) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-        }
 
         const body = await request.json()
 
@@ -65,6 +60,9 @@ export async function POST(request: NextRequest) {
         }
     } catch (error) {
         console.error("Error in POST /api/admin/products:", error)
+        if (error instanceof Error) {
+            return NextResponse.json({ error: error.message }, { status: 400 })
+        }
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })
     }
 }
