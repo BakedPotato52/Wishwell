@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { collection, addDoc, getDocs, query, orderBy, where, limit, serverTimestamp } from "firebase/firestore"
 import { db } from "@/lib/firebase/config"
 import type { Product } from "@/lib/types"
+import { sub } from "date-fns"
 
 // Admin authentication middleware
 export function verifyAdminToken(request: NextRequest): boolean {
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest) {
         const category = searchParams.get("category")
         const pageSize = Number.parseInt(searchParams.get("limit") || "20")
 
-        let q = query(collection(db, "products"), orderBy("createdAt", "desc"))
+        let q = query(collection(db, "categories"), orderBy("createdAt", "desc"))
 
         if (category) {
             q = query(q, where("category", "==", category))
@@ -45,19 +46,19 @@ export async function GET(request: NextRequest) {
         q = query(q, limit(pageSize))
 
         const snapshot = await getDocs(q)
-        const products = snapshot.docs.map((doc) => ({
+        const categories = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         })) as Product[]
 
         return NextResponse.json({
             success: true,
-            products,
-            total: products.length,
+            categories,
+            total: categories.length,
         })
     } catch (error) {
-        console.error("Error fetching products:", error)
-        return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 })
+        console.error("Error fetching categories:", error)
+        return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 })
     }
 }
 
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest) {
         console.log("Request body received:", body)
 
         // Validate required fields
-        const requiredFields = ["name", "description", "price", "category", "subcategory"]
+        const requiredFields = ["name", "image", "subcategory"]
         for (const field of requiredFields) {
             if (!body[field]) {
                 console.log(`Missing required field: ${field}`)
@@ -89,27 +90,18 @@ export async function POST(request: NextRequest) {
         }
 
         // Prepare product data
-        const productData = {
+        const categoriesData = {
             name: body.name,
-            description: body.description,
-            price: body.price,
-            category: body.category,
-            subcategory: body.subcategory,
-            subsubcategory: body.subsubcategory,
-            image: body.image || "/placeholder.svg?height=300&width=300",
-            images: body.images || [body.image || "/placeholder.svg?height=300&width=300"],
-            inStock: body.inStock !== false, // Default to true
-            rating: body.rating || 0,
-            reviews: body.reviews || 0,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
+            image: body.image || "/default-category-image.svg",
+            subcategories: body.subcategories || [],
+            subsubcategories: body.subsubcategories || {},
         }
 
-        console.log("Prepared product data:", productData)
+        console.log("Prepared product data:", categoriesData)
         console.log("Attempting to add to Firestore...")
 
         // Add to Firestore
-        const docRef = await addDoc(collection(db, "products"), productData)
+        const docRef = await addDoc(collection(db, "categories"), categoriesData)
         console.log("Product created successfully with ID:", docRef.id)
 
         return NextResponse.json({
@@ -118,7 +110,7 @@ export async function POST(request: NextRequest) {
             message: "Product created successfully",
         })
     } catch (error) {
-        console.error("Error in POST /api/admin/products:", error)
+        console.error("Error in POST /api/admin/categories:", error)
 
         // Check if it's a Firebase error
         if (error && typeof error === "object" && "code" in error) {
@@ -133,7 +125,7 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json(
                     {
                         error: "Permission denied: Check Firebase security rules",
-                        details: "The current user does not have permission to write to the products collection",
+                        details: "The current user does not have permission to write to the categories collection",
                     },
                     { status: 403 },
                 )

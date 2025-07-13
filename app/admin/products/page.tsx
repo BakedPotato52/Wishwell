@@ -13,6 +13,7 @@ import { BulkUploadModal } from "@/components/admin/bulk-upload-modal"
 import type { Product } from "@/lib/types"
 import Image from "next/image"
 import { initializeProducts } from "@/lib/firebase/admin"
+import { categories } from "@/lib/categoryData"
 
 export default function AdminProducts() {
     const [products, setProducts] = useState<Product[]>([])
@@ -145,11 +146,11 @@ export default function AdminProducts() {
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
-                                    <option value="">All Categories</option>
-                                    <option value="Men">Men</option>
-                                    <option value="Women">Women</option>
-                                    <option value="Kids">Kids</option>
-                                    <option value="Snakes & Drinks">Snakes & Drinks</option>
+                                    {categories.map((category) => (
+                                        <option key={category.id} value={category.name}>
+                                            {category.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>

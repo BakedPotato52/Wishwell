@@ -15,6 +15,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useDropzone } from "react-dropzone"
 import Image from "next/image"
 import type { Product } from "@/lib/types"
+import { categories } from "@/lib/categoryData"
 
 const productSchema = z.object({
     name: z.string().min(1, "Product name is required"),
@@ -286,29 +287,39 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
                                 id="category"
                                 {...register("category")}
                                 className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onChange={(e) => {
+                                    setValue("category", e.target.value)
+                                    setValue("subcategory", "") // Reset subcategory when category changes
+                                }}
                             >
                                 <option value="">Select Category</option>
-                                <option value="Men">Men</option>
-                                <option value="Women">Women</option>
-                                <option value="Kids">Kids</option>
-                                <option value="Beauty & Personal care">Beauty & Personal care</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Footwear">Footwear</option>
-                                <option value="Grocery & Kitchen">Grocery & Kitchen</option>
-                                <option value="Household Essentials">Household Essentials</option>
-                                <option value="Snacks & Drinks">Snacks & Drinks</option>
+                                {categories.map((category) => (
+                                    <option key={category.id} value={category.name}>
+                                        {category.name}
+                                    </option>
+                                ))}
                             </select>
                             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
                         </div>
 
                         <div>
-                            <Label htmlFor="subcategory">Subcategory (Optional)</Label>
-                            <Input
+                            <Label htmlFor="subcategory">Subcategory</Label>
+                            <select
                                 id="subcategory"
                                 {...register("subcategory")}
-                                className="mt-1"
-                                placeholder="e.g., T-Shirts, Jeans"
-                            />
+                                className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                disabled={!watch("category")}
+                            >
+                                <option value="">Select Subcategory</option>
+                                {watch("category") &&
+                                    categories
+                                        .find((cat) => cat.name === watch("category"))
+                                        ?.subcategories?.map((subcategory) => (
+                                            <option key={subcategory} value={subcategory}>
+                                                {subcategory}
+                                            </option>
+                                        ))}
+                            </select>
                         </div>
 
                         <div>
