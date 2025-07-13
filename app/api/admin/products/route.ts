@@ -4,7 +4,7 @@ import { db } from "@/lib/firebase/config"
 import type { Product } from "@/lib/types"
 
 // Admin authentication middleware
-function verifyAdminToken(request: NextRequest): boolean {
+export function verifyAdminToken(request: NextRequest): boolean {
     const authHeader = request.headers.get("authorization")
     const adminToken = request.headers.get("x-admin-token")
 
@@ -63,15 +63,12 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
     try {
-        console.log("POST /api/admin/products - Starting request")
 
         // Verify admin authentication
         if (!verifyAdminToken(request)) {
             console.log("Admin token verification failed")
             return NextResponse.json({ error: "Unauthorized: Invalid admin token" }, { status: 401 })
         }
-
-        console.log("Admin token verified successfully")
 
         const body = await request.json()
         console.log("Request body received:", body)

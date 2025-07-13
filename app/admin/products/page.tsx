@@ -12,6 +12,7 @@ import { ProductUploadModal } from "@/components/admin/product-upload-modal"
 import { BulkUploadModal } from "@/components/admin/bulk-upload-modal"
 import type { Product } from "@/lib/types"
 import Image from "next/image"
+import { initializeProducts } from "@/lib/firebase/admin"
 
 export default function AdminProducts() {
     const [products, setProducts] = useState<Product[]>([])
@@ -49,6 +50,17 @@ export default function AdminProducts() {
     useEffect(() => {
         fetchProducts()
     }, [searchTerm, selectedCategory])
+
+    const handleInitializeProducts = async () => {
+        try {
+            await initializeProducts()
+            setProducts([]) // Clear current products
+            setLoading(true) // Set loading state to true
+            fetchProducts() // Refresh product list after initialization
+        } catch (error) {
+            console.error("Error initializing products:", error)
+        }
+    }
 
     const handleDeleteProduct = async (productId: string) => {
         if (!confirm("Are you sure you want to delete this product?")) return
@@ -89,7 +101,7 @@ export default function AdminProducts() {
             </AdminLayout>
         )
     }
-
+    const action = "initialize"
     return (
         <AdminLayout>
             <div className="space-y-6">
@@ -146,6 +158,7 @@ export default function AdminProducts() {
 
                 {/* Products Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <Button onClick={() => handleInitializeProducts()}>Initialize</Button>
                     {products.map((product, index) => (
                         <motion.div
                             key={product.id}

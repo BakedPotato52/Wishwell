@@ -15,15 +15,16 @@ async function checkAdminAccess(request: NextRequest) {
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const isAdmin = await checkAdminAccess(request)
         if (!isAdmin) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
 
+        const { id } = await params
         const body = await request.json()
-        await adminUpdateProduct(params.id, body)
+        await adminUpdateProduct(id, body)
 
         return NextResponse.json({ success: true })
     } catch (error) {
@@ -31,15 +32,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })
     }
 }
-
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
         const isAdmin = await checkAdminAccess(request)
         if (!isAdmin) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
 
-        await adminDeleteProduct(params.id)
+        const { id } = await params
+        await adminDeleteProduct(id)
 
         return NextResponse.json({ success: true })
     } catch (error) {
@@ -47,3 +48,4 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })
     }
 }
+
