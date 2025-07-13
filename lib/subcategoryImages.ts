@@ -109,4 +109,16 @@ export const subcategoryImages: Record<string, string> = {
     "Frozen Food": "/categories/subcategory/frozen.png",
     Sweets: "/categories/subcategory/sweets.png",
     "Paan Corner": "/categories/subcategory/paan.png",
+
+    //Gifts subcategories
+    "Birthday Gifts": "/categories/subcategory/birthday-gifts.png",
+    "Anniversary Gifts": "/categories/subcategory/anniversary-gifts.png",
+    "Wedding Gifts": "/categories/subcategory/wedding-gifts.png",
+    "Cake Delivery": "/categories/subcategory/cake-delivery.png",
+    "Flower Delivery": "/categories/subcategory/flower-delivery.png",
+    "Personalized Gifts": "/categories/subcategory/personalized-gifts.png",
+    "Chocolate Gifts": "/categories/subcategory/chocolate-gifts.png",
+    "Toy Gifts": "/categories/subcategory/toy-gifts.png",
+    "Home Decor Gifts": "/categories/subcategory/home-decor-gifts.png",
+    "Festive Gifts": "/categories/subcategory/festive-gifts.png",
 }

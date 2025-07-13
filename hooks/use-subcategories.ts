@@ -1,19 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { collection, getDocs, query, orderBy, onSnapshot } from "firebase/firestore"
+import { collection, getDocs, query, orderBy, onSnapshot, where, limit as firestoreLimit } from "firebase/firestore"
 import { db } from "@/lib/firebase/config"
 
 export interface Subcategory {
     id: string
     name: string
-    image: string
-    icon?: string
+    slug: string
     categoryId: string
     categoryName: string
+    image?: string
+    icon?: string
+    description?: string
     productCount?: number
     featured?: boolean
-    description?: string
+    createdAt?: any
+    updatedAt?: any
 }
 
 interface UseSubcategoriesOptions {
@@ -36,7 +39,24 @@ export function useSubcategories(options: UseSubcategoriesOptions = {}) {
                 setLoading(true)
                 setError(null)
 
-                const q = query(collection(db, "subcategories"), orderBy("name"))
+                let q = query(collection(db, "subcategories"))
+
+                // Add filters
+                if (categoryId) {
+                    q = query(q, where("categoryId", "==", categoryId))
+                }
+
+                if (featured) {
+                    q = query(q, where("featured", "==", true))
+                }
+
+                // Add ordering - using name instead of createdAt to avoid index issues
+                q = query(q, orderBy("name", "asc"))
+
+                // Add limit
+                if (limit) {
+                    q = query(q, firestoreLimit(limit))
+                }
 
                 if (realtime) {
                     const unsubscribe = onSnapshot(
@@ -47,21 +67,7 @@ export function useSubcategories(options: UseSubcategoriesOptions = {}) {
                                 ...doc.data(),
                             })) as Subcategory[]
 
-                            let filteredData = subcategoriesData
-
-                            if (categoryId) {
-                                filteredData = filteredData.filter((sub) => sub.categoryId === categoryId)
-                            }
-
-                            if (featured) {
-                                filteredData = filteredData.filter((sub) => sub.featured === true)
-                            }
-
-                            if (limit) {
-                                filteredData = filteredData.slice(0, limit)
-                            }
-
-                            setSubcategories(filteredData)
+                            setSubcategories(subcategoriesData)
                             setLoading(false)
                         },
                         (error) => {
@@ -79,26 +85,12 @@ export function useSubcategories(options: UseSubcategoriesOptions = {}) {
                         ...doc.data(),
                     })) as Subcategory[]
 
-                    let filteredData = subcategoriesData
-
-                    if (categoryId) {
-                        filteredData = filteredData.filter((sub) => sub.categoryId === categoryId)
-                    }
-
-                    if (featured) {
-                        filteredData = filteredData.filter((sub) => sub.featured === true)
-                    }
-
-                    if (limit) {
-                        filteredData = filteredData.slice(0, limit)
-                    }
-
-                    setSubcategories(filteredData)
-                    setLoading(false)
+                    setSubcategories(subcategoriesData)
                 }
             } catch (error) {
                 console.error("Error fetching subcategories:", error)
                 setError("Failed to load subcategories")
+            } finally {
                 setLoading(false)
             }
         }
@@ -109,8 +101,44 @@ export function useSubcategories(options: UseSubcategoriesOptions = {}) {
     const refetch = () => {
         setLoading(true)
         setError(null)
-        // Re-trigger the effect
     }
 
     return { subcategories, loading, error, refetch }
+}
+
+export function useSubcategory(subcategoryId: string) {
+    const [subcategory, setSubcategory] = useState<Subcategory | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+
+    useEffect(() => {
+        const fetchSubcategory = async () => {
+            try {
+                setLoading(true)
+                setError(null)
+
+                const q = query(collection(db, "subcategories"), where("id", "==", subcategoryId))
+                const snapshot = await getDocs(q)
+
+                if (!snapshot.empty) {
+                    const doc = snapshot.docs[0]
+                    setSubcategory({ id: doc.id, ...doc.data() } as Subcategory)
+                } else {
+                    setError("Subcategory not found")
+                }
+
+                setLoading(false)
+            } catch (error) {
+                console.error("Error fetching subcategory:", error)
+                setError("Failed to load subcategory")
+                setLoading(false)
+            }
+        }
+
+        if (subcategoryId) {
+            fetchSubcategory()
+        }
+    }, [subcategoryId])
+
+    return { subcategory, loading, error }
 }

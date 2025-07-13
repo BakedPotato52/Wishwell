@@ -124,4 +124,22 @@ export const categories: Category[] = [
             "Paan Corner"
         ],
     },
+    {
+        id: "10",
+        name: "Gifts",
+        image: "/categories/gifts.svg?height=60&width=60",
+        icon: "📱",
+        subcategories: [
+            "Birthday Gifts",
+            "Anniversary Gifts",
+            "Wedding Gifts",
+            "Cake Delivery",
+            "Flower Delivery",
+            "Personalized Gifts",
+            "Chocolate Gifts",
+            "Toy Gifts",
+            "Home Decor Gifts",
+            "Festive Gifts",
+        ],
+    }
 ]
