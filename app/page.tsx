@@ -12,6 +12,8 @@ import { CategoryGrid } from "@/components/category-grid"
 import { ProductGrid } from "@/components/product-grid"
 import { adImages } from "@/lib/data"
 import { useProducts } from "@/hooks/use-api-data"
+import { CategoryFilterBar } from "@/components/category-filter-bar"
+import { categories } from "@/lib/categoryData"
 
 
 function InstallPrompt() {
@@ -129,8 +131,8 @@ function InstallPrompt() {
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const category = categories.find((c) => c.name === "Grocery & Kitchen")
 
-  let products = useProducts()
 
   useEffect(() => {
     if (adImages.length <= 1) return
@@ -188,11 +190,29 @@ export default function HomePage() {
       {/* Categories - Desktop only, mobile has horizontal nav */}
       <CategoryGrid />
 
-      {/* Featured Products */}
-      <ProductGrid
-        products={products.products.slice(0, 10)}
-        title="Daily essentials"
-      />
+      {/* Grocery & Kitchen Subcategories */}
+      {category && (
+        <section className="container mx-auto px-4 py-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">{category.name}</h2>
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {category.subcategories?.map((subcategory) => (
+              <div key={subcategory} className="p-2 md:p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer">
+                <div className="flex flex-col items-center text-center">
+                  <Image
+                    src={category.image || "/placeholder.svg"}
+                    alt={subcategory}
+                    width={70}
+                    height={250}
+                    className="mb-2 md:mb-3 md:w-15 md:h-15 object-cover bg-sky-300 rounded"
+                  />
+                  <h3 className="text-xs md:text-sm font-semibold leading-tight line-clamp-2">{subcategory}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
 
     </motion.div>
   )

@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
             price: body.price,
             category: body.category,
             subcategory: body.subcategory,
-            subsubcategory: body.subsubcategory,
+            subsubcategories: body.subsubcategories || [""],
             image: body.image || "/placeholder.svg?height=300&width=300",
             images: body.images || [body.image || "/placeholder.svg?height=300&width=300"],
             inStock: body.inStock !== false, // Default to true
