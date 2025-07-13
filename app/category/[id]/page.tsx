@@ -9,11 +9,11 @@ import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
-import { useProducts } from "@/hooks/use-products"
+import { useProducts } from "@/hooks/use-api-data"
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
-  const products = useProducts(resolvedParams.id ? { category: resolvedParams.id } : {})
+  const products = useProducts()
 
   /* ------------------------- NEW local state -------------------------- */
   const [selectedSub, setSelectedSub] = useState<string | null>(null)
