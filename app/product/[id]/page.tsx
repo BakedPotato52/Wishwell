@@ -8,12 +8,13 @@ import { ArrowLeft, Star, Heart, Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { products } from "@/lib/productData"
 import { AddToCartButton } from "@/components/add-to-cart-button"
+import { useProducts } from "@/hooks/use-api-data"
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params)
   const [quantity, setQuantity] = useState(1)
+  const products = useProducts().products || []
 
   const product = products.find((p) => p.id === id)
 

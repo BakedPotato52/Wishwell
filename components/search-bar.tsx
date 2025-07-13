@@ -12,9 +12,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Link from "next/link"
-import { products } from "@/lib/productData"
 import { categories } from "@/lib/categoryData"
 import type { Product, Category } from "@/lib/types"
+import { useProducts } from "@/hooks/use-api-data"
 
 interface SearchResult {
     type: "product" | "category"
@@ -38,6 +38,8 @@ export function SearchBar({ onSearchSubmit, className = "" }: SearchBarProps) {
 
     const searchRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
+
+    const products = useProducts().products || []
 
     // Load recent searches from localStorage
     useEffect(() => {

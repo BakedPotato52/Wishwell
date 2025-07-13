@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button"
 import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
-import { products } from "@/lib/productData"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
+import { useProducts } from "@/hooks/use-api-data"
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
+  let products = useProducts()
 
   /* ------------------------- NEW local state -------------------------- */
   const [selectedSub, setSelectedSub] = useState<string | null>(null)
@@ -24,7 +25,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
 
   /* -------- filter products by category AND (optionally) sub‑category -------- */
   const baseProducts = useMemo(() => {
-    return products.filter(
+    return products.products.filter(
       (p) =>
         p.category.toLowerCase() === category?.name.toLowerCase() &&
         (selectedSub ? p.subcategory === selectedSub : true),
@@ -97,7 +98,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       <EnhancedProductGrid products={sortedProducts} view={view} loading={loading} />
 
       {/* (Optional) Load‑more button */}
-      {sortedProducts.length > 0 && (
+      {sortedProducts.length > 20 && (
         <div className="container mx-auto px-4 py-8 text-center">
           <Button variant="outline" size="lg">
             Load More Products

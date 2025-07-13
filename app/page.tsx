@@ -10,8 +10,8 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { ProductGrid } from "@/components/product-grid"
-import { products } from "@/lib/productData"
 import { adImages } from "@/lib/data"
+import { useProducts } from "@/hooks/use-api-data"
 
 
 function InstallPrompt() {
@@ -130,6 +130,8 @@ function InstallPrompt() {
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
+  let products = useProducts()
+
   useEffect(() => {
     if (adImages.length <= 1) return
     const interval = setInterval(() => {
@@ -188,13 +190,10 @@ export default function HomePage() {
 
       {/* Featured Products */}
       <ProductGrid
-        products={products.filter((p) => p.category === "Household Essentials") && products.slice(266, 276)}
+        products={products.products.slice(0, 10)}
         title="Daily essentials"
       />
-      <ProductGrid
-        products={products.filter((p) => p.category === "Grocery & Kitchen") && products.slice(226, 236)}
-        title="Grocery & Kitchen"
-      />
+
     </motion.div>
   )
 }

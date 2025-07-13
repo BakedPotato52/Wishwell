@@ -9,12 +9,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
-import { products } from "@/lib/productData"
 import type { Product } from "@/lib/types"
+import { useProducts } from "@/hooks/use-api-data"
 
 function SearchPageContent() {
     const searchParams = useSearchParams()
     const query = searchParams.get("q") || ""
+    const products = useProducts().products || []
 
     const [sortBy, setSortBy] = useState("relevance")
     const [filterBy, setFilterBy] = useState<"all" | "products" | "categories">("all")
