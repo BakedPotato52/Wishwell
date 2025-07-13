@@ -128,7 +128,7 @@ export function BulkUploadModal({ isOpen, onClose, onComplete }: BulkUploadModal
         imageFiles.forEach((file) => {
             formData.append("files", file)
         })
-        formData.append("folder", "shopease/products")
+        formData.append("folder", "WishWell/products")
 
         const response = await fetch("/api/admin/upload", {
             method: "POST",

@@ -135,7 +135,7 @@ export function ProductUploadModal({ isOpen, onClose, onSave, product }: Product
         try {
             const formData = new FormData()
             formData.append("files", imageFile)
-            formData.append("folder", "shopease/products")
+            formData.append("folder", "WishWell/products")
 
             const response = await fetch("/api/admin/upload", {
                 method: "POST",

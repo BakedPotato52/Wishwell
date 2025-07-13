@@ -123,7 +123,7 @@ function LoginFormWithSearchParams() {
       }
     }
     return {
-      title: "Welcome back to ShopEase",
+      title: "Welcome back to WishWell",
       message: "Sign in to access your account and continue shopping.",
     }
   }
