@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
 import { Download, Smartphone } from "lucide-react"
@@ -9,12 +10,8 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
-import { ProductGrid } from "@/components/product-grid"
 import { adImages } from "@/lib/data"
-import { useProducts } from "@/hooks/use-api-data"
-import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { categories } from "@/lib/categoryData"
-
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -50,7 +47,6 @@ function InstallPrompt() {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
       window.removeEventListener("appinstalled", handleAppInstalled)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasReloaded])
 
   const handleInstallClick = async () => {
@@ -68,13 +64,11 @@ function InstallPrompt() {
     try {
       deferredPrompt.prompt()
       const { outcome } = await deferredPrompt.userChoice
-
       if (outcome === "accepted") {
         toast.success("App will be installed!")
       } else {
         toast.info("Installation cancelled")
       }
-
       setDeferredPrompt(null)
       setIsInstallable(false)
     } catch (error) {
@@ -84,12 +78,11 @@ function InstallPrompt() {
   }
 
   if (isStandalone) {
-    return null // Don't show install button if already installed
+    return null
   }
 
   return (
     <div>
-      {/* Modal for install prompt */}
       <Dialog open={isInstallable} onOpenChange={setIsInstallable}>
         <DialogTitle asChild>
           <span className="sr-only">Install App</span>
@@ -101,14 +94,10 @@ function InstallPrompt() {
           </div>
           <div className="space-y-3"></div>
           <p className="text-sm text-muted-foreground">
-            Install our app for a better experience. You can access it directly from your home screen, just like a native app.
+            Install our app for a better experience. You can access it directly from your home screen, just like a
+            native app.
           </p>
-          <Button
-            onClick={handleInstallClick}
-            size="sm"
-            className="w-full"
-            variant="default"
-          >
+          <Button onClick={handleInstallClick} size="sm" className="w-full" variant="default">
             <Download className="w-4 h-4 mr-2" />
             {isIOS && !deferredPrompt ? "Add to Home Screen" : "Install App"}
           </Button>
@@ -125,14 +114,13 @@ function InstallPrompt() {
           )}
         </DialogContent>
       </Dialog>
-    </div >
+    </div>
   )
 }
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const category = categories.find((c) => c.name === "Grocery & Kitchen")
-
 
   useEffect(() => {
     if (adImages.length <= 1) return
@@ -141,6 +129,14 @@ export default function HomePage() {
     }, 5000)
     return () => clearInterval(interval)
   }, [adImages.length])
+
+  // Create slug from subcategory name
+  const createSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
+  }
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
@@ -194,26 +190,37 @@ export default function HomePage() {
       {category && (
         <section className="container mx-auto px-4 py-6">
           <h2 className="text-xl md:text-2xl font-bold mb-4">{category.name}</h2>
-          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {category.subcategories?.map((subcategory) => (
-              <div key={subcategory} className="p-2 md:p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="flex flex-col items-center text-center">
-                  <Image
-                    src={category.image || "/placeholder.svg"}
-                    alt={subcategory}
-                    width={70}
-                    height={250}
-                    className="mb-2 md:mb-3 md:w-15 md:h-15 object-cover bg-sky-300 rounded"
-                  />
-                  <h3 className="text-xs md:text-sm font-semibold leading-tight line-clamp-2">{subcategory}</h3>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
+            {category.subcategories?.map((subcategory) => {
+              const slug = createSlug(subcategory)
+              return (
+                <Link key={subcategory} href={`/subcategory/${slug}`}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="p-2 md:p-4 bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 cursor-pointer group"
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
+                        <Image
+                          src={category.image || "/placeholder.svg"}
+                          alt={subcategory}
+                          width={70}
+                          height={70}
+                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-sky-300 rounded-lg group-hover:scale-110 transition-transform duration-200"
+                        />
+                      </div>
+                      <h3 className="text-xs md:text-sm font-semibold leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        {subcategory}
+                      </h3>
+                    </div>
+                  </motion.div>
+                </Link>
+              )
+            })}
           </div>
         </section>
       )}
-
-
     </motion.div>
   )
 }

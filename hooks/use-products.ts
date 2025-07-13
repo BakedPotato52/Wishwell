@@ -17,10 +17,16 @@ import { db } from "@/lib/firebase/config"
 import type { Product } from "@/lib/types"
 
 interface UseProductsOptions {
+    categoryId?: string
     category?: string
+    subcategoryId?: string
     subcategory?: string
+    featured?: boolean
     limit?: number
     realtime?: boolean
+    searchQuery?: string
+    sortBy?: "name" | "price" | "createdAt"
+    sortOrder?: "asc" | "desc"
 }
 
 interface UseProductsReturn {

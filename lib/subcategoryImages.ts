@@ -4,17 +4,17 @@ export const subcategoryImages: Record<string, string> = {
     default: "/placeholder.svg?height=48&width=48",
 
     // All categories
-    All: "/categories/subcategory/all.png",
+    All: "/categories/subcategory/shirts.png",
 
     // Men's subcategories
     Shirts: "/categories/subcategory/shirts.png",
-    Topwear: "/categories/subcategory/men-topwear.png",
-    Bottomwear: "/categories/subcategory/men-bottomwear.png",
-    Innerwear: "/categories/subcategory/men-innerwear.png",
-    "Ethnic & Fusion Wear": "/categories/subcategory/men-ethnic.png",
-    "Graphic T-Shirts": "/categories/subcategory/men-graphic-tees.png",
-    Accessories: "/categories/subcategory/accessories.png",
-    Footwear: "/categories/subcategory/footwear.png",
+    Topwear: "/categories/subcategory/shirts.png",
+    Bottomwear: "/categories/subcategory/shirts.png",
+    Innerwear: "/categories/subcategory/shirts.png",
+    "Ethnic & Fusion Wear": "/categories/subcategory/shirts.png",
+    "Graphic T-Shirts": "/categories/subcategory/shirts.png",
+    Accessories: "/categories/subcategory/shirts.png",
+    Footwear: "/categories/subcategory/shirts.png",
 
     // Women's subcategories
     "Top-wear": "/categories/subcategory/women-topwear.png",
