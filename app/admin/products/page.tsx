@@ -92,7 +92,6 @@ export default function AdminProducts() {
             </AdminLayout>
         )
     }
-    const action = "initialize"
     return (
         <AdminLayout>
             <div className="space-y-6">
