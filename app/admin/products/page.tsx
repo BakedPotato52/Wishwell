@@ -52,6 +52,16 @@ export default function AdminProducts() {
         fetchProducts()
     }, [searchTerm, selectedCategory])
 
+    // const handleInitializeProducts = async () => {
+    //     try {
+    //         await initializeProducts()
+    //         setProducts([]) // Clear current products
+    //         setLoading(true) // Set loading state to true
+    //         fetchProducts() // Refresh product list after initialization
+    //     } catch (error) {
+    //         console.error("Error initializing products:", error)
+    //     }
+    // }
 
     const handleDeleteProduct = async (productId: string) => {
         if (!confirm("Are you sure you want to delete this product?")) return
@@ -111,6 +121,9 @@ export default function AdminProducts() {
                             <Plus className="h-4 w-4 mr-2" />
                             Add Product
                         </Button>
+                        {/* <Button onClick={handleInitializeProducts} variant="secondary">
+                            Initialize Products
+                        </Button> */}
                     </div>
                 </div>
 

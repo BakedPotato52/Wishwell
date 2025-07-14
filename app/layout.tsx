@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { MobileBottomNav } from "@/components/mobile-bottom-navigation"
+import { ProductProvider } from "@/hooks/use-product-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -37,13 +38,15 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <CartProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-1 bg-background">{children}</main>
-              <Footer />
-              <MobileBottomNav />
-              <Toaster position="top-center" richColors closeButton duration={4000} />
-            </div>
+            <ProductProvider>
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-1 bg-background">{children}</main>
+                <Footer />
+                <MobileBottomNav />
+                <Toaster position="top-center" richColors closeButton duration={4000} />
+              </div>
+            </ProductProvider>
           </CartProvider>
         </AuthProvider>
       </body>

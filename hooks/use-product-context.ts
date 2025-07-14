@@ -1,3 +1,4 @@
+"use client"
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product } from '@/lib/types';
 import { useProducts } from '@/hooks/use-api-data';

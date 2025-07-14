@@ -10,12 +10,12 @@ import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import type { Product } from "@/lib/types"
-import { useProducts } from "@/hooks/use-api-data"
+import { useProductContext } from "@/hooks/use-product-context"
 
 function SearchPageContent() {
     const searchParams = useSearchParams()
     const query = searchParams.get("q") || ""
-    const products = useProducts().products || []
+    const { products } = useProductContext()
 
     const [sortBy, setSortBy] = useState("relevance")
     const [filterBy, setFilterBy] = useState<"all" | "products" | "categories">("all")
@@ -27,52 +27,54 @@ function SearchPageContent() {
         if (!query.trim()) return []
 
         const lowerQuery = query.toLowerCase()
-        let results: Product[] = []
 
-        // Search products
-        products.forEach((product) => {
+        // Filter and map in a single pass for efficiency
+        let results: (Product & { relevance: number })[] = []
+        for (const product of products) {
             let relevance = 0
-            if (product.name.toLowerCase().includes(lowerQuery)) relevance += 3
-            if (product.description.toLowerCase().includes(lowerQuery)) relevance += 2
-            if (product.category.toLowerCase().includes(lowerQuery)) relevance += 1
+            const name = product.name.toLowerCase()
+            const description = product.description.toLowerCase()
+            const category = product.category.toLowerCase()
+
+            if (name.includes(lowerQuery)) relevance += 3
+            if (description.includes(lowerQuery)) relevance += 2
+            if (category.includes(lowerQuery)) relevance += 1
 
             if (relevance > 0) {
-                results.push({ ...product, relevance } as Product & { relevance: number })
-            }
-        })
-
-        // Apply price filter
-        if (priceRange !== "all") {
-            results = results.filter((product) => {
-                switch (priceRange) {
-                    case "under-500":
-                        return product.price < 500
-                    case "500-1000":
-                        return product.price >= 500 && product.price <= 1000
-                    case "over-1000":
-                        return product.price > 1000
-                    default:
-                        return true
+                // Apply price filter inline
+                const price = product.price
+                if (
+                    priceRange === "all" ||
+                    (priceRange === "under-500" && price < 500) ||
+                    (priceRange === "500-1000" && price >= 500 && price <= 1000) ||
+                    (priceRange === "over-1000" && price > 1000)
+                ) {
+                    results.push({ ...product, relevance })
                 }
-            })
+            }
         }
 
-        // Sort results
+        // Sort only once, after filtering
         switch (sortBy) {
             case "relevance":
-                return results.sort((a, b) => (b as any).relevance - (a as any).relevance)
+                results.sort((a, b) => b.relevance - a.relevance)
+                break
             case "price-low":
-                return results.sort((a, b) => a.price - b.price)
+                results.sort((a, b) => a.price - b.price)
+                break
             case "price-high":
-                return results.sort((a, b) => b.price - a.price)
+                results.sort((a, b) => b.price - a.price)
+                break
             case "rating":
-                return results.sort((a, b) => b.rating - a.rating)
+                results.sort((a, b) => b.rating - a.rating)
+                break
             case "newest":
-                return results.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
-            default:
-                return results
+                results.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
+                break
         }
-    }, [query, sortBy, priceRange])
+
+        return results
+    }, [query, sortBy, priceRange, products])
 
     const handleSortChange = (sort: string) => {
         setLoading(true)

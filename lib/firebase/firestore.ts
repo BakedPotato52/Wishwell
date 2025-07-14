@@ -16,7 +16,6 @@ import {
 } from "firebase/firestore"
 import { db } from "./config"
 import type { Product, CartItem, Order } from "@/lib/types"
-import { products } from "../productData"
 
 // Products Collection
 export const getProducts = async (): Promise<Product[]> => {
@@ -231,24 +230,3 @@ export const updateOrderStatus = async (orderId: string, status: Order["status"]
   }
 }
 
-// Initialize sample data (run once)
-export const initializeSampleData = async (): Promise<void> => {
-  try {
-    const sampleProducts: Omit<Product, "id">[] = products.map((product) => ({
-      ...product,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    }))
-
-    const batch = writeBatch(db)
-    sampleProducts.forEach((product) => {
-      const productRef = doc(collection(db, "products"))
-      batch.set(productRef, product)
-    })
-
-    await batch.commit()
-    console.log("Sample data initialized successfully")
-  } catch (error) {
-    console.error("Error initializing sample data:", error)
-  }
-}

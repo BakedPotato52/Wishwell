@@ -14,7 +14,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { categories } from "@/lib/categoryData"
 import type { Product, Category } from "@/lib/types"
-import { useProducts } from "@/hooks/use-api-data"
+import { useProductContext } from "@/hooks/use-product-context"
 
 interface SearchResult {
     type: "product" | "category"
@@ -38,8 +38,8 @@ export function SearchBar({ onSearchSubmit, className = "" }: SearchBarProps) {
 
     const searchRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
+    const { products } = useProductContext()
 
-    const products = useProducts().products || []
 
     // Load recent searches from localStorage
     useEffect(() => {
