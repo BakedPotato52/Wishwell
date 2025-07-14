@@ -17,7 +17,7 @@ export interface CloudinaryUploadResult {
     resource_type: string
 }
 
-export const uploadToCloudinary = async (file: File, folder = "wishwell"): Promise<CloudinaryUploadResult> => {
+export const uploadToCloudinary = async (file: File, folder = "WishWell"): Promise<CloudinaryUploadResult> => {
     try {
         // Validate Cloudinary configuration
         if (
@@ -63,7 +63,7 @@ export const uploadToCloudinary = async (file: File, folder = "wishwell"): Promi
 
 export const uploadMultipleToCloudinary = async (
     files: File[],
-    folder = "wishwell",
+    folder = "WishWell",
 ): Promise<CloudinaryUploadResult[]> => {
     try {
         const uploadPromises = files.map((file) => uploadToCloudinary(file, folder))

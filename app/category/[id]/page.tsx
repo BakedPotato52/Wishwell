@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, use } from "react"
+import { useState, useMemo, use, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -10,22 +10,51 @@ import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
 import { useProducts } from "@/hooks/use-api-data"
+import { Product } from "@/lib/types"
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
-  const products = useProducts()
+  const category = categories.find((c) => c.id === resolvedParams.id)
+
+
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
+      const params = new URLSearchParams()
+      if (category) params.set("category", category.name)
+
+      const response = await fetch(`/api/products?${params.toString()}`)
+      if (!response.ok) {
+        throw new Error("Failed to fetch products")
+      }
+
+      const data = await response.json()
+      setProducts(data.products)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [category])
+
 
   /* ------------------------- NEW local state -------------------------- */
   const [selectedSub, setSelectedSub] = useState<string | null>(null)
   const [view, setView] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState("featured")
-  const [loading, setLoading] = useState(false)
 
-  const category = categories.find((c) => c.id === resolvedParams.id)
 
   /* -------- filter products by category AND (optionally) sub‑category -------- */
   const baseProducts = useMemo(() => {
-    return products.products.filter(
+    return products.filter(
       (p) =>
         p.category.toLowerCase() === category?.name.toLowerCase() &&
         (selectedSub ? p.subcategory === selectedSub : true),

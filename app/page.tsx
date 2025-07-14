@@ -120,7 +120,11 @@ function InstallPrompt() {
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+
   const category = categories.find((c) => c.name === "Grocery & Kitchen")
+  const homeCategory = categories.find((c) => c.name === "Household Essentials")
+  const snacksCategory = categories.find((c) => c.name === "Snacks & Drinks")
+
 
   useEffect(() => {
     if (adImages.length <= 1) return
@@ -188,17 +192,24 @@ export default function HomePage() {
 
       {/* Grocery & Kitchen Subcategories */}
       {category && (
-        <section className="container mx-auto px-4 py-6">
-          <h2 className="text-xl md:text-2xl font-bold mb-4">{category.name}</h2>
+        <section className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{category.name}</h1>
           <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
             {category.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory)
               return (
                 <Link key={subcategory} href={`/subcategory/${slug}`}>
                   <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="p-2 md:p-4 bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 cursor-pointer group"
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
                   >
                     <div className="flex flex-col items-center text-center">
                       <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
@@ -207,10 +218,13 @@ export default function HomePage() {
                           alt={subcategory}
                           width={70}
                           height={70}
-                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-sky-300 rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
-                      <h3 className="text-xs md:text-sm font-semibold leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
+
+                    </div>
+                    <div className="text-center overflow-hidden">
+                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
                         {subcategory}
                       </h3>
                     </div>
@@ -221,6 +235,96 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {homeCategory && (
+        <section className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{homeCategory.name}</h1>
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
+            {homeCategory.subcategories?.map((subcategory) => {
+              const slug = createSlug(subcategory)
+              return (
+                <Link key={subcategory} href={`/subcategory/${slug}`}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
+                        <Image
+                          src={homeCategory.image || "/placeholder.svg"}
+                          alt={subcategory}
+                          width={70}
+                          height={70}
+                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                        />
+                      </div>
+
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
+                        {subcategory}
+                      </h3>
+                    </div>
+                  </motion.div>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {snacksCategory && (
+        <section className="container mx-auto px-4 py-4">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6 tracking-tight">{snacksCategory.name}</h1>
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 ">
+            {snacksCategory.subcategories?.map((subcategory) => {
+              const slug = createSlug(subcategory)
+              return (
+                <Link key={subcategory} href={`/subcategory/${slug}`}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className=" rounded-xl p-2 md:p-4 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
+                  >
+                    <div className="flex-1 flex items-center justify-center mb-2 md:mb-4 relative">
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <Image
+                          src={snacksCategory.image || "/placeholder.svg"}
+                          alt={subcategory}
+                          width={70}
+                          height={70}
+                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                        />
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <h4 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
+                        {subcategory}
+                      </h4>
+                    </div>
+                  </motion.div>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
     </motion.div>
   )
 }
