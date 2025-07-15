@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url)
         const category = searchParams.get("category")
-        const pageSize = Number.parseInt(searchParams.get("limit") || "20")
 
         let q = query(collection(db, "products"), orderBy("createdAt", "desc"))
 
@@ -15,7 +14,6 @@ export async function GET(request: NextRequest) {
             q = query(q, where("category", "==", category))
         }
 
-        q = query(q, limit(pageSize))
 
         const snapshot = await getDocs(q)
         const products = snapshot.docs.map((doc) => ({

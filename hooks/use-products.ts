@@ -9,7 +9,6 @@ import {
     query,
     where,
     orderBy,
-    limit,
     onSnapshot,
     type QueryConstraint,
 } from "firebase/firestore"
@@ -22,7 +21,6 @@ interface UseProductsOptions {
     subcategoryId?: string
     subcategory?: string
     featured?: boolean
-    limit?: number
     realtime?: boolean
     searchQuery?: string
     sortBy?: "name" | "price" | "createdAt"
@@ -41,7 +39,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    const { category, subcategory, limit: limitCount = 50, realtime = false } = options
+    const { category, subcategory, realtime = false } = options
 
     const fetchProducts = async () => {
         try {
@@ -58,9 +56,6 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
                 constraints.push(where("subcategory", "==", subcategory))
             }
 
-            if (limitCount) {
-                constraints.push(limit(limitCount))
-            }
 
             const q = query(collection(db, "products"), ...constraints)
 
@@ -118,7 +113,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsReturn
                 unsubscribe()
             }
         }
-    }, [category, subcategory, limitCount, realtime])
+    }, [category, subcategory, realtime])
 
     const refetch = () => {
         fetchProducts()

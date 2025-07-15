@@ -348,45 +348,45 @@ export const adminUpdateOrderStatus = async (orderId: string, status: Order["sta
     }
 }
 
-// Initialize categories from existing data
-export const initializeCategories = async (): Promise<void> => {
-    try {
-        const { categories } = await import("@/lib/categoryData")
-        const batch = writeBatch(db)
+// // Initialize categories from existing data
+// export const initializeCategories = async (): Promise<void> => {
+//     try {
+//         const { categories } = await import("@/lib/categoryData")
+//         const batch = writeBatch(db)
 
-        for (const category of categories) {
-            const categoryRef = doc(db, "categories", category.id)
-            batch.set(categoryRef, category)
-        }
+//         for (const category of categories) {
+//             const categoryRef = doc(db, "categories", category.id)
+//             batch.set(categoryRef, category)
+//         }
 
-        await batch.commit()
-        console.log("Categories initialized successfully")
-    } catch (error) {
-        console.error("Error initializing categories:", error)
-        throw error
-    }
-}
+//         await batch.commit()
+//         console.log("Categories initialized successfully")
+//     } catch (error) {
+//         console.error("Error initializing categories:", error)
+//         throw error
+//     }
+// }
 
-// Initialize products from existing data
-export const initializeProducts = async (): Promise<void> => {
-    try {
-        const { products } = await import("@/lib/productData")
-        const batch = writeBatch(db)
+// // Initialize products from existing data
+// export const initializeProducts = async (): Promise<void> => {
+//     try {
+//         const { products } = await import("@/lib/productData")
+//         const batch = writeBatch(db)
 
-        for (const product of products) {
-            const productRef = doc(db, "products", product.id)
-            const productData = {
-                ...product,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp(),
-            }
-            batch.set(productRef, productData)
-        }
+//         for (const product of products) {
+//             const productRef = doc(db, "products", product.id)
+//             const productData = {
+//                 ...product,
+//                 createdAt: serverTimestamp(),
+//                 updatedAt: serverTimestamp(),
+//             }
+//             batch.set(productRef, productData)
+//         }
 
-        await batch.commit()
-        console.log("Products initialized successfully")
-    } catch (error) {
-        console.error("Error initializing products:", error)
-        throw error
-    }
-}
+//         await batch.commit()
+//         console.log("Products initialized successfully")
+//     } catch (error) {
+//         console.error("Error initializing products:", error)
+//         throw error
+//     }
+// }
