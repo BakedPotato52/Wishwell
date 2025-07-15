@@ -48,8 +48,13 @@ export const categories: Category[] = [
         image: "/categories/accessories.svg?height=60&width=60",
         icon: "👜",
         subcategories: [
-            "Necklaces", "Bracelets", "Sunglasses", "Watches", "Earrings", "Wallets", "Belts", "Ties", "Earrings", "Necklace and Chains", "Jewellery Sets", "Handbags & Wallets", "Rings", "Bracelets", "Sunglasses", "Watches"
+            "For Him",
+            "For Her"
         ],
+        subsubcategories: {
+            "For Him": ["Necklaces", "Bracelets", "Sunglasses", "Watches", "Earrings", "Wallets", "Belts", "Ties"],
+            "For Her": ["Earrings", "Necklace and Chains", "Jewellery Sets", "Handbags & Wallets", "Rings", "Bracelets", "Sunglasses", "Watches"]
+        }
 
     },
     {
@@ -58,10 +63,13 @@ export const categories: Category[] = [
         image: "/categories/footwear.svg?height=60&width=60",
         icon: "👟",
         subcategories: [
-            "Casual Shoes", "Formal Shoes", "Sandals and Floaters", "Flip Flops & Slippers",
-            "Heels", "Flats", "Casual Shoes"
+            "For Him",
+            "For Her"
         ],
-
+        subsubcategories: {
+            "For Him": ["Casual Shoes", "Formal Shoes", "Sandals and Floaters", "Flip Flops & Slippers"],
+            "For Her": ["Heels", "Flats", "Casual Shoes"]
+        }
     },
     {
         id: "7",

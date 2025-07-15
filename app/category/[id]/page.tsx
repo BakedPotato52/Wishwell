@@ -27,15 +27,10 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   const [sortBy, setSortBy] = useState("featured")
   const [showingProducts, setShowingProducts] = useState(false)
 
-  // Example subsubcategories data - customize based on your actual data structure
-  const subsubcategories: Record<string, string[]> = {
-    Footwear: ["Casual Shoes", "Formal Shoes", "Sports Shoes", "Sandals"],
-    Topwear: ["T-Shirts", "Shirts", "Hoodies", "Jackets"],
-    Accessories: ["Watches", "Belts", "Wallets", "Sunglasses"],
-    Bottomwear: ["Jeans", "Trousers", "Shorts", "Track Pants"],
-    "Ethnic & Fusion Wear": ["Kurtas", "Sherwanis", "Nehru Jackets", "Dhotis"],
-    // Add more mappings as needed - if a subcategory is not here, it will show products directly
-  }
+  const subsubcategories = useMemo(() => {
+    if (!category?.subsubcategories) return {}
+    return category.subsubcategories
+  }, [category?.subsubcategories])
 
   const fetchProducts = async () => {
     try {
