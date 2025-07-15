@@ -14,17 +14,41 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Search, Grid, List } from "lucide-react"
 import { categories } from "@/lib/categoryData"
 
+// Helper functions for slug conversion
+const createSlug = (text: string): string => {
+    return text
+        .toLowerCase()
+        .replace(/&/g, "and") // Replace & with "and"
+        .replace(/,/g, "") // Remove commas
+        .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
+        .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
+}
+
+const getSubcategoryFromSlug = (slug: string): string | null => {
+    // Create a mapping of all possible subcategories to their slugs
+    const subcategoryMap = new Map<string, string>()
+
+    categories.forEach((category) => {
+        category.subcategories?.forEach((subcategory) => {
+            const subcategorySlug = createSlug(subcategory)
+            subcategoryMap.set(subcategorySlug, subcategory)
+        })
+    })
+
+    return subcategoryMap.get(slug) || null
+}
+
 export default function SubcategoryPage() {
     const params = useParams()
     const router = useRouter()
     const slug = params.slug as string
 
-    // Convert slug back to subcategory name
-    const subcategoryName = slug
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
-    console.log(subcategoryName)
+    // Get the actual subcategory name from slug
+    const subcategoryName = getSubcategoryFromSlug(slug)
+
+    console.log("Slug:", slug)
+    console.log("Subcategory Name:", subcategoryName)
+
     // Find the category and subcategory info
     const [categoryInfo, setCategoryInfo] = useState<any>(null)
     const [searchQuery, setSearchQuery] = useState("")
@@ -33,6 +57,8 @@ export default function SubcategoryPage() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
     useEffect(() => {
+        if (!subcategoryName) return
+
         // Find which category contains this subcategory
         for (const category of categories) {
             if (category.subcategories?.includes(subcategoryName)) {
@@ -46,7 +72,7 @@ export default function SubcategoryPage() {
     }, [subcategoryName])
 
     const { products, loading, error, refetch } = useProducts({
-        subcategory: subcategoryName,
+        subcategory: subcategoryName || "",
         searchQuery,
         sortBy,
         sortOrder,
@@ -86,7 +112,6 @@ export default function SubcategoryPage() {
                             <ArrowLeft className="h-4 w-4" />
                             Back
                         </Button>
-
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                                 <Image
@@ -100,7 +125,6 @@ export default function SubcategoryPage() {
                             </div>
                             <h1 className="text-xl md:text-2xl font-bold">{subcategoryName}</h1>
                         </div>
-
                         <div className="flex gap-2">
                             <Button
                                 variant={viewMode === "grid" ? "default" : "outline"}
@@ -130,7 +154,6 @@ export default function SubcategoryPage() {
                                 className="pl-10"
                             />
                         </div>
-
                         <Select value={`${sortBy}-${sortOrder}`} onValueChange={handleSortChange}>
                             <SelectTrigger className="w-full sm:w-48">
                                 <SelectValue placeholder="Sort by" />
@@ -151,9 +174,7 @@ export default function SubcategoryPage() {
             {/* Content */}
             <div className="container mx-auto px-4 py-8">
                 {loading && <ProductGridSkeleton count={12} />}
-
                 {error && <ErrorMessage message={error} onRetry={refetch} />}
-
                 {!loading && !error && products.length > 0 && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                         <div className="mb-6 flex justify-between items-center">
@@ -165,7 +186,6 @@ export default function SubcategoryPage() {
                         <ProductGrid products={products} />
                     </motion.div>
                 )}
-
                 {!loading && !error && products.length === 0 && (
                     <div className="text-center py-12">
                         <div className="text-6xl mb-4">📦</div>
@@ -199,9 +219,7 @@ export default function SubcategoryPage() {
                                 .filter((sub: string) => sub !== subcategoryName)
                                 .slice(0, 6)
                                 .map((subcategory: string) => {
-                                    const subSlug = subcategory
-                                        .toLowerCase()
-                                        .replace(/[^a-z0-9]+/g, "-")
+                                    const subSlug = createSlug(subcategory)
                                     return (
                                         <Link key={subcategory} href={`/subcategory/${subSlug}`}>
                                             <motion.div
