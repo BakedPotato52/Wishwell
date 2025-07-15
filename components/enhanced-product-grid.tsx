@@ -13,7 +13,7 @@ interface EnhancedProductGridProps {
 export function EnhancedProductGrid({ products, view, loading = false }: EnhancedProductGridProps) {
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-4">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[...Array(8)].map((_, index) => (
             <div key={index} className="bg-gray-200 rounded-lg h-64 animate-pulse" />
@@ -54,6 +54,8 @@ export function EnhancedProductGrid({ products, view, loading = false }: Enhance
             <ProductCard product={product} view={view} />
           </motion.div>
         ))}
+
+
       </div>
     </div>
   )

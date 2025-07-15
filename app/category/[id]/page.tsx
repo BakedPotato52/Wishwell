@@ -8,30 +8,44 @@ import { Button } from "@/components/ui/button"
 import { CategoryFilterBar } from "@/components/category-filter-bar"
 import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
+import type { Product } from "@/lib/types"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
-import { useProducts } from "@/hooks/use-api-data"
-import { Product } from "@/lib/types"
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params)
   const category = categories.find((c) => c.id === resolvedParams.id)
 
-
+  // Product data state
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  // Filter and view state
+  const [selectedSub, setSelectedSub] = useState<string | null>(null)
+  const [selectedSubSub, setSelectedSubSub] = useState<string | null>(null)
+  const [view, setView] = useState<"grid" | "list">("grid")
+  const [sortBy, setSortBy] = useState("featured")
+  const [showingProducts, setShowingProducts] = useState(false)
+
+  // Example subsubcategories data - customize based on your actual data structure
+  const subsubcategories: Record<string, string[]> = {
+    Footwear: ["Casual Shoes", "Formal Shoes", "Sports Shoes", "Sandals"],
+    Topwear: ["T-Shirts", "Shirts", "Hoodies", "Jackets"],
+    Accessories: ["Watches", "Belts", "Wallets", "Sunglasses"],
+    Bottomwear: ["Jeans", "Trousers", "Shorts", "Track Pants"],
+    "Ethnic & Fusion Wear": ["Kurtas", "Sherwanis", "Nehru Jackets", "Dhotis"],
+    // Add more mappings as needed - if a subcategory is not here, it will show products directly
+  }
 
   const fetchProducts = async () => {
     try {
       setLoading(true)
       const params = new URLSearchParams()
       if (category) params.set("category", category.name)
-
       const response = await fetch(`/api/products?${params.toString()}`)
       if (!response.ok) {
         throw new Error("Failed to fetch products")
       }
-
       const data = await response.json()
       setProducts(data.products)
     } catch (err) {
@@ -45,23 +59,17 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
     fetchProducts()
   }, [category])
 
-
-  /* ------------------------- NEW local state -------------------------- */
-  const [selectedSub, setSelectedSub] = useState<string | null>(null)
-  const [view, setView] = useState<"grid" | "list">("grid")
-  const [sortBy, setSortBy] = useState("featured")
-
-
-  /* -------- filter products by category AND (optionally) sub‑category -------- */
+  // Filter products by category, subcategory, and subsubcategory
   const baseProducts = useMemo(() => {
     return products.filter(
       (p) =>
         p.category.toLowerCase() === category?.name.toLowerCase() &&
-        (selectedSub ? p.subcategory === selectedSub : true),
+        (selectedSub ? p.subcategory === selectedSub : true) &&
+        (selectedSubSub ? p.subsubcategory === selectedSubSub : true),
     )
-  }, [category?.name, selectedSub])
+  }, [products, category?.name, selectedSub, selectedSubSub])
 
-  /* ------------------------- sort after filtering --------------------------- */
+  // Sort products after filtering
   const sortedProducts = useMemo(() => {
     const sorted = [...baseProducts]
     switch (sortBy) {
@@ -74,11 +82,49 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       case "newest":
         return sorted.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
       default:
-        return sorted         // “featured” keeps original order
+        return sorted // "featured" keeps original order
     }
   }, [baseProducts, sortBy])
 
-  /* -------------------------------- UI --------------------------------- */
+  // Handlers
+  const handleSortChange = (sort: string) => {
+    setLoading(true)
+    setSortBy(sort)
+    setTimeout(() => setLoading(false), 300) // simulate delay
+  }
+
+  const handleShowProducts = (subcategory: string, hasSubcategories: boolean) => {
+    console.log(`Showing products for: ${subcategory}, has subcategories: ${hasSubcategories}`)
+    setShowingProducts(true)
+    // Products will be filtered automatically by the baseProducts useMemo
+  }
+
+  const handleSubSubcategoryChange = (subcategory: string | null, subsubcategory: string | null) => {
+    setSelectedSub(subcategory)
+    setSelectedSubSub(subsubcategory)
+    setShowingProducts(true)
+  }
+
+  const handleSubcategoryChange = (subcategory: string | null) => {
+    setSelectedSub(subcategory)
+    setSelectedSubSub(null) // Reset subsubcategory when subcategory changes
+    if (subcategory === null) {
+      setShowingProducts(false) // Hide products when clearing all filters
+    }
+  }
+
+  // Error handling
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4 text-red-600">Error</h1>
+        <p className="text-gray-600 mb-4">{error}</p>
+        <Button onClick={fetchProducts}>Try Again</Button>
+      </div>
+    )
+  }
+
+  // Category not found
   if (!category) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
@@ -90,17 +136,11 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
     )
   }
 
-  const handleSortChange = (sort: string) => {
-    setLoading(true)
-    setSortBy(sort)
-    setTimeout(() => setLoading(false), 300)   // sim delay
-  }
-
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto pt-2">
           <Link href="/">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -112,28 +152,25 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
         </div>
       </div>
 
-      {/* Filter / Sort / View bar */}
+      {/* Filter / Sort / View bar */}
       <CategoryFilterBar
         categoryName={category.name}
+        category={category}
         subcategories={category.subcategories}
+        subsubcategories={subsubcategories}
         totalProducts={sortedProducts.length}
         currentView={view}
         onViewChange={setView}
         onSortChange={handleSortChange}
-        onSubcategoryChange={setSelectedSub}
+        onSubcategoryChange={handleSubcategoryChange}
+        onSubSubcategoryChange={handleSubSubcategoryChange}
+        onShowProducts={handleShowProducts}
       />
 
       {/* Product grid */}
       <EnhancedProductGrid products={sortedProducts} view={view} loading={loading} />
 
-      {/* (Optional) Load‑more button */}
-      {sortedProducts.length > 20 && (
-        <div className="container mx-auto px-4 py-8 text-center">
-          <Button variant="outline" size="lg">
-            Load More Products
-          </Button>
-        </div>
-      )}
+
     </motion.div>
   )
 }

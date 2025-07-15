@@ -24,7 +24,7 @@ export function MobileCategoryNav() {
   }
 
   return (
-    <section className="py-4 bg-white border-b mb-2">
+    <section className="py-2 bg-white border-b">
       <div className="relative">
         {/* Left scroll button */}
         <Button

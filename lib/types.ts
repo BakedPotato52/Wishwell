@@ -8,7 +8,7 @@ export interface Product {
   image: string
   category: string
   subcategory: string
-  subsubcategories?: string[]
+  subsubcategory?: string
   inStock: boolean
   rating: number
   reviews: number

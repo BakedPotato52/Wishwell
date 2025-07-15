@@ -202,7 +202,6 @@ export default function SubcategoryPage() {
                                     const subSlug = subcategory
                                         .toLowerCase()
                                         .replace(/[^a-z0-9]+/g, "-")
-                                        .replace(/(^-|-$)/g, "")
                                     return (
                                         <Link key={subcategory} href={`/subcategory/${subSlug}`}>
                                             <motion.div
