@@ -157,7 +157,8 @@ export const categories: Category[] = [
         name: "Grocery & Kitchen",
         image: "/categories/grocery.svg?height=60&width=60",
         icon: "🍎",
-        subcategories: ["Fresh Vegetables",
+        subcategories: [
+            "Fresh Vegetables",
             "Fresh Fruits",
             "Dairy, Bread & Eggs",
             "Cereals & Breakfast",
@@ -170,25 +171,20 @@ export const categories: Category[] = [
             "Sauces & Spreads",
             "Meat & Seafood"
         ],
-    },
-    {
-        id: "J5ipSdkpu2xUG0TkUApS",
-        name: "Household Essentials",
-        image: "/categories/households.svg?height=60&width=60",
-        icon: "🏠",
-        subcategories: ["Home & Furnishing",
-            "Kitchen & Dining",
-            "Cleaning Essentials",
-            "Clothing",
-            "Mobiles & Electronics",
-            "Appliances",
-            "Books & Stationery",
-            "Jewellery & Accessories",
-            "Puja Items",
-            "Toys & Games",
-            "Sports & Fitness",
-            "Pet Supplies"
-        ],
+        subsubcategories: {
+            "Fresh Vegetables": ["Vegetables", "Leafy & Seasonings", "Exotic Vegetables", "Seasonal Fruits", "Cuts & Sprouts", "Pooja & Festive", "Certified Organics", "Combos", "Bouquet & Plants", "Exotic Fruits", "Cut Fruits & Juices", "Fresh Fruits", "Frozen Vegetables"],
+            "Fresh Fruits": ["Fruits", "Seasonal Fruits", "Exotic Fruits", "Cut Fruits & Juices", "Pooja & Festive", "Bouquet & Plants", "Combos", "Certified Organics", "Exotic Vegetables", "Fresh Vegetables", "Leafy & Seasonings", "Cuts & Sprouts"],
+            "Dairy, Bread & Eggs": ["Bread & Buns", "Milk", "Eggs", "Curd & Yogurts", "Paneer & Cream", "Cheese", "Butter", "Batters & Chutneys", "Indian Breads", "Dairy Alternatives", "Lassi & Buttermilk", "Milkshakes", "Bakery"],
+            "Cereals & Breakfast": ["Muesli & Granola", "Oats", "Kids Cereals", "Flakes", "Energy Bars", "Ready Mixes", "Pancake Mixes", "Peanut Butters", "Chocolate Spreads", "Mayo & Spreads", "Instant Oats", "Seeds & Trail Mixes", "Hot Beverages", "Juices & Fruit Drinks", "Jams", "Batters", "Gourmet"],
+            "Atta, Rice & Dal": ["Basmati Rice", "Atta", "Rice", "Besan", "Sooji & Maida", "Premium Brands", "Toor/Moong/Urad", "Rajma/Chola/Others", "Poha & Puffed Rice", "Ready to Cook Flour Mix", "Millets & Daliya", "Other Flours", "Soya Chunk & Badi", "Limited Time Deal"],
+            "Oils & Ghee": ["Sunflower Oil", "Mustard Oil", "Ghee", "Blended Oils", "Premium Brands", "Rice Bran Oil", "Olive Oil", "Soybean Oil", "Cold - pressed", "Limited Time Deal"],
+            "Masalas": ["Powdered Spices", "Salt", "Sugar & Jaggery", "Whole Spices", "Ready Masala", "Paste & Puree", "Herbs & Seasoning", "Pickles & Chutney", "Papad & Fryums", "Coconut Milk & Powder"],
+            "Dry Fruits & Seeds": ["Mixed Dry Fruits", "Almonds", "Cashews", "Dates", "Pista & Walnuts", "Makhana & Seeds", "Dried Fruits", "Nuts & Seeds Mix", "Gift Packs", "Limited Time Deal"],
+            "Biscuits & Cakes": ["Value Packs", "Cakes & Pies", "Cookies", "Cream Biscuits", "Marie/Digestive", "Salted/Plain", "Wafers", "Rusk", "Dessert Mixes", "Baking ingredients", "Flavouring", "Pancake Mixes", "Gift Boxes", "Healthy Snacking", "Ice Cream Cakes"],
+            "Tea, Coffee & Milk Drinks": ["Tea", "Instant Coffee", "Filter/Ground Coffee", "Green/Herbal Tea", "Cold Coffee", "Drink Mixes", "Nutrition", "Milkshake & Smoothie", "Syrups & Powder", "Premixes", "Cookies", "Gourmet"],
+            "Sauces & Spreads": ["Peanut Butter", "Chocolate Spread", "Honey & Cider Vinegar", "Mayo & Spreads", "Tomato Ketchup", "Asian Sauces", "Cooking Sauces", "Dips & Dressing", "Jams", "Gourmet"],
+            "Meat & Seafood": ["Fresh Chicken", "Seafood", "Mutton", "Marinated", "Cold Cuts", "Eggs", "Paste & Spreads", "Frozen Food", "Leafy & Seasonings", "Masalas", "Plant - Based Meat"]
+        }
     },
 
     {
@@ -196,7 +192,8 @@ export const categories: Category[] = [
         name: "Snacks & Drinks",
         image: "/categories/snacks.svg?height=60&width=60",
         icon: "🍿",
-        subcategories: ["Cold Drinks and Juices",
+        subcategories: [
+            "Cold Drinks and Juices",
             "Ice Creams and Frozen Desserts",
             "Chips and Namkeens",
             "Chocolates",
@@ -205,7 +202,49 @@ export const categories: Category[] = [
             "Sweets",
             "Paan Corner"
         ],
+        subsubcategories: {
+            "Cold Drinks and Juices": ["Top Deals", "Soft Drinks", "Juices & Drinks", "Energy Drinks", "Mango Drinks", "Fresh Juice", "Soda & Mixers", "Coconut Water", "Diet Soft Drinks", "Hydration", "Water & Ice Cubes", "Non Alcoholic", "Ice Tea & Kombucha", "Drink Mixes", "Milk Drinks", "Cold Coffee"],
+            "Ice Creams and Frozen Desserts": ["Rare Finds", "Tubs & Party Packs", "Cones", "Sticks", "Guilt Free", "Kulfi", "Premium", "Cups", "Cakes & Sandwiches", "Regional Favourites", "Brownies & Cakes", "Syrups"],
+            "Chips and Namkeens": ["Bestseller", "Chips & Crisps", "Nachos", "Puffs & Crunchies", "Bhujia & Namkeens", "Premium Brands", "Nuts & Makhana", "Indian Snacks", "Popcorn", "Gift Hampers", "Snack Bars", "Healthy Snacking", "Party Pack"],
+            "Chocolates": ["Top Deals", "Bestseller", "Dark", "Gift Boxes", "Premium", "Milk", "Shared Packs", "Imported", "Gourmet", "Wafers", "Candies", "Gums & Mint"],
+            "Noodles, Pasta, Vermicelli": ["Top Deals", "Instant Noodles", "Cup Noodles", "Korean", "Hakka", "Pasta", "Vermicelli", "Soups", "Ready to Eat"],
+            "Frozen Food": ["Top Deals", "Veg Frozen", "Non Veg", "Cold Cuts", "Kebabs", "Roti", "Paranthas & Sheets", "Frozen Veg", "Momos & Bao"],
+            "Sweets": ["Top Deals", "Kaju Katli & Barfi", "Rasgulla", "Gulab Jamun", "Mysore Pak", "Ladoos", "Pedhas", "Chikki", "Rasmalai", "Cakes"],
+            "Paan Corner": ["Regular Cigarettes", "Flavour Cigarettes", "Smoking Accessories", "Nicotine Alternatives", "Paan & Mouth Fresheners", "Cookies & Cakes", "Chips & Crisps", "Cold Drinks & Juices"]
+        }
     },
+
+    {
+        id: "J5ipSdkpu2xUG0TkUApS",
+        name: "Household Essentials",
+        image: "/categories/households.svg?height=60&width=60",
+        icon: "🏠",
+        subcategories: [
+            "Home & Furnishing",
+            "Kitchen & Dining",
+            "Cleaning Essentials",
+            "Mobiles & Electronics",
+            "Appliances",
+            "Books & Stationery",
+            "Puja Items",
+            "Toys & Games",
+            "Sports & Fitness",
+            "Pet Supplies"
+        ],
+        subsubcategories: {
+            "Home & Furnishing": ["Bedsheets", "Towels", "Furnishing", "Decor", "Storage", "Tissues", "Cleaning Tools", "Party Decor", "Air Freshners", "Gardening", "Bathware", "Utility", "Pooja Needs", "Appliances", "Repellants", "Sports & Gym", "Stationery"],
+            "Kitchen & Dining": ["Cookware", "Plates", "Bowls", "Crockery", "Cutlery", "Jars/Containers", "Bottles/Flasks/Tiffins", "Barware", "Bakeware/BBQ", "Chopping Tools", "Kitchen Tools", "Kitchen Appliances", "Kitchen Cleaning"],
+            "Cleaning Essentials": ["Detergents", "Fabric Softeners", "Brooms & Mops", "Floor Cleaner", "Utensil Cleaner", "Kitchen Cleaning", "Dustbins", "Cloth", "Disinfectant", "Toilet Cleaner", "Bathroom Cleaning", "Wipers", "Glass Cleaner", "Sink Brush", "Toxin Free"],
+            "Mobiles & Electronics": ["Mobiles", "Earbuds", "Speakers", "Smart Watches", "Kitchen/Home Appliances", "Personal Care", "Health Care", "Powerbanks/Chargers", "Streaming Devices", "Lights", "Batteries", "Computer Accessories"],
+            "Appliances": ["Mixer", "Blenders", "Kettles", "Choppers", "Toasters", "AirFryers", "Induction", "Irons", "Heaters", "Vacuum", "Fans", "Cameras", "Networking", "Others"],
+            "Books & Stationery": ["Pens/Pencils/Highlighters", "Notebooks", "Diaries", "Stationery", "School Supplies", "Colouring", "Craft", "Bags", "Tiffins", "Bottles"],
+            "Puja Items": ["Idols/Books", "Diya/Baati", "Agarbatti", "Dhoop", "Hawan", "Tika/Mala", "Kalash/Gangajal", "Camphor", "Sambrani", "Flowers/Leaves", "Ghee/Oil", "Puja Thali", "Cloth", "Decor", "Fresh Fruits", "Dry Fruits", "Sweets"],
+            "Toys & Games": ["Soft Toys", "Board Games", "STEAM", "Toy Cars", "Building Blocks", "Newly Added", "Baby Toys", "Pretend Play", "Art & Crafts", "Action Figures", "Outdoor Toys", "Ride - Ons", "Pool Toys", "Musical Toys", "Dough"],
+            "Sports & Fitness": ["Badminton", "Cricket", "Football", "Gym Accessories", "Yoga", "Pain & Wound", "Outdoor Toys", "Chess", "Table Tennis", "Cycling", "PickleBall"],
+            "Pet Supplies": ["Cat Food", "Dog Food", "Pet Treats", "Accessories/Toys", "Grooming & Supplements"]
+        },
+    },
+
     {
         id: "lZ2d1eCsMNTx85RvyXvZ",
         name: "Gifts",
@@ -214,15 +253,31 @@ export const categories: Category[] = [
         subcategories: [
             "Birthday Gifts",
             "Anniversary Gifts",
-            "Wedding Gifts",
-            "Cake Delivery",
-            "Flower Delivery",
-            "Personalized Gifts",
-            "Chocolate Gifts",
-            "Toy Gifts",
-            "Home Decor Gifts",
+            "Cakes",
+            "Flowers",
+            "Chocolates",
+            "Toys",
+            "Custom Gifts",
+            "Gift Hampers",
+            "For Him",
+            "For Her",
+            "Home Decor",
             "Festive Gifts",
         ],
+        subsubcategories: {
+            "Birthday Gifts": ["Birthday Cakes(Designer, Bento, Photo)", "Birthday Flowers(Roses, Bouquets)", "Greeting Cards", "Balloons / Decor", "Chocolates", "Personalized Gifts(Mugs, Cushions, Photo Frames)", "Hampers", "Candles", "Return Gifts", "Party Essentials"],
+            "Anniversary Gifts": ["Cakes(Heart, Premium, Bento)", "Flowers(Roses, Lilies)", "Decor & Hampers", "Chocolates / Sweets", "Personalized Gifts", "Couple Hampers", "Luxury Perfumes", "Cards & Candles", "Jewelry"],
+            "Cakes": ["Designer", "Bento", "Chocolate", "Black Forest", "Red Velvet", "Fruit Cakes", "Cupcakes", "Jar Cakes", "Theme Cakes", "Eggless", "Sugar - Free", "Premium"],
+            "Flowers": ["Roses", "Lilies/Orchids", "Exotic", "Mixed", "Carnations/Tulips", "Premium Baskets", "Hampers", "Indoor Plants", "Forever Roses"],
+            "Chocolates": ["Dark", "Imported", "Assorted", "Handmade", "Bouquets", "Truffles", "Hampers", "Sugar-Free"],
+            "Toys": ["Soft Toys", "Dolls", "Cars/Bikes", "Action Figures", "Board Games", "Educational", "Kid Sets", "Character Themed"],
+            "Custom Gifts": ["Mugs", "Cushions", "Keychains", "Frames", "Custom Jewelry", "Name Plates", "Custom Phone Cases", "Hampers", "Wall Clocks", "Pens"],
+            "Gift Hampers": ["Chocolate", "Gourmet", "Dry Fruit", "Luxury", "Spa/Beauty", "Festival", "Corporate", "Baby", "Wine/Beverage"],
+            "For Him": ["Wallets & Belts", "Perfumes & Deos", "Watches", "Gadgets", "Grooming Kits", "Eyewear", "Personalized", "Keychains", "Office Gifts", "Choco Combos"],
+            "For Her": ["Jewelry", "Handbags/Wallets", "Perfumes/Body Mists", "Makeup Kits", "Hair Accessories", "Personalized Gifts", "Watches", "Choco/Flower Combos", "Luxury Hampers"],
+            "Home Decor": ["Lamps & Candles", "Frames/Paintings", "Plants & Pots", "Table Decor", "Showpieces", "Diffusers", "Clocks", "Home Gift Sets"],
+            "Festive Gifts": ["Diwali Hampers", "Rakhi & Gifts", "Karwa Chauth", "Eid Hampers", "Holi Hampers", "New Year Hampers", "Christmas", "Pooja Essentials", "Ganesh Gifts"]
+        }
     }
 
 ]

@@ -10,6 +10,10 @@ export interface Product {
   subcategory: string
   subsubcategory?: string
   inStock: boolean
+  sizes?: string[]
+  colors?: string[]
+  tags?: string[]
+  quantity?: number
   rating: number
   reviews: number
   createdAt: Timestamp | FieldValue
