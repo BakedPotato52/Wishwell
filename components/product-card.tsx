@@ -1,20 +1,70 @@
 "use client"
 
+import { useState, useMemo } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Star } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import type { Product } from "@/lib/types"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import type { UnifiedProduct } from "@/lib/types"
+import { isEnhancedProduct, getCurrentPrice, getStockStatus } from "@/utils/product-migration"
 import { AddToCartButton } from "@/components/add-to-cart-button"
-import { QuickAddButton } from "@/components/quick-add-button"
 
-interface ProductCardProps {
-  product: Product
+interface UnifiedProductCardProps {
+  product: UnifiedProduct
   view?: "grid" | "list"
 }
 
-export function ProductCard({ product, view = "grid" }: ProductCardProps) {
+export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps) {
+  const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({})
+
+  // Get current price and stock based on product type and selected attributes
+  const currentPrice = useMemo(() => getCurrentPrice(product, selectedAttributes), [product, selectedAttributes])
+  const stockStatus = useMemo(() => getStockStatus(product, selectedAttributes), [product, selectedAttributes])
+
+  // Handle attribute selection for enhanced products
+  const handleAttributeChange = (attributeId: string, value: string) => {
+    setSelectedAttributes((prev) => ({
+      ...prev,
+      [attributeId]: value,
+    }))
+  }
+
+  // Render attribute selectors for enhanced products
+  const renderAttributeSelectors = () => {
+    if (!isEnhancedProduct(product) || !product.attributes) return null
+
+    return (
+      <div className="space-y-2 mt-2">
+        {product.attributes.slice(0, 2).map(
+          (
+            attribute, // Show only first 2 attributes in card
+          ) => (
+            <div key={attribute.attributeId} className="flex items-center space-x-2">
+              <span className="text-xs text-gray-600 min-w-[40px]">{attribute.name}:</span>
+              <Select
+                value={selectedAttributes[attribute.attributeId] || ""}
+                onValueChange={(value) => handleAttributeChange(attribute.attributeId, value)}
+              >
+                <SelectTrigger className="h-7 text-xs">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  {attribute.values.map((option) => (
+                    <SelectItem key={option.id} value={option.value} className="text-xs">
+                      {option.displayName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          ),
+        )}
+      </div>
+    )
+  }
+
   if (view === "list") {
     return (
       <motion.div
@@ -25,7 +75,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
       >
         <Link href={`/product/${product.id}`}>
           <div className="flex">
-            <div className="relative aspect-auto flex-shrink-0">
+            <div className="relative aspect-square w-32 flex-shrink-0">
               <Image
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
@@ -33,8 +83,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
                 height={128}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <QuickAddButton product={product} />
-              {!product.inStock && <Badge className="absolute top-2 left-2 bg-red-500">Out of Stock</Badge>}
+              {!stockStatus.inStock && <Badge className="absolute top-2 left-2 bg-red-500">Out of Stock</Badge>}
             </div>
 
             <div className="p-4 flex-1">
@@ -54,9 +103,16 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
                 <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-xl font-bold text-blue-600">₹{product.price}</span>
-                <AddToCartButton product={product} size="sm" disabled={!product.inStock} />
+              {renderAttributeSelectors()}
+
+              <div className="flex items-center justify-between mt-4">
+                <span className="text-xl font-bold text-blue-600">₹{currentPrice.toLocaleString()}</span>
+                <AddToCartButton
+                  product={product}
+                  selectedAttributes={selectedAttributes}
+                  size="sm"
+                  disabled={!stockStatus.inStock}
+                />
               </div>
             </div>
           </div>
@@ -65,7 +121,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
     )
   }
 
-  // Grid view (existing code remains the same)
+  // Grid view
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -82,7 +138,7 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
             height={300}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          {!product.inStock && <Badge className="absolute top-2 left-2 bg-red-500">Out of Stock</Badge>}
+          {!stockStatus.inStock && <Badge className="absolute top-2 left-2 bg-red-500">Out of Stock</Badge>}
         </div>
 
         <div className="p-4">
@@ -102,9 +158,16 @@ export function ProductCard({ product, view = "grid" }: ProductCardProps) {
             <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold text-blue-600">₹{product.price}</span>
-            <AddToCartButton product={product} size="sm" disabled={!product.inStock} />
+          {renderAttributeSelectors()}
+
+          <div className="flex items-center justify-between mt-4">
+            <span className="text-xl font-bold text-blue-600">₹{currentPrice.toLocaleString()}</span>
+            <AddToCartButton
+              product={product}
+              selectedAttributes={selectedAttributes}
+              size="sm"
+              disabled={!stockStatus.inStock}
+            />
           </div>
         </div>
       </Link>

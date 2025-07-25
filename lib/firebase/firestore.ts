@@ -15,32 +15,44 @@ import {
   increment,
 } from "firebase/firestore"
 import { db } from "./config"
-import type { Product, CartItem, Order } from "@/lib/types"
+import type { Product, EnhancedProduct, UnifiedProduct, CartItem, Order } from "@/lib/types"
 
 // Products Collection
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (): Promise<UnifiedProduct[]> => {
   try {
     const productsRef = collection(db, "products")
     const snapshot = await getDocs(query(productsRef, orderBy("createdAt", "desc")))
 
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Product[]
+    return snapshot.docs.map((doc) => {
+      const data = doc.data()
+      return {
+        id: doc.id,
+        ...data,
+        // Ensure backward compatibility
+        price: data.price || data.basePrice || 0,
+        inStock: data.inStock !== undefined ? data.inStock : data.inventory?.quantity > 0 || false,
+        quantity: data.quantity || data.inventory?.quantity || 0,
+      }
+    }) as UnifiedProduct[]
   } catch (error) {
     console.error("Error fetching products:", error)
     return []
   }
 }
 
-export const getProduct = async (productId: string): Promise<Product | null> => {
+export const getProduct = async (productId: string): Promise<UnifiedProduct | null> => {
   try {
     const productDoc = await getDoc(doc(db, "products", productId))
     if (productDoc.exists()) {
+      const data = productDoc.data()
       return {
         id: productDoc.id,
-        ...productDoc.data(),
-      } as Product
+        ...data,
+        // Ensure backward compatibility
+        price: data.price || data.basePrice || 0,
+        inStock: data.inStock !== undefined ? data.inStock : data.inventory?.quantity > 0 || false,
+        quantity: data.quantity || data.inventory?.quantity || 0,
+      } as UnifiedProduct
     }
     return null
   } catch (error) {
@@ -70,6 +82,24 @@ export const getProductsByCategory = async (category: string): Promise<Product[]
   }
 }
 
+export const createProduct = async (productData: Omit<EnhancedProduct, "id">): Promise<string> => {
+  try {
+    const productRef = doc(collection(db, "products"))
+    const product: EnhancedProduct = {
+      id: productRef.id,
+      ...productData,
+      isEnhanced: true,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }
+
+    await setDoc(productRef, product)
+    return productRef.id
+  } catch (error) {
+    console.error("Error creating enhanced product:", error)
+    throw error
+  }
+}
 // Cart Management
 export const getUserCart = async (userId: string): Promise<CartItem[]> => {
   try {
@@ -86,9 +116,20 @@ export const getUserCart = async (userId: string): Promise<CartItem[]> => {
   }
 }
 
-export const addToCart = async (userId: string, product: Product, quantity = 1): Promise<void> => {
+export const addToCart = async (
+  userId: string,
+  product: UnifiedProduct,
+  quantity = 1,
+  options?: {
+    selectedAttributes?: Record<string, string>
+    variantId?: string
+  },
+): Promise<void> => {
   try {
-    const cartItemRef = doc(db, "users", userId, "cart", product.id)
+    // Create a unique cart item ID based on product and selected attributes
+    const cartItemId = options?.variantId ? `${product.id}_${options.variantId}` : product.id
+
+    const cartItemRef = doc(db, "users", userId, "cart", cartItemId)
     const existingItem = await getDoc(cartItemRef)
 
     if (existingItem.exists()) {
@@ -100,9 +141,11 @@ export const addToCart = async (userId: string, product: Product, quantity = 1):
     } else {
       // Add new item to cart
       const cartItem: CartItem = {
-        id: product.id,
+        id: cartItemId,
         product,
         quantity,
+        selectedAttributes: options?.selectedAttributes,
+        variantId: options?.variantId,
         addedAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       }
@@ -230,3 +273,74 @@ export const updateOrderStatus = async (orderId: string, status: Order["status"]
   }
 }
 
+// Enhanced product creation
+export const createEnhancedProduct = async (productData: Omit<EnhancedProduct, "id">): Promise<string> => {
+  try {
+    const productRef = doc(collection(db, "products"))
+    const product: EnhancedProduct = {
+      id: productRef.id,
+      ...productData,
+      isEnhanced: true,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }
+
+    await setDoc(productRef, product)
+    return productRef.id
+  } catch (error) {
+    console.error("Error creating enhanced product:", error)
+    throw error
+  }
+}
+
+// Migration utility to convert legacy products to enhanced
+export const migrateProductToEnhanced = async (productId: string): Promise<void> => {
+  try {
+    const productDoc = await getDoc(doc(db, "products", productId))
+    if (!productDoc.exists()) {
+      throw new Error("Product not found")
+    }
+
+    const legacyProduct = { id: productDoc.id, ...productDoc.data() } as Product
+
+    // Use the migration utility
+    const { migrateProductToEnhanced } = await import("../../utils/product-migration")
+    const enhancedProduct = migrateProductToEnhanced(legacyProduct)
+
+    // Update the product in Firestore
+    await updateDoc(doc(db, "products", productId), {
+      ...enhancedProduct,
+      updatedAt: serverTimestamp(),
+    })
+  } catch (error) {
+    console.error("Error migrating product:", error)
+    throw error
+  }
+}
+
+// Batch migration for all legacy products
+export const batchMigrateProducts = async (): Promise<void> => {
+  try {
+    const productsRef = collection(db, "products")
+    const snapshot = await getDocs(query(productsRef, where("isEnhanced", "!=", true)))
+
+    const batch = writeBatch(db)
+    const { migrateProductToEnhanced } = await import("../../utils/product-migration")
+
+    snapshot.docs.forEach((doc) => {
+      const legacyProduct = { id: doc.id, ...doc.data() } as Product
+      const enhancedProduct = migrateProductToEnhanced(legacyProduct)
+
+      batch.update(doc.ref, {
+        ...enhancedProduct,
+        updatedAt: serverTimestamp(),
+      })
+    })
+
+    await batch.commit()
+    console.log(`Migrated ${snapshot.docs.length} products to enhanced format`)
+  } catch (error) {
+    console.error("Error batch migrating products:", error)
+    throw error
+  }
+}

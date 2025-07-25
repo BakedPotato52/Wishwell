@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button"
 import { AuthPromptModal } from "@/components/auth-prompt-modal"
 import { useCart } from "@/contexts/cart-context"
 import { useAuthGuard } from "@/hooks/use-auth-guard"
-import type { Product } from "@/lib/types"
+import type { UnifiedProduct } from "@/lib/types"
+import { isEnhancedProduct, getCurrentVariant } from "@/utils/product-migration"
 
 interface AddToCartButtonProps {
-  product: Product
+  product: UnifiedProduct
+  selectedAttributes?: Record<string, string>
   size?: "sm" | "default" | "lg"
   variant?: "default" | "outline" | "ghost"
   className?: string
@@ -21,6 +23,7 @@ interface AddToCartButtonProps {
 
 export function AddToCartButton({
   product,
+  selectedAttributes = {},
   size = "sm",
   variant = "default",
   className = "",
@@ -50,19 +53,39 @@ export function AddToCartButton({
   }, [product.id])
 
   const handleAddToCart = async () => {
-    if (disabled || !product.inStock) return
+    if (disabled) return
 
     setError(null)
+
+    // For enhanced products, validate required attributes
+    if (isEnhancedProduct(product) && product.attributes) {
+      const requiredAttributes = product.attributes.filter((attr) => attr.required)
+      const missingAttributes = requiredAttributes.filter((attr) => !selectedAttributes[attr.attributeId])
+
+      if (missingAttributes.length > 0) {
+        setError(`Please select: ${missingAttributes.map((attr) => attr.name).join(", ")}`)
+        return
+      }
+    }
 
     const success = await requireAuth(
       async () => {
         setIsAdding(true)
 
         try {
-          await addToCart(product, quantity)
-          setShowSuccess(true)
+          // Create cart item with enhanced data if applicable
+          const cartItemData = {
+            product,
+            quantity,
+            ...(isEnhancedProduct(product) && {
+              selectedAttributes,
+              variantId: getCurrentVariant(product, selectedAttributes)?.id,
+            }),
+          }
 
-          // Reset success state after 2 seconds
+          await addToCart(cartItemData.product, cartItemData.quantity)
+
+          setShowSuccess(true)
           setTimeout(() => setShowSuccess(false), 2000)
         } catch (error) {
           console.error("Error adding to cart:", error)
@@ -83,7 +106,7 @@ export function AddToCartButton({
     if (isAdding) {
       return (
         <>
-          <Loader2 className="h-4 w-4 animate-spin mr-1" />
+          <Loader2 className="h-5 w-5 animate-spin mr-1" />
           {showText && "Adding..."}
         </>
       )
@@ -92,7 +115,7 @@ export function AddToCartButton({
     if (showSuccess) {
       return (
         <>
-          <Check className="h-4 w-4 mr-1 text-green-600" />
+          <Check className="h-5 w-5 mr-1 text-green-600" />
           {showText && "Added!"}
         </>
       )
@@ -100,7 +123,7 @@ export function AddToCartButton({
 
     return (
       <>
-        <ShoppingCart className="h-4 w-4 mr-1" />
+        <ShoppingCart className="h-5 w-5 mr-1" />
         {showText && "Add"}
       </>
     )
@@ -113,7 +136,7 @@ export function AddToCartButton({
           size={size}
           variant={variant}
           onClick={handleAddToCart}
-          disabled={disabled || !product.inStock || isAdding}
+          disabled={disabled || isAdding}
           className={`${showSuccess ? "bg-green-600 hover:bg-green-700" : "bg-blue-600 hover:bg-blue-700"} ${className}`}
         >
           {buttonContent()}

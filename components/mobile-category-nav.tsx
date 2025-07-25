@@ -64,7 +64,7 @@ export function MobileCategoryNav() {
                       className="object-cover"
                     />
                   </div>
-                  <span className="text-sm text-center font-medium">{category.name}</span>
+                  <span className="text-sm text-center font-medium">{category.name}{category.name.length > 10 ? "..." : ""}</span>
                 </div>
               </Link>
             </motion.div>
