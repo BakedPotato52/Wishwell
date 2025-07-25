@@ -106,7 +106,7 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
               {renderAttributeSelectors()}
 
               <div className="flex items-center justify-between mt-4">
-                <span className="text-xl font-bold text-blue-600">₹{currentPrice.toLocaleString()}</span>
+                <span className="text-xl font-bold text-blue-600">₹{currentPrice}</span>
                 <AddToCartButton
                   product={product}
                   selectedAttributes={selectedAttributes}
@@ -161,7 +161,7 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
           {renderAttributeSelectors()}
 
           <div className="flex items-center justify-between mt-4">
-            <span className="text-xl font-bold text-blue-600">₹{currentPrice.toLocaleString()}</span>
+            <span className="text-xl font-bold text-blue-600">₹{currentPrice}</span>
             <AddToCartButton
               product={product}
               selectedAttributes={selectedAttributes}
