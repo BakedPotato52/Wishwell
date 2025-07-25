@@ -225,7 +225,7 @@ export default function HomePage() {
                     </div>
                     <div className="text-center overflow-hidden">
                       <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory}
+                        {subcategory.slice(0, 20)}{subcategory.length > 20 ? "..." : ""}
                       </h3>
                     </div>
                   </motion.div>
@@ -270,7 +270,7 @@ export default function HomePage() {
                     </div>
                     <div className="text-center">
                       <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory}
+                        {subcategory.slice(0, 20)}{subcategory.length > 20 ? "..." : ""}
                       </h3>
                     </div>
                   </motion.div>
@@ -314,7 +314,7 @@ export default function HomePage() {
                     </div>
                     <div className="text-center">
                       <h4 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory}
+                        {subcategory.slice(0, 20)}{subcategory.length > 20 ? "..." : ""}
                       </h4>
                     </div>
                   </motion.div>

@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Star, Heart, Minus, Plus } from "lucide-react"
+import { ArrowLeft, Star, Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -108,9 +108,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     className="flex-1"
                     showText={true}
                   />
-                  <Button variant="outline" size="icon">
-                    <Heart className="h-4 w-4" />
-                  </Button>
+
                 </div>
 
                 <Link href={'/checkout'}>
