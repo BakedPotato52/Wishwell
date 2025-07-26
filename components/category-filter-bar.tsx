@@ -101,6 +101,7 @@ export function CategoryFilterBar({
       })
       setNavigationHistory([])
       onSubcategoryChange?.(null)
+      onSubSubcategoryChange?.(null, null)
       return
     }
 
@@ -110,18 +111,23 @@ export function CategoryFilterBar({
       /* Drill into SUBCATEGORY level - show subsubcategories */
       setNavigationHistory((prev) => [...prev, currentLevel])
       setSelectedSubcategory(subcategory)
+      setSelectedSubSubcategory(null)
       setCurrentLevel({
         type: LEVELS.SUBCATEGORY,
         parent: subcategory,
+        items: subsubcategories![subcategory],
         title: subcategory,
-        items: subsubcategories[subcategory] || [],
       })
       onSubcategoryChange?.(subcategory)
+      onSubSubcategoryChange?.(subcategory, null)
     } else {
-      // No subsubcategories - just select this subcategory and show products
+      /* No subsubcategories - show products directly */
       setSelectedSubcategory(subcategory)
       setSelectedSubSubcategory(null)
       onSubcategoryChange?.(subcategory)
+      onSubSubcategoryChange?.(subcategory, null)
+
+      // Trigger showing products for this subcategory
       onShowProducts?.(subcategory, false)
     }
   }
@@ -176,21 +182,62 @@ export function CategoryFilterBar({
     <div className="flex bg-gray-50">
       {/* Sidebar */}
       <div className="w-24 bg-white border-r shadow-sm">
+        {/* Header */}
+        {/* <div className="p-4 border-b">
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-xl font-bold">{categoryName}</h1>
+            {(selectedSubcategory || selectedSubSubcategory) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleSubcategorySelect(null)}
+                className="text-blue-600 hover:text-blue-800 text-xs"
+              >
+                Clear
+              </Button>
+            )}
+          </div>
+
+          
+          <div className="flex items-center space-x-1 text-sm text-gray-600 mb-2">
+            {getBreadcrumbs().map((crumb, i, arr) => (
+              <div key={`breadcrumb-${i}-${crumb}`} className="flex items-center">
+                {i > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
+                <span className={i === arr.length - 1 ? "font-medium text-gray-900" : ""}>{crumb}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-sm text-gray-600">{totalProducts} products</p>
+        </div> */}
+
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 overflow-y-scroll sm:max-h-[380px] scrollbar-hide ">
+          <div className="p-2 overflow-y-scroll sm:max-h-[380px] scrollbar-hide sticky" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
-
+                {!!navigationHistory.length && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={navigateBack}
+                    className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 p-1"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                  </Button>
+                )}
                 <motion.h3
                   key={currentLevel.title}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-lg font-semibold"
                 >
-                  {"Categories"
-                  }
+                  {currentLevel.type === LEVELS.MAIN
+                    ? "Categories"
+                    : currentLevel.type === LEVELS.SUBCATEGORY
+                      ? `${currentLevel.title}`
+                      : currentLevel.title}
                 </motion.h3>
               </div>
             </div>
@@ -200,8 +247,10 @@ export function CategoryFilterBar({
 
               {/* Category Items */}
               <AnimatePresence>
-                {currentLevel.type === LEVELS.MAIN && currentLevel.items.map((item, i) => {
-                  const isSelected = selectedSubcategory === item
+                {currentLevel.items.map((item, i) => {
+                  const hasChildren = currentLevel.type === LEVELS.MAIN && !!subsubcategories?.[item]?.length
+                  const isSelected =
+                    currentLevel.type === LEVELS.MAIN ? selectedSubcategory === item : selectedSubSubcategory === item
 
                   return (
                     <CategoryListItem
@@ -210,9 +259,12 @@ export function CategoryFilterBar({
                       selected={isSelected}
                       image={subcategoryImages[item] ?? "/placeholder.svg"}
                       onClick={() =>
-                        handleSubcategorySelect(item)
+                        currentLevel.type === LEVELS.MAIN
+                        || handleSubcategorySelect(item)
+
                       }
                       delay={(i + 1) * 0.05}
+                      hasSubItems={!hasChildren}
                     />
                   )
                 })}
@@ -286,9 +338,10 @@ interface CategoryListItemProps {
   image: string
   onClick: () => void
   delay: number
+  hasSubItems: boolean
 }
 
-function CategoryListItem({ label, selected, image, onClick, delay }: CategoryListItemProps) {
+function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -302,13 +355,17 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
     >
       <div
         className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
-          ? "bg-blue-100 border-2 border-blue-200 shadow-md"
-          : "bg-gray-100 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+          ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+          : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
           }`}
       >
         <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
           <Image src={image ?? "/placeholder.svg"} alt={label} width={48} height={48} className="object-contain" />
-
+          {hasSubItems && (
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+              <ChevronRight className="h-2 w-2 text-white" />
+            </div>
+          )}
         </div>
         <span
           className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selected ? "text-blue-700" : "text-gray-700"
@@ -316,7 +373,11 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
         >
           {label}
         </span>
-
+        {hasSubItems && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ChevronDown className={`h-3 w-3 ${selected ? "text-blue-600" : "text-gray-400"}`} />
+          </motion.div>
+        )}
       </div>
     </motion.div>
   )
