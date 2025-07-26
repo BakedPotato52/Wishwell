@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useProducts } from "@/hooks/use-api-data"
-import { migrateProductToEnhanced } from "@/utils/product-migration"
 import UnifiedProductDetail from "@/components/unified-product-detail"
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -28,11 +27,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   }
 
   // Convert legacy product to enhanced format for display
-  const enhancedProduct = migrateProductToEnhanced(product)
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <UnifiedProductDetail product={enhancedProduct} />
+      <UnifiedProductDetail product={product} />
     </motion.div>
   )
 }

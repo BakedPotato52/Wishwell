@@ -25,7 +25,6 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({})
     const [quantity, setQuantity] = useState(1)
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-
     // Get current price, stock, and variant based on product type and selected attributes
     const currentPrice = useMemo(() => getCurrentPrice(product, selectedAttributes), [product, selectedAttributes])
     const stockStatus = useMemo(() => getStockStatus(product, selectedAttributes), [product, selectedAttributes])
@@ -90,6 +89,7 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
                       `}
                                         >
                                             {option.displayName}
+                                            {/* {console.log("Rendering attribute:", attribute.name, "Value:", option.displayName)} */}
                                         </Label>
                                     </div>
                                 ))}
@@ -294,13 +294,12 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
                     {/* Product Attributes */}
                     <Card>
                         <CardContent className="p-6 space-y-6">
+
                             {/* Enhanced product attributes */}
-                            {isEnhancedProduct(product) && product.attributes && product.attributes.map(renderAttributeSelector)}
+                            {isEnhancedProduct(product) && product.attributes && product.attributes.map((attr) => renderAttributeSelector(attr))}
 
                             {/* Legacy product selectors */}
                             {renderLegacySelectors()}
-
-                            {/* Quantity Selector */}
                             <div className="space-y-3">
                                 <Label className="text-base font-medium">Quantity</Label>
                                 <div className="flex items-center space-x-2">
