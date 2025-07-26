@@ -261,7 +261,21 @@ export default function CheckoutPage() {
               Proceed to Payment
             </Button>
           ) : (
-            <Button size="lg" className="w-full bg-green-600 hover:bg-green-700">
+            <Button
+              size="lg"
+              className="w-full bg-green-600 hover:bg-green-700"
+              onClick={() => {
+                const order = {
+                  items: cartState.items,
+                  deliveryAddress,
+                  total: orderTotal,
+                  additionalFees,
+                  user: authState.user,
+                  timestamp: new Date().toISOString()
+                }
+                console.log('Order placed:', order)
+              }}
+            >
               Place Order
             </Button>
           )}

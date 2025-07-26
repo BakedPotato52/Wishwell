@@ -165,22 +165,25 @@ export default function CartPage() {
                   </div>
 
                 </div>
-                <div className="flex flex-col space-y-2">
+                <div className="flex items-center justify-between mt-3">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleRemoveItem(item.product.id)}
                     disabled={updatingItems.has(item.product.id)}
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
                     {updatingItems.has(item.product.id) ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
                     ) : (
-                      <Trash2 className="h-4 w-4 mr-1" />
+                      <Trash2 className="h-4 w-4 mr-2" />
                     )}
                     Remove
                   </Button>
-                  <Link href="/checkout" className='flex justify-end'>
-                    <Button size="sm">Buy Now</Button>
+                  <Link href="/checkout">
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                      Buy Now
+                    </Button>
                   </Link>
                 </div>
               </CardContent>
