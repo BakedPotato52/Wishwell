@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import { subcategoryImages } from "@/lib/subcategoryImages"
-import type { Category } from "@/lib/types"
+import type { Category, UnifiedProduct } from "@/lib/types"
+import { EnhancedProductGrid } from "./enhanced-product-grid"
 
 /* -------------------------------------------------------------------------- */
 /*                              🔖  Type helpers                              */
@@ -41,6 +42,9 @@ interface CategoryFilterBarProps {
   onSubSubcategoryChange?: (subcategory: string | null, subsubcategory: string | null) => void
   onShowProducts?: (subcategory: string, hasSubcategories: boolean) => void
   currentView: "grid" | "list"
+  sortedProducts?: UnifiedProduct[]
+  view: "grid" | "list"
+  loading?: boolean
 }
 
 /* -------------------------------------------------------------------------- */
@@ -57,6 +61,9 @@ export function CategoryFilterBar({
   onSubSubcategoryChange,
   onShowProducts,
   currentView,
+  sortedProducts,
+  view,
+  loading
 }: CategoryFilterBarProps) {
   /* -------------------------------- State -------------------------------- */
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
@@ -172,112 +179,52 @@ export function CategoryFilterBar({
   /*                                 ✨ UI                                   */
   /* ----------------------------------------------------------------------- */
   return (
-    <div className="bg-white border-b z-30 py-2">
-      <div className="container mx-auto px-4">
-        {/* ---------- Header / breadcrumbs ---------- */}
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <div className="flex items-center space-x-2 mb-1">
-              <h1 className="text-xl font-bold">{categoryName}</h1>
-              {(selectedSubcategory || selectedSubSubcategory) && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleSubcategorySelect(null)}
-                  className="text-blue-600 hover:text-blue-800 text-xs"
-                >
-                  Clear filters
-                </Button>
-              )}
-            </div>
-            <div className="flex items-center space-x-1 text-sm text-gray-600 mb-1">
-              {getBreadcrumbs().map((crumb, i, arr) => (
-                <div key={`breadcrumb-${i}-${crumb}`} className="flex items-center">
-                  {i > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
-                  <span className={i === arr.length - 1 ? "font-medium text-gray-900" : ""}>{crumb}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm text-gray-600">{totalProducts} products</p>
-          </div>
-
-          {/* ---------- View toggle ---------- */}
-          <div className="hidden md:flex items-center space-x-2">
-            <Button
-              variant={currentView === "grid" ? "default" : "outline"}
-              size="sm"
-              onClick={() => onViewChange("grid")}
-            >
-              <Grid3X3 className="h-4 w-4" />
-            </Button>
-            <Button
-              variant={currentView === "list" ? "default" : "outline"}
-              size="sm"
-              onClick={() => onViewChange("list")}
-            >
-              <List className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        {/* ---------- Sort + active‑tag ---------- */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <div className="w-24 bg-white border-r shadow-sm">
+        {/* Header */}
+        {/* <div className="p-4 border-b">
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-xl font-bold">{categoryName}</h1>
             {(selectedSubcategory || selectedSubSubcategory) && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-200"
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleSubcategorySelect(null)}
+                className="text-blue-600 hover:text-blue-800 text-xs"
               >
-                <span className="text-sm font-medium text-blue-700">{getActiveSelectionText()}</span>
-                <button
-                  onClick={() => handleSubcategorySelect(null)}
-                  className="text-blue-500 hover:text-blue-700 ml-1"
-                >
-                  ×
-                </button>
-              </motion.div>
+                Clear
+              </Button>
             )}
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="bg-transparent">
-                <SortAsc className="h-4 w-4 mr-2" />
-                Sort
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {[
-                ["featured", "Featured"],
-                ["price-low", "Price: Low to High"],
-                ["price-high", "Price: High to Low"],
-                ["rating", "Customer Rating"],
-                ["newest", "Newest First"],
-              ].map(([val, label]) => (
-                <DropdownMenuItem key={val} onClick={() => handleSortChange(val)}>
-                  {label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+          
+          <div className="flex items-center space-x-1 text-sm text-gray-600 mb-2">
+            {getBreadcrumbs().map((crumb, i, arr) => (
+              <div key={`breadcrumb-${i}-${crumb}`} className="flex items-center">
+                {i > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
+                <span className={i === arr.length - 1 ? "font-medium text-gray-900" : ""}>{crumb}</span>
+              </div>
+            ))}
+          </div>
 
-        {/* ---------- Dynamic nav rail ---------- */}
+          <p className="text-sm text-gray-600">{totalProducts} products</p>
+        </div> */}
+
+        {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="mb-2">
-            {/* Heading + Back button */}
-            <div className="flex items-center justify-between mb-2">
+          <div className="p-2 overflow-y-auto" ref={scrollRef}>
+            {/* Navigation Header */}
+            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 {!!navigationHistory.length && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={navigateBack}
-                    className="flex items-center space-x-1 text-blue-600 hover:text-blue-800"
+                    className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 p-1"
                   >
                     <ArrowLeft className="h-4 w-4" />
-                    <span>Back</span>
                   </Button>
                 )}
                 <motion.h3
@@ -287,27 +234,20 @@ export function CategoryFilterBar({
                   className="text-lg font-semibold"
                 >
                   {currentLevel.type === LEVELS.MAIN
-                    ? "Shop by Category"
+                    ? "Categories"
                     : currentLevel.type === LEVELS.SUBCATEGORY
-                      ? `${currentLevel.title} Styles`
+                      ? `${currentLevel.title}`
                       : currentLevel.title}
                 </motion.h3>
               </div>
             </div>
 
-            <div
-              ref={scrollRef}
-              className="flex overflow-x-auto scrollbar-hide gap-4 px-4 "
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              {/* "All …" card */}
+            {/* Category List */}
+            <div className="space-y-2">
+              {/* "All" option */}
               {(currentLevel.type === LEVELS.MAIN || currentLevel.type === LEVELS.SUBCATEGORY) && (
-                <CategoryCard
-                  label={currentLevel.type === LEVELS.MAIN ? "All" : `All ${currentLevel.title}`}
+                <CategoryListItem
+                  label={currentLevel.type === LEVELS.MAIN ? "All Categories" : `All ${currentLevel.title}`}
                   selected={
                     currentLevel.type === LEVELS.MAIN
                       ? !selectedSubcategory && !selectedSubSubcategory
@@ -323,16 +263,15 @@ export function CategoryFilterBar({
                 />
               )}
 
-              {/* Actual items */}
-              <AnimatePresence >
+              {/* Category Items */}
+              <AnimatePresence>
                 {currentLevel.items.map((item, i) => {
                   const hasChildren = currentLevel.type === LEVELS.MAIN && !!subsubcategories?.[item]?.length
-
                   const isSelected =
                     currentLevel.type === LEVELS.MAIN ? selectedSubcategory === item : selectedSubSubcategory === item
 
                   return (
-                    <CategoryCard
+                    <CategoryListItem
                       key={`${currentLevel.type}-${i}-${item || "empty"}`}
                       label={item}
                       selected={isSelected}
@@ -352,14 +291,87 @@ export function CategoryFilterBar({
           </div>
         )}
       </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 p-3">
+        {/* Toolbar */}
+        <div className="flex items-center justify-between mb-6">
+          {/* Active Selection Tag */}
+          <div className="flex items-center space-x-2">
+            {(selectedSubcategory || selectedSubSubcategory) && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-200"
+              >
+                <span className="text-sm font-medium text-blue-700">{getActiveSelectionText()}</span>
+                <button
+                  onClick={() => handleSubcategorySelect(null)}
+                  className="text-blue-500 hover:text-blue-700 ml-1"
+                >
+                  ×
+                </button>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Controls */}
+          <div className="flex items-center space-x-4">
+            {/* View Toggle */}
+            <div className="flex items-center space-x-2">
+              <Button
+                variant={currentView === "grid" ? "default" : "outline"}
+                size="sm"
+                onClick={() => onViewChange("grid")}
+              >
+                <Grid3X3 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={currentView === "list" ? "default" : "outline"}
+                size="sm"
+                onClick={() => onViewChange("list")}
+              >
+                <List className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Sort Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <SortAsc className="h-4 w-4 mr-2" />
+                  Sort
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {[
+                  ["featured", "Featured"],
+                  ["price-low", "Price: Low to High"],
+                  ["price-high", "Price: High to Low"],
+                  ["rating", "Customer Rating"],
+                  ["newest", "Newest First"],
+                ].map(([val, label]) => (
+                  <DropdownMenuItem key={val} onClick={() => handleSortChange(val)}>
+                    {label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+
+        {/* Products will be displayed here */}
+        <EnhancedProductGrid products={sortedProducts || []} view={view} loading={loading} />
+
+      </div>
     </div>
   )
 }
 
 /* -------------------------------------------------------------------------- */
-/*                        🟦  Small card component                            */
+/*                        🟦  Sidebar list item component                     */
 /* -------------------------------------------------------------------------- */
-interface CategoryCardProps {
+interface CategoryListItemProps {
   label: string
   selected: boolean
   image: string
@@ -368,7 +380,7 @@ interface CategoryCardProps {
   hasSubItems: boolean
 }
 
-function CategoryCard({ label, selected, image, onClick, delay, hasSubItems }: CategoryCardProps) {
+function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}

@@ -148,22 +148,26 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       </div>
 
       {/* Filter / Sort / View bar */}
-      <CategoryFilterBar
-        categoryName={category.name}
-        category={category}
-        subcategories={category.subcategories}
-        subsubcategories={subsubcategories}
-        totalProducts={sortedProducts.length}
-        currentView={view}
-        onViewChange={setView}
-        onSortChange={handleSortChange}
-        onSubcategoryChange={handleSubcategoryChange}
-        onSubSubcategoryChange={handleSubSubcategoryChange}
-        onShowProducts={handleShowProducts}
-      />
+      <aside className="">
+        <CategoryFilterBar
+          categoryName={category.name}
+          category={category}
+          subcategories={category.subcategories}
+          subsubcategories={subsubcategories}
+          totalProducts={sortedProducts.length}
+          currentView={view}
+          onViewChange={setView}
+          onSortChange={handleSortChange}
+          onSubcategoryChange={handleSubcategoryChange}
+          onSubSubcategoryChange={handleSubSubcategoryChange}
+          onShowProducts={handleShowProducts}
+          sortedProducts={sortedProducts}
+          view={view}
+          loading={loading}
+        />
+      </aside>
 
       {/* Product grid */}
-      <EnhancedProductGrid products={sortedProducts} view={view} loading={loading} />
 
 
     </motion.div>
