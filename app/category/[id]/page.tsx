@@ -132,40 +132,32 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b">
-        <div className="container mx-auto pt-2">
-          <Link href="/">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
-          </Link>
+        <div className="container mx-auto pt-2 top-0 z-10">
           {/* Mobile Category Navigation - outside the main container */}
           <MobileCategoryNav />
         </div>
       </div>
 
       {/* Filter / Sort / View bar */}
-      <aside className="">
-        <CategoryFilterBar
-          categoryName={category.name}
-          category={category}
-          subcategories={category.subcategories}
-          subsubcategories={subsubcategories}
-          totalProducts={sortedProducts.length}
-          currentView={view}
-          onViewChange={setView}
-          onSortChange={handleSortChange}
-          onSubcategoryChange={handleSubcategoryChange}
-          onSubSubcategoryChange={handleSubSubcategoryChange}
-          onShowProducts={handleShowProducts}
-          sortedProducts={sortedProducts}
-          view={view}
-          loading={loading}
-        />
-      </aside>
+      <CategoryFilterBar
+        categoryName={category.name}
+        category={category}
+        subcategories={category.subcategories}
+        subsubcategories={subsubcategories}
+        totalProducts={sortedProducts.length}
+        currentView={view}
+        onViewChange={setView}
+        onSortChange={handleSortChange}
+        onSubcategoryChange={handleSubcategoryChange}
+        onSubSubcategoryChange={handleSubSubcategoryChange}
+        onShowProducts={handleShowProducts}
+        sortedProducts={sortedProducts}
+        view={view}
+        loading={loading}
+      />
 
       {/* Product grid */}
 

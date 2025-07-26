@@ -179,7 +179,7 @@ export function CategoryFilterBar({
   /*                                 ✨ UI                                   */
   /* ----------------------------------------------------------------------- */
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex bg-gray-50">
       {/* Sidebar */}
       <div className="w-24 bg-white border-r shadow-sm">
         {/* Header */}
@@ -213,7 +213,7 @@ export function CategoryFilterBar({
 
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 overflow-y-auto" ref={scrollRef}>
+          <div className="p-2 overflow-y-scroll sm:max-h-[380px] scrollbar-hide ">
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -244,31 +244,11 @@ export function CategoryFilterBar({
 
             {/* Category List */}
             <div className="space-y-2">
-              {/* "All" option */}
-              {(currentLevel.type === LEVELS.MAIN || currentLevel.type === LEVELS.SUBCATEGORY) && (
-                <CategoryListItem
-                  label={currentLevel.type === LEVELS.MAIN ? "All Categories" : `All ${currentLevel.title}`}
-                  selected={
-                    currentLevel.type === LEVELS.MAIN
-                      ? !selectedSubcategory && !selectedSubSubcategory
-                      : selectedSubcategory === currentLevel.parent && !selectedSubSubcategory
-                  }
-                  image={subcategoryImages["All"] ?? "/placeholder.svg"}
-                  onClick={() =>
-                    currentLevel.type === LEVELS.MAIN ? handleSubcategorySelect(null) : handleSubSubcategorySelect(null)
-                  }
-                  delay={0}
-                  hasSubItems={false}
-                  key={`all-${currentLevel.type}-${currentLevel.title || "main"}`}
-                />
-              )}
 
               {/* Category Items */}
               <AnimatePresence>
-                {currentLevel.items.map((item, i) => {
-                  const hasChildren = currentLevel.type === LEVELS.MAIN && !!subsubcategories?.[item]?.length
-                  const isSelected =
-                    currentLevel.type === LEVELS.MAIN ? selectedSubcategory === item : selectedSubSubcategory === item
+                {currentLevel.type === LEVELS.MAIN && currentLevel.items.map((item, i) => {
+                  const isSelected = selectedSubcategory === item
 
                   return (
                     <CategoryListItem
@@ -277,12 +257,9 @@ export function CategoryFilterBar({
                       selected={isSelected}
                       image={subcategoryImages[item] ?? "/placeholder.svg"}
                       onClick={() =>
-                        currentLevel.type === LEVELS.MAIN
-                          ? handleSubcategorySelect(item)
-                          : handleSubSubcategorySelect(item)
+                        handleSubcategorySelect(item)
                       }
                       delay={(i + 1) * 0.05}
-                      hasSubItems={hasChildren}
                     />
                   )
                 })}
@@ -294,74 +271,53 @@ export function CategoryFilterBar({
 
       {/* Main Content Area */}
       <div className="flex-1 p-3">
-        {/* Toolbar */}
-        <div className="flex items-center justify-between mb-6">
-          {/* Active Selection Tag */}
-          <div className="flex items-center space-x-2">
-            {(selectedSubcategory || selectedSubSubcategory) && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-200"
-              >
-                <span className="text-sm font-medium text-blue-700">{getActiveSelectionText()}</span>
-                <button
-                  onClick={() => handleSubcategorySelect(null)}
-                  className="text-blue-500 hover:text-blue-700 ml-1"
+        {/* Subsubcategories */}
+
+        {currentLevel.type === LEVELS.SUBCATEGORY && selectedSubcategory && (
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">{selectedSubcategory}</h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 overflow-y-scroll max-h-64 scrollbar-hide">
+              {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => (
+                <motion.div
+                  key={subsubcategory}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleSubSubcategorySelect(subsubcategory)}
+                  className="cursor-pointer relative"
                 >
-                  ×
-                </button>
-              </motion.div>
-            )}
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center space-x-4">
-            {/* View Toggle */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant={currentView === "grid" ? "default" : "outline"}
-                size="sm"
-                onClick={() => onViewChange("grid")}
-              >
-                <Grid3X3 className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={currentView === "list" ? "default" : "outline"}
-                size="sm"
-                onClick={() => onViewChange("list")}
-              >
-                <List className="h-4 w-4" />
-              </Button>
+                  <div
+                    className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 max-w-[80px] ${selectedSubSubcategory === subsubcategory
+                      ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+                      : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+                      }`}
+                  >
+                    <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
+                      <Image
+                        src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
+                        alt={subsubcategory}
+                        width={48}
+                        height={48}
+                        className="object-contain"
+                      />
+                    </div>
+                    <span
+                      className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selectedSubSubcategory === subsubcategory ? "text-blue-700" : "text-gray-700"
+                        }`}
+                    >
+                      {subsubcategory}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-
-            {/* Sort Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <SortAsc className="h-4 w-4 mr-2" />
-                  Sort
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {[
-                  ["featured", "Featured"],
-                  ["price-low", "Price: Low to High"],
-                  ["price-high", "Price: High to Low"],
-                  ["rating", "Customer Rating"],
-                  ["newest", "Newest First"],
-                ].map(([val, label]) => (
-                  <DropdownMenuItem key={val} onClick={() => handleSortChange(val)}>
-                    {label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
-        </div>
+        )}
 
-        {/* Products will be displayed here */}
-        <EnhancedProductGrid products={sortedProducts || []} view={view} loading={loading} />
+        {/* Active Selection */}
 
       </div>
     </div>
@@ -377,10 +333,9 @@ interface CategoryListItemProps {
   image: string
   onClick: () => void
   delay: number
-  hasSubItems: boolean
 }
 
-function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems }: CategoryListItemProps) {
+function CategoryListItem({ label, selected, image, onClick, delay }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -400,11 +355,7 @@ function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems 
       >
         <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
           <Image src={image ?? "/placeholder.svg"} alt={label} width={48} height={48} className="object-contain" />
-          {hasSubItems && (
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-              <ChevronRight className="h-2 w-2 text-white" />
-            </div>
-          )}
+
         </div>
         <span
           className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selected ? "text-blue-700" : "text-gray-700"
@@ -412,11 +363,7 @@ function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems 
         >
           {label}
         </span>
-        {hasSubItems && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ChevronDown className={`h-3 w-3 ${selected ? "text-blue-600" : "text-gray-400"}`} />
-          </motion.div>
-        )}
+
       </div>
     </motion.div>
   )
