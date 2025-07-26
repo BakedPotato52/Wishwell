@@ -114,8 +114,8 @@ export interface CartItem {
   id: string
   product: UnifiedProduct
   quantity: number
-  selectedAttributes?: Record<string, string> // For enhanced products
-  variantId?: string // For enhanced products
+  selectedAttributes?: Record<string, string> | null // Allow null
+  variantId?: string | null // Allow null
   addedAt: Timestamp | FieldValue
   updatedAt: Timestamp | FieldValue
 }

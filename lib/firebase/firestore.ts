@@ -132,23 +132,40 @@ export const addToCart = async (
     const cartItemRef = doc(db, "users", userId, "cart", cartItemId)
     const existingItem = await getDoc(cartItemRef)
 
+    // Clean up undefined values for Firestore
+    const cleanOptions = {
+      selectedAttributes: options?.selectedAttributes || null, // Use null instead of undefined
+      variantId: options?.variantId || null, // Use null instead of undefined
+    }
+
     if (existingItem.exists()) {
       // Update quantity if item already exists
       await updateDoc(cartItemRef, {
         quantity: increment(quantity),
         updatedAt: serverTimestamp(),
+        // Update options if they changed
+        ...(cleanOptions.selectedAttributes && { selectedAttributes: cleanOptions.selectedAttributes }),
+        ...(cleanOptions.variantId && { variantId: cleanOptions.variantId }),
       })
     } else {
-      // Add new item to cart
-      const cartItem: CartItem = {
+      // Add new item to cart - only include fields that are not null
+      const cartItem: any = {
         id: cartItemId,
         product,
         quantity,
-        selectedAttributes: options?.selectedAttributes,
-        variantId: options?.variantId,
         addedAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       }
+
+      // Only add optional fields if they have values
+      if (cleanOptions.selectedAttributes) {
+        cartItem.selectedAttributes = cleanOptions.selectedAttributes
+      }
+
+      if (cleanOptions.variantId) {
+        cartItem.variantId = cleanOptions.variantId
+      }
+
       await setDoc(cartItemRef, cartItem)
     }
   } catch (error) {

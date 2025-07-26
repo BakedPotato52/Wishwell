@@ -324,7 +324,7 @@ export function CategoryFilterBar({
               )}
 
               {/* Actual items */}
-              <AnimatePresence mode="wait">
+              <AnimatePresence >
                 {currentLevel.items.map((item, i) => {
                   const hasChildren = currentLevel.type === LEVELS.MAIN && !!subsubcategories?.[item]?.length
 

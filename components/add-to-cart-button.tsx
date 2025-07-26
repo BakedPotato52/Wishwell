@@ -68,7 +68,7 @@ export function AddToCartButton({
       }
     }
 
-    const success = await requireAuth(
+    await requireAuth(
       async () => {
         setIsAdding(true)
 

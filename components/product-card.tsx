@@ -23,47 +23,7 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
   const currentPrice = useMemo(() => getCurrentPrice(product, selectedAttributes), [product, selectedAttributes])
   const stockStatus = useMemo(() => getStockStatus(product, selectedAttributes), [product, selectedAttributes])
 
-  // Handle attribute selection for enhanced products
-  const handleAttributeChange = (attributeId: string, value: string) => {
-    setSelectedAttributes((prev) => ({
-      ...prev,
-      [attributeId]: value,
-    }))
-  }
 
-  // Render attribute selectors for enhanced products
-  const renderAttributeSelectors = () => {
-    if (!isEnhancedProduct(product) || !product.attributes) return null
-
-    return (
-      <div className="space-y-2 mt-2">
-        {product.attributes.slice(0, 2).map(
-          (
-            attribute, // Show only first 2 attributes in card
-          ) => (
-            <div key={attribute.attributeId} className="flex items-center space-x-2">
-              <span className="text-xs text-gray-600 min-w-[40px]">{attribute.name}:</span>
-              <Select
-                value={selectedAttributes[attribute.attributeId] || ""}
-                onValueChange={(value) => handleAttributeChange(attribute.attributeId, value)}
-              >
-                <SelectTrigger className="h-7 text-xs">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  {attribute.values.map((option) => (
-                    <SelectItem key={option.id} value={option.value} className="text-xs">
-                      {option.displayName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          ),
-        )}
-      </div>
-    )
-  }
 
   if (view === "list") {
     return (
@@ -103,7 +63,6 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
                 <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
               </div>
 
-              {renderAttributeSelectors()}
 
               <div className="flex items-center justify-between mt-4">
                 <span className="text-xl font-bold text-blue-600">₹{currentPrice}</span>
@@ -158,7 +117,6 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
             <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
           </div>
 
-          {renderAttributeSelectors()}
 
           <div className="flex items-center justify-between mt-4">
             <span className="text-xl font-bold text-blue-600">₹{currentPrice}</span>

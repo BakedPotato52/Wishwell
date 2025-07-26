@@ -1,16 +1,16 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useAuth } from "./auth-context"
 import {
-  addToCart as addToCartFirestore,
+  getUserCart as getCartItemsFn, addToCart as addToCartFn,
   subscribeToCart,
   updateCartItemQuantity,
   removeFromCart as removeFromCartFirestore,
   clearCart as clearCartFirestore,
 } from "@/lib/firebase/firestore"
-import type { CartItem, Product } from "@/lib/types"
+import type { CartItem, Product, UnifiedProduct } from "@/lib/types"
 
 interface CartState {
   items: CartItem[]
@@ -61,14 +61,58 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe()
   }, [firebaseUser])
 
-  const addToCart = async (product: Product, quantity = 1) => {
+  const fetchCartItems = useCallback(async () => {
     if (!firebaseUser) {
-      throw new Error("User must be authenticated to add items to cart")
+      setItems([])
+      return
+    }
+    setLoading(true)
+    try {
+      const items = await getCartItemsFn(firebaseUser.uid)
+      setItems(items)
+    } catch (error) {
+      console.error("Error fetching cart items:", error)
+    } finally {
+      setLoading(false)
+    }
+  }, [firebaseUser])
+
+  useEffect(() => {
+    fetchCartItems()
+  }, [fetchCartItems])
+
+
+  const addToCart = async (
+    product: UnifiedProduct,
+    quantity = 1,
+    options?: {
+      selectedAttributes?: Record<string, string>
+      variantId?: string
+    },
+  ) => {
+    if (!firebaseUser) {
+      throw new Error("User must be logged in to add items to cart")
     }
 
     try {
       setLoading(true)
-      await addToCartFirestore(firebaseUser.uid, product, quantity)
+
+      // Clean up options to avoid undefined values
+      const cleanOptions = options
+        ? {
+          selectedAttributes:
+            options.selectedAttributes && Object.keys(options.selectedAttributes).length > 0
+              ? options.selectedAttributes
+              : undefined,
+          variantId: options.variantId || undefined,
+        }
+        : undefined
+
+      // Use enhanced cart function for better compatibility
+      await addToCartFn(firebaseUser.uid, product, quantity, cleanOptions)
+
+      // Refresh cart items
+      await fetchCartItems()
     } catch (error) {
       console.error("Error adding to cart:", error)
       throw error
