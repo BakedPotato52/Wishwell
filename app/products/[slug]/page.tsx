@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, Search, Grid, List, Home } from "lucide-react"
 import { categories } from "@/lib/categoryData"
+import { subcategoryImages } from "@/lib/subcategoryImages"
 
 // Helper functions for slug conversion
 const createSlug = (text: string): string => {
@@ -55,9 +56,6 @@ export default function SubsubcategoryProductPage() {
     // Get the actual subsubcategory info from slug
     const subsubcategoryInfo = getSubsubcategoryFromSlug(slug)
 
-    console.log("Slug:", slug)
-    console.log("Subsubcategory Info:", subsubcategoryInfo)
-
     // Find the full category info
     const [categoryInfo, setCategoryInfo] = useState<any>(null)
     const [searchQuery, setSearchQuery] = useState("")
@@ -77,7 +75,7 @@ export default function SubsubcategoryProductPage() {
                 currentSubsubcategory: subsubcategoryInfo.subsubcategory,
             })
         }
-    }, [subsubcategoryInfo])
+    }, [slug])
 
     const { products, loading, error, refetch } = useProducts({
         category: subsubcategoryInfo?.category || "",
@@ -89,7 +87,9 @@ export default function SubsubcategoryProductPage() {
     })
 
     // Filter products by subsubcategory since the hook doesn't support it directly
-    const filteredProducts = products.filter((product) => product.subsubcategory === subsubcategoryInfo?.subsubcategory)
+    const filteredProducts = subsubcategoryInfo
+        ? products.filter((product) => product.subsubcategory === subsubcategoryInfo.subsubcategory)
+        : []
 
     const handleSortChange = (value: string) => {
         const [field, order] = value.split("-")
@@ -120,10 +120,7 @@ export default function SubsubcategoryProductPage() {
             <div className="bg-white shadow-sm sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4 mb-4">
-                        <Button variant="ghost" size="sm" className="gap-2" onClick={() => router.back()}>
-                            <ArrowLeft className="h-4 w-4" />
-                            Back
-                        </Button>
+
                         <div className="flex-1">
                             {/* Breadcrumb */}
                             <div className="flex items-center gap-2 mb-2 text-sm text-gray-500">
@@ -154,38 +151,34 @@ export default function SubsubcategoryProductPage() {
                                 <span>/</span>
                                 <span className="text-gray-700 font-medium">{subsubcategoryInfo.subsubcategory}</span>
                             </div>
-                            <h1 className="text-xl md:text-2xl font-bold">{subsubcategoryInfo.subsubcategory}</h1>
-                            <p className="text-sm text-gray-600">in {subsubcategoryInfo.subcategory}</p>
+                            <div className="flex gap-2 p-2">
+                                <div className="flex-1">
+                                    <h1 className="text-xl md:text-2xl font-bold">{subsubcategoryInfo.subsubcategory}</h1>
+                                    <p className="text-sm text-gray-600">in {subsubcategoryInfo.subcategory}</p>
+                                </div>
+                                <Button
+                                    variant={viewMode === "grid" ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setViewMode("grid")}
+                                >
+                                    <Grid className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                    variant={viewMode === "list" ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setViewMode("list")}
+                                >
+                                    <List className="h-4 w-4" />
+                                </Button>
+                            </div>
+
                         </div>
-                        <div className="flex gap-2">
-                            <Button
-                                variant={viewMode === "grid" ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => setViewMode("grid")}
-                            >
-                                <Grid className="h-4 w-4" />
-                            </Button>
-                            <Button
-                                variant={viewMode === "list" ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => setViewMode("list")}
-                            >
-                                <List className="h-4 w-4" />
-                            </Button>
-                        </div>
+
                     </div>
 
                     {/* Search and Filter Bar */}
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                            <Input
-                                placeholder="Search products..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10"
-                            />
-                        </div>
+
                         <Select value={`${sortBy}-${sortOrder}`} onValueChange={handleSortChange}>
                             <SelectTrigger className="w-full sm:w-48">
                                 <SelectValue placeholder="Sort by" />
@@ -249,23 +242,23 @@ export default function SubsubcategoryProductPage() {
                         <div className="container mx-auto px-4">
                             <h2 className="text-xl font-bold mb-6">More in {subsubcategoryInfo.subcategory}</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                {categoryInfo.subsubcategories[subsubcategoryInfo.subcategory]
-                                    .filter((subsubcat: string) => subsubcat !== subsubcategoryInfo.subsubcategory)
+                                {categoryInfo.subcategories
+                                    .filter((sub: string) => sub !== subsubcategoryInfo.subsubcategory)
                                     .slice(0, 6)
                                     .map((subsubcategory: string) => {
                                         const subsubSlug = createSlug(subsubcategory)
                                         return (
-                                            <Link key={subsubcategory} href={`/subcategory-product/${subsubSlug}`}>
+                                            <Link key={subsubcategory} href={`/products/${subsubSlug}`}>
                                                 <motion.div
                                                     whileHover={{ scale: 1.02 }}
                                                     className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                                                 >
                                                     <div className="flex flex-col items-center text-center">
                                                         <Image
-                                                            src={categoryInfo.image || "/placeholder.svg"}
+                                                            src={subcategoryImages[subsubcategory] || "/placeholder.svg"}
                                                             alt={subsubcategory}
-                                                            width={48}
-                                                            height={48}
+                                                            width={64}
+                                                            height={64}
                                                             className="mb-2 rounded-lg"
                                                         />
                                                         <span className="text-sm font-medium line-clamp-2">{subsubcategory}</span>
@@ -286,25 +279,25 @@ export default function SubsubcategoryProductPage() {
                         <h2 className="text-xl font-bold mb-6">Other categories in {categoryInfo.name}</h2>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                             {categoryInfo.subcategories
-                                .filter((sub: string) => sub !== subsubcategoryInfo.subcategory)
+                                .filter((sub: string) => sub !== subsubcategoryInfo.subsubcategory)
                                 .slice(0, 6)
-                                .map((subcategory: string) => {
-                                    const subSlug = createSlug(subcategory)
+                                .map((subsubcategory: string) => {
+                                    const subSlug = createSlug(subsubcategory)
                                     return (
-                                        <Link key={subcategory} href={`/subcategory/${subSlug}`}>
+                                        <Link key={subsubcategory} href={`/products/${subSlug}`}>
                                             <motion.div
                                                 whileHover={{ scale: 1.02 }}
                                                 className="p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer shadow-sm"
                                             >
                                                 <div className="flex flex-col items-center text-center">
                                                     <Image
-                                                        src={categoryInfo.image || "/placeholder.svg"}
-                                                        alt={subcategory}
-                                                        width={48}
-                                                        height={48}
+                                                        src={subcategoryImages[subsubcategory] || "/placeholder.svg"}
+                                                        alt={subsubcategory}
+                                                        width={64}
+                                                        height={64}
                                                         className="mb-2 rounded-lg"
                                                     />
-                                                    <span className="text-sm font-medium line-clamp-2">{subcategory}</span>
+                                                    <span className="text-sm font-medium line-clamp-2">{subsubcategory}</span>
                                                 </div>
                                             </motion.div>
                                         </Link>
