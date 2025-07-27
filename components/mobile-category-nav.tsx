@@ -51,11 +51,11 @@ export function MobileCategoryNav() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-shrink-0"
+              className="flex-shrink-0 max-w-[120px]"
             >
               <Link href={`/category/${category.id}`}>
-                <div className="flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
-                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                <div className="flex flex-col items-center p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                     <Image
                       src={category.image || "/placeholder.svg"}
                       alt={category.name}
@@ -64,7 +64,7 @@ export function MobileCategoryNav() {
                       className="object-cover"
                     />
                   </div>
-                  <span className="text-sm text-center font-medium">{category.name}{category.name.length > 10 ? "..." : ""}</span>
+                  <span className="text-sm text-center font-medium">{category.name.slice(0, 10)}{category.name.length > 10 ? "..." : ""}</span>
                 </div>
               </Link>
             </motion.div>

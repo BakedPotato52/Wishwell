@@ -169,7 +169,7 @@ export function CategoryFilterBar({
                   key={currentLevel.title}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-lg font-medium text-gray-800"
+                  className="text-md font-semibold text-gray-800"
                 >
                   {currentLevel.type === LEVELS.MAIN
                     ? "Categories"
