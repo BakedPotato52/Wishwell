@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { SortAsc, Grid3X3, List, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
 import { subcategoryImages } from "@/lib/subcategoryImages"
 import type { Category, UnifiedProduct } from "@/lib/types"
 
@@ -81,9 +82,11 @@ export function CategoryFilterBar({
   }, [currentLevel])
 
   /* -------------------------------- Handlers ----------------------------- */
-  const handleSortChange = (sort: string) => {
-    setSortBy(sort)
-    onSortChange(sort)
+  const createSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")
   }
 
   const handleSubcategorySelect = (subcategory: string | null) => {
@@ -220,49 +223,55 @@ export function CategoryFilterBar({
             <div className="mb-4">
               <h2 className="text-lg font-semibold mb-2">{selectedSubcategory}</h2>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => (
-                  <motion.div
-                    key={subsubcategory}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleSubSubcategorySelect(subsubcategory)}
-                    className="cursor-pointer relative"
-                  >
-                    <div
-                      className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 max-w-[120px] ${selectedSubSubcategory === subsubcategory
-                        ? "bg-blue-50 border-2 border-blue-200 shadow-md"
-                        : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
-                        }`}
-                    >
-                      <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
-                        <Image
-                          src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
-                          alt={subsubcategory}
-                          width={64}
-                          height={64}
-                          className="object-contain"
-                        />
-                      </div>
-                      <span
-                        className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selectedSubSubcategory === subsubcategory ? "text-blue-700" : "text-gray-700"
-                          }`}
+                {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => {
+                  const slug = createSlug(subsubcategory)
+                  return (
+                    <Link key={subsubcategory} href={`/subcategory/${slug}`}>
+                      <motion.div
+                        key={subsubcategory}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ delay: index * 0.05 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleSubSubcategorySelect(subsubcategory)}
+                        className="cursor-pointer relative"
                       >
-                        {subsubcategory}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
+                        <div
+                          className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 max-w-[120px] ${selectedSubSubcategory === subsubcategory
+                            ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+                            : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+                            }`}
+                        >
+                          <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
+                            <Image
+                              src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
+                              alt={subsubcategory}
+                              width={64}
+                              height={64}
+                              className="object-contain"
+                            />
+                          </div>
+                          <span
+                            className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selectedSubSubcategory === subsubcategory ? "text-blue-700" : "text-gray-700"
+                              }`}
+                          >
+                            {subsubcategory}
+                          </span>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
-          )}
+          )
+        }
 
         {/* Active Selection */}
-      </section>
-    </div>
+      </section >
+    </div >
   )
 }
 
