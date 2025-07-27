@@ -86,52 +86,28 @@ export function CategoryFilterBar({
     onSortChange(sort)
   }
 
-  /** User picked / cleared a 1st‑level sub‑category ("For Him") */
-  // Function to handle when a subcategory is selected, takes a subcategory string or null as parameter
   const handleSubcategorySelect = (subcategory: string | null) => {
-    // Check if subcategory is null/undefined (user wants to reset)
     if (!subcategory) {
-      // Reset to MAIN category view
-      setSelectedSubcategory(null)                // Clear selected subcategory state
-      setSelectedSubSubcategory(null)             // Clear selected sub-subcategory state
-      setCurrentLevel({                           // Reset navigation level to main categories
+      setSelectedSubcategory(null)
+      setSelectedSubSubcategory(null)
+      setCurrentLevel({
         type: LEVELS.MAIN,
-        items: subcategories,                     // Set items to all available subcategories
-        title: categoryName,                      // Set title to the main category name
+        items: subcategories,
+        title: categoryName,
       })
-      setNavigationHistory([])                    // Clear navigation history stack
-      onSubcategoryChange?.(null)                 // Notify parent about subcategory reset (if callback exists)
-      onSubSubcategoryChange?.(null, null)        // Notify parent about sub-subcategory reset (if callback exists)
-      return                                      // Exit function early
+      setNavigationHistory([])
+      onSubcategoryChange?.(null)
+      onSubSubcategoryChange?.(null, null)
+      return
     }
 
-    // Check if selected subcategory has any sub-subcategories
-    const hasSubSubcategories = !!subsubcategories?.[subcategory]?.length
-
-    if (hasSubSubcategories) {
-      /* Drill into SUBCATEGORY level - show subsubcategories */
-      setNavigationHistory((prev) => [...prev, currentLevel]) // Add current level to history for back navigation
-      setSelectedSubcategory(subcategory)                     // Update selected subcategory state
-      setSelectedSubSubcategory(null)                         // Clear any previously selected sub-subcategory
-      setCurrentLevel({                                       // Update current navigation level
-        type: LEVELS.SUBCATEGORY,                             // Set type to subcategory level
-        parent: subcategory,                                  // Set parent reference to current subcategory
-        items: subsubcategories![subcategory],                // Set items to sub-subcategories of this subcategory
-        title: subcategory,                                   // Set title to selected subcategory name
-      })
-      onSubcategoryChange?.(subcategory)                      // Notify parent of subcategory selection
-      onSubSubcategoryChange?.(subcategory, null)             // Notify parent about sub-subcategory (null because none selected yet)
-    } else {
-      /* No subsubcategories - show products directly */
-      setSelectedSubcategory(subcategory)                     // Update selected subcategory state
-      setSelectedSubSubcategory(null)                         // Ensure no sub-subcategory is selected
-      onSubcategoryChange?.(subcategory)                      // Notify parent of subcategory selection
-      onSubSubcategoryChange?.(subcategory, null)             // Notify parent about sub-subcategory (null because none exist)
-
-      // Trigger showing products for this subcategory directly
-      onShowProducts?.(subcategory, false)                    // Call product display handler with subcategory and false (indicating not a sub-subcategory)
-    }
+    setSelectedSubcategory(subcategory)
+    setSelectedSubSubcategory(null)
+    onSubcategoryChange?.(subcategory)
+    onSubSubcategoryChange?.(subcategory, null)
+    onShowProducts?.(subcategory, false)
   }
+
 
   /** User picked / cleared a 2nd‑level sub‑category ("Casual Shoes") */
   const handleSubSubcategorySelect = (subsubcategory: string | null) => {
@@ -163,18 +139,6 @@ export function CategoryFilterBar({
     }
   }
 
-  /* -------------------------------- Helpers ------------------------------ */
-  // const getBreadcrumbs = () => {
-  //   const crumbs = [categoryName]
-  //   if (selectedSubcategory) crumbs.push(selectedSubcategory)
-  //   if (selectedSubSubcategory) crumbs.push(selectedSubSubcategory)
-  //   return crumbs
-  // }
-
-  // const getActiveSelectionText = () =>
-  //   selectedSubSubcategory
-  //     ? `${selectedSubcategory} > ${selectedSubSubcategory}`
-  //     : (selectedSubcategory ?? "All Categories")
 
   /* ----------------------------------------------------------------------- */
   /*                                 ✨ UI                                   */
@@ -187,7 +151,7 @@ export function CategoryFilterBar({
 
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 sm:max-h-[380px] scrollbar-hide sticky" ref={scrollRef}>
+          <div className="p-2 max-h-[380px]  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -323,7 +287,7 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="cursor-pointer relative overflow-y-scroll scrollbar-hide"
+      className="cursor-pointer relative"
     >
       <div
         className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
