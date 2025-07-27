@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { SortAsc, Grid3X3, List, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
@@ -62,7 +62,7 @@ export function CategoryFilterBar({
   currentView,
   sortedProducts,
   view,
-  loading
+  loading,
 }: CategoryFilterBarProps) {
   /* -------------------------------- State -------------------------------- */
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
@@ -80,6 +80,20 @@ export function CategoryFilterBar({
   useEffect(() => {
     scrollRef.current?.scrollTo({ left: 0, behavior: "smooth" })
   }, [currentLevel])
+
+  /* --------------------------- Auto-select on reload ------------------------- */
+  useEffect(() => {
+    // Auto-execute handleSubcategorySelect on component mount if there's a selected subcategory
+    // This ensures subsubcategories are displayed immediately after page reload
+    if (selectedSubcategory && subsubcategories[selectedSubcategory]?.length > 0) {
+      // Use setTimeout to ensure the component is fully mounted before executing
+      const timeoutId = setTimeout(() => {
+        handleSubcategorySelect(selectedSubcategory)
+      }, 0)
+
+      return () => clearTimeout(timeoutId)
+    }
+  }, []) // Empty dependency array ensures this only runs once on mount
 
   /* -------------------------------- Handlers ----------------------------- */
   const createSlug = (name: string) => {
@@ -104,13 +118,17 @@ export function CategoryFilterBar({
       return
     }
 
+    // Prevent unnecessary re-execution if the same subcategory is already selected
+    if (selectedSubcategory === subcategory) {
+      return
+    }
+
     setSelectedSubcategory(subcategory)
     setSelectedSubSubcategory(null)
     onSubcategoryChange?.(subcategory)
     onSubSubcategoryChange?.(subcategory, null)
     onShowProducts?.(subcategory, false)
   }
-
 
   /** User picked / cleared a 2nd‑level sub‑category ("Casual Shoes") */
   const handleSubSubcategorySelect = (subsubcategory: string | null) => {
@@ -142,7 +160,6 @@ export function CategoryFilterBar({
     }
   }
 
-
   /* ----------------------------------------------------------------------- */
   /*                                 ✨ UI                                   */
   /* ----------------------------------------------------------------------- */
@@ -150,8 +167,6 @@ export function CategoryFilterBar({
     <div className="flex bg-gray-50">
       {/* Sidebar */}
       <div className="w-24 bg-white border-r shadow-sm">
-
-
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
           <div className="p-2 max-h-dvh  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
@@ -185,12 +200,12 @@ export function CategoryFilterBar({
 
             {/* Category List */}
             <div className="space-y-2">
-
               {/* Category Items */}
               <AnimatePresence>
                 {currentLevel.items.map((item, i) => {
                   const isSelected =
-                    currentLevel.type === LEVELS.MAIN && selectedSubcategory === item
+                    currentLevel.type === LEVELS.MAIN &&
+                    (selectedSubcategory === item || (selectedSubcategory === null && i === 0))
 
                   return (
                     <CategoryListItem
@@ -198,17 +213,12 @@ export function CategoryFilterBar({
                       label={item}
                       selected={isSelected}
                       image={subcategoryImages[item] ?? "/placeholder.svg"}
-                      onClick={() =>
-                        currentLevel.type === LEVELS.MAIN
-                        && handleSubcategorySelect(item)
-
-                      }
+                      onClick={() => currentLevel.type === LEVELS.MAIN && handleSubcategorySelect(item)}
                       delay={(i + 1) * 0.05}
                     />
                   )
                 })}
               </AnimatePresence>
-
             </div>
           </div>
         )}
@@ -266,12 +276,11 @@ export function CategoryFilterBar({
                 })}
               </div>
             </div>
-          )
-        }
+          )}
 
         {/* Active Selection */}
-      </section >
-    </div >
+      </section>
+    </div>
   )
 }
 
@@ -305,14 +314,7 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
           }`}
       >
         <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
-          <Image
-            src={image ?? "/placeholder.svg"}
-            alt={label}
-            width={64}
-            height={64}
-            className="object-contain"
-          />
-
+          <Image src={image ?? "/placeholder.svg"} alt={label} width={64} height={64} className="object-contain" />
         </div>
         <span
           className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selected ? "text-blue-700" : "text-gray-700"
@@ -320,7 +322,6 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
         >
           {label}
         </span>
-
       </div>
     </motion.div>
   )
