@@ -3,10 +3,8 @@
 import { useState, useMemo, use, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CategoryFilterBar } from "@/components/category-filter-bar"
-import { EnhancedProductGrid } from "@/components/enhanced-product-grid"
 import { categories } from "@/lib/categoryData"
 import type { Product } from "@/lib/types"
 import { MobileCategoryNav } from "@/components/mobile-category-nav"
@@ -132,7 +130,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-h-screen bg-gray-50">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-h-dvh scrollbar-hide overflow-hidden bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b">
         <div className="container mx-auto pt-2 top-0 z-10">
@@ -159,7 +157,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
         loading={loading}
       />
 
-      {/* Product grid */}
 
 
     </motion.div>

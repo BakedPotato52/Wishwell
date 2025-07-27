@@ -237,12 +237,12 @@ export function CategoryFilterBar({
                       : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
                       }`}
                   >
-                    <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
+                    <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
                       <Image
                         src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
                         alt={subsubcategory}
-                        width={48}
-                        height={48}
+                        width={64}
+                        height={64}
                         className="object-contain"
                       />
                     </div>
@@ -290,13 +290,19 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
       className="cursor-pointer relative"
     >
       <div
-        className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
-          ? "bg-blue-100 border-2 border-blue-200 shadow-md"
-          : "bg-gray-100 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+        className={`flex flex-col items-center p-2 rounded-lg transition-all duration-200 min-w-[80px] ${selected
+          ? "bg-blue-200 border-2 border-blue-400 shadow-md"
+          : "bg-gray-200 hover:bg-gray-300 border-2 border-transparent hover:border-gray-400"
           }`}
       >
-        <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
-          <Image src={image ?? "/placeholder.svg"} alt={label} width={48} height={48} className="object-contain" />
+        <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
+          <Image
+            src={image ?? "/placeholder.svg"}
+            alt={label}
+            width={64}
+            height={64}
+            className="object-contain"
+          />
 
         </div>
         <span
