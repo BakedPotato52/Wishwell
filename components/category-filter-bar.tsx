@@ -154,7 +154,7 @@ export function CategoryFilterBar({
 
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 max-h-[380px]  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
+          <div className="p-2 max-h-dvh  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -215,7 +215,7 @@ export function CategoryFilterBar({
       </div>
 
       {/* Main Content Area */}
-      <section className="flex-1 p-3 max-h-[380px] overflow-y-scroll scrollbar-hide">
+      <section className="flex-1 p-3 max-h-dvh overflow-y-scroll scrollbar-hide">
         {/* Subsubcategories - Alternative display in main content area */}
         {currentLevel.type === LEVELS.MAIN &&
           selectedSubcategory &&
@@ -226,7 +226,7 @@ export function CategoryFilterBar({
                 {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => {
                   const slug = createSlug(subsubcategory)
                   return (
-                    <Link key={subsubcategory} href={`/subcategory/${slug}`}>
+                    <Link key={subsubcategory} href={`/products/${slug}`}>
                       <motion.div
                         key={subsubcategory}
                         initial={{ opacity: 0, scale: 0.8 }}
