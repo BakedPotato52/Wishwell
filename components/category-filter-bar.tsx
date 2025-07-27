@@ -169,7 +169,7 @@ export function CategoryFilterBar({
                   key={currentLevel.title}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-lg font-semibold"
+                  className="text-lg font-medium text-gray-800"
                 >
                   {currentLevel.type === LEVELS.MAIN
                     ? "Categories"
@@ -212,56 +212,56 @@ export function CategoryFilterBar({
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 p-3">
-        {/* Subsubcategories */}
-
-        {currentLevel.type === LEVELS.SUBCATEGORY && selectedSubcategory && (
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">{selectedSubcategory}</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 overflow-y-scroll max-h-64 scrollbar-hide">
-              {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => (
-                <motion.div
-                  key={subsubcategory}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleSubSubcategorySelect(subsubcategory)}
-                  className="cursor-pointer relative"
-                >
-                  <div
-                    className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 max-w-[80px] ${selectedSubSubcategory === subsubcategory
-                      ? "bg-blue-50 border-2 border-blue-200 shadow-md"
-                      : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
-                      }`}
+      <section className="flex-1 p-3 max-h-[380px] overflow-y-scroll scrollbar-hide">
+        {/* Subsubcategories - Alternative display in main content area */}
+        {currentLevel.type === LEVELS.MAIN &&
+          selectedSubcategory &&
+          subsubcategories[selectedSubcategory]?.length > 0 && (
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold mb-2">{selectedSubcategory}</h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => (
+                  <motion.div
+                    key={subsubcategory}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleSubSubcategorySelect(subsubcategory)}
+                    className="cursor-pointer relative"
                   >
-                    <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
-                      <Image
-                        src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
-                        alt={subsubcategory}
-                        width={64}
-                        height={64}
-                        className="object-contain"
-                      />
-                    </div>
-                    <span
-                      className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selectedSubSubcategory === subsubcategory ? "text-blue-700" : "text-gray-700"
+                    <div
+                      className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 max-w-[120px] ${selectedSubSubcategory === subsubcategory
+                        ? "bg-blue-50 border-2 border-blue-200 shadow-md"
+                        : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
                         }`}
                     >
-                      {subsubcategory}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
+                      <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
+                        <Image
+                          src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
+                          alt={subsubcategory}
+                          width={64}
+                          height={64}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span
+                        className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selectedSubSubcategory === subsubcategory ? "text-blue-700" : "text-gray-700"
+                          }`}
+                      >
+                        {subsubcategory}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Active Selection */}
-
-      </div>
+      </section>
     </div>
   )
 }
