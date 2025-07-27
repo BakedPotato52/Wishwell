@@ -14,7 +14,7 @@ export function ProductGrid({ products, title }: ProductGridProps) {
     <section className="py-4">
       <div className="container mx-auto px-4">
         {title && (
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-6">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-3">
             {title}
           </motion.h2>
         )}

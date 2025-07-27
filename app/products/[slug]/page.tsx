@@ -197,12 +197,12 @@ export default function SubsubcategoryProductPage() {
             </div>
 
             {/* Content */}
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-2">
                 {loading && <ProductGridSkeleton count={12} />}
                 {error && <ErrorMessage message={error} onRetry={refetch} />}
                 {!loading && !error && filteredProducts.length > 0 && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                        <div className="mb-6 flex justify-between items-center">
+                        <div className="mb-2 flex justify-between items-center">
                             <p className="text-sm text-gray-600">
                                 Showing {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""} in{" "}
                                 {subsubcategoryInfo.subsubcategory}
@@ -238,7 +238,7 @@ export default function SubsubcategoryProductPage() {
             {/* Related Subsubcategories */}
             {categoryInfo.subsubcategories?.[subsubcategoryInfo.subcategory] &&
                 categoryInfo.subsubcategories[subsubcategoryInfo.subcategory].length > 1 && (
-                    <section className="bg-white py-8 mt-8">
+                    <section className="bg-white py-4">
                         <div className="container mx-auto px-4">
                             <h2 className="text-xl font-bold mb-6">More in {subsubcategoryInfo.subcategory}</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -274,7 +274,7 @@ export default function SubsubcategoryProductPage() {
 
             {/* Related Subcategories */}
             {categoryInfo.subcategories && categoryInfo.subcategories.length > 1 && (
-                <section className="bg-gray-100 py-8">
+                <section className="bg-gray-100 py-4">
                     <div className="container mx-auto px-4">
                         <h2 className="text-xl font-bold mb-6">Other categories in {categoryInfo.name}</h2>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
