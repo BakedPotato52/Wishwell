@@ -4,11 +4,9 @@ import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { SortAsc, Grid3X3, List, ChevronRight, ChevronDown, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import { subcategoryImages } from "@/lib/subcategoryImages"
 import type { Category, UnifiedProduct } from "@/lib/types"
-import { EnhancedProductGrid } from "./enhanced-product-grid"
 
 /* -------------------------------------------------------------------------- */
 /*                              🔖  Type helpers                              */
@@ -89,46 +87,49 @@ export function CategoryFilterBar({
   }
 
   /** User picked / cleared a 1st‑level sub‑category ("For Him") */
+  // Function to handle when a subcategory is selected, takes a subcategory string or null as parameter
   const handleSubcategorySelect = (subcategory: string | null) => {
+    // Check if subcategory is null/undefined (user wants to reset)
     if (!subcategory) {
-      // Reset to MAIN
-      setSelectedSubcategory(null)
-      setSelectedSubSubcategory(null)
-      setCurrentLevel({
+      // Reset to MAIN category view
+      setSelectedSubcategory(null)                // Clear selected subcategory state
+      setSelectedSubSubcategory(null)             // Clear selected sub-subcategory state
+      setCurrentLevel({                           // Reset navigation level to main categories
         type: LEVELS.MAIN,
-        items: subcategories,
-        title: categoryName,
+        items: subcategories,                     // Set items to all available subcategories
+        title: categoryName,                      // Set title to the main category name
       })
-      setNavigationHistory([])
-      onSubcategoryChange?.(null)
-      onSubSubcategoryChange?.(null, null)
-      return
+      setNavigationHistory([])                    // Clear navigation history stack
+      onSubcategoryChange?.(null)                 // Notify parent about subcategory reset (if callback exists)
+      onSubSubcategoryChange?.(null, null)        // Notify parent about sub-subcategory reset (if callback exists)
+      return                                      // Exit function early
     }
 
+    // Check if selected subcategory has any sub-subcategories
     const hasSubSubcategories = !!subsubcategories?.[subcategory]?.length
 
     if (hasSubSubcategories) {
       /* Drill into SUBCATEGORY level - show subsubcategories */
-      setNavigationHistory((prev) => [...prev, currentLevel])
-      setSelectedSubcategory(subcategory)
-      setSelectedSubSubcategory(null)
-      setCurrentLevel({
-        type: LEVELS.SUBCATEGORY,
-        parent: subcategory,
-        items: subsubcategories![subcategory],
-        title: subcategory,
+      setNavigationHistory((prev) => [...prev, currentLevel]) // Add current level to history for back navigation
+      setSelectedSubcategory(subcategory)                     // Update selected subcategory state
+      setSelectedSubSubcategory(null)                         // Clear any previously selected sub-subcategory
+      setCurrentLevel({                                       // Update current navigation level
+        type: LEVELS.SUBCATEGORY,                             // Set type to subcategory level
+        parent: subcategory,                                  // Set parent reference to current subcategory
+        items: subsubcategories![subcategory],                // Set items to sub-subcategories of this subcategory
+        title: subcategory,                                   // Set title to selected subcategory name
       })
-      onSubcategoryChange?.(subcategory)
-      onSubSubcategoryChange?.(subcategory, null)
+      onSubcategoryChange?.(subcategory)                      // Notify parent of subcategory selection
+      onSubSubcategoryChange?.(subcategory, null)             // Notify parent about sub-subcategory (null because none selected yet)
     } else {
       /* No subsubcategories - show products directly */
-      setSelectedSubcategory(subcategory)
-      setSelectedSubSubcategory(null)
-      onSubcategoryChange?.(subcategory)
-      onSubSubcategoryChange?.(subcategory, null)
+      setSelectedSubcategory(subcategory)                     // Update selected subcategory state
+      setSelectedSubSubcategory(null)                         // Ensure no sub-subcategory is selected
+      onSubcategoryChange?.(subcategory)                      // Notify parent of subcategory selection
+      onSubSubcategoryChange?.(subcategory, null)             // Notify parent about sub-subcategory (null because none exist)
 
-      // Trigger showing products for this subcategory
-      onShowProducts?.(subcategory, false)
+      // Trigger showing products for this subcategory directly
+      onShowProducts?.(subcategory, false)                    // Call product display handler with subcategory and false (indicating not a sub-subcategory)
     }
   }
 
@@ -163,17 +164,17 @@ export function CategoryFilterBar({
   }
 
   /* -------------------------------- Helpers ------------------------------ */
-  const getBreadcrumbs = () => {
-    const crumbs = [categoryName]
-    if (selectedSubcategory) crumbs.push(selectedSubcategory)
-    if (selectedSubSubcategory) crumbs.push(selectedSubSubcategory)
-    return crumbs
-  }
+  // const getBreadcrumbs = () => {
+  //   const crumbs = [categoryName]
+  //   if (selectedSubcategory) crumbs.push(selectedSubcategory)
+  //   if (selectedSubSubcategory) crumbs.push(selectedSubSubcategory)
+  //   return crumbs
+  // }
 
-  const getActiveSelectionText = () =>
-    selectedSubSubcategory
-      ? `${selectedSubcategory} > ${selectedSubSubcategory}`
-      : (selectedSubcategory ?? "All Categories")
+  // const getActiveSelectionText = () =>
+  //   selectedSubSubcategory
+  //     ? `${selectedSubcategory} > ${selectedSubSubcategory}`
+  //     : (selectedSubcategory ?? "All Categories")
 
   /* ----------------------------------------------------------------------- */
   /*                                 ✨ UI                                   */
@@ -182,38 +183,11 @@ export function CategoryFilterBar({
     <div className="flex bg-gray-50">
       {/* Sidebar */}
       <div className="w-24 bg-white border-r shadow-sm">
-        {/* Header */}
-        {/* <div className="p-4 border-b">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-xl font-bold">{categoryName}</h1>
-            {(selectedSubcategory || selectedSubSubcategory) && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleSubcategorySelect(null)}
-                className="text-blue-600 hover:text-blue-800 text-xs"
-              >
-                Clear
-              </Button>
-            )}
-          </div>
 
-          
-          <div className="flex items-center space-x-1 text-sm text-gray-600 mb-2">
-            {getBreadcrumbs().map((crumb, i, arr) => (
-              <div key={`breadcrumb-${i}-${crumb}`} className="flex items-center">
-                {i > 0 && <ChevronRight className="h-3 w-3 mx-1" />}
-                <span className={i === arr.length - 1 ? "font-medium text-gray-900" : ""}>{crumb}</span>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-sm text-gray-600">{totalProducts} products</p>
-        </div> */}
 
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 overflow-y-scroll sm:max-h-[380px] scrollbar-hide sticky" ref={scrollRef}>
+          <div className="p-2 sm:max-h-[380px] scrollbar-hide sticky" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -248,9 +222,8 @@ export function CategoryFilterBar({
               {/* Category Items */}
               <AnimatePresence>
                 {currentLevel.items.map((item, i) => {
-                  const hasChildren = currentLevel.type === LEVELS.MAIN && !!subsubcategories?.[item]?.length
                   const isSelected =
-                    currentLevel.type === LEVELS.MAIN ? selectedSubcategory === item : selectedSubSubcategory === item
+                    currentLevel.type === LEVELS.MAIN && selectedSubcategory === item
 
                   return (
                     <CategoryListItem
@@ -260,15 +233,15 @@ export function CategoryFilterBar({
                       image={subcategoryImages[item] ?? "/placeholder.svg"}
                       onClick={() =>
                         currentLevel.type === LEVELS.MAIN
-                        || handleSubcategorySelect(item)
+                        && handleSubcategorySelect(item)
 
                       }
                       delay={(i + 1) * 0.05}
-                      hasSubItems={!hasChildren}
                     />
                   )
                 })}
               </AnimatePresence>
+
             </div>
           </div>
         )}
@@ -338,10 +311,9 @@ interface CategoryListItemProps {
   image: string
   onClick: () => void
   delay: number
-  hasSubItems: boolean
 }
 
-function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems }: CategoryListItemProps) {
+function CategoryListItem({ label, selected, image, onClick, delay }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -351,21 +323,17 @@ function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems 
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="cursor-pointer relative"
+      className="cursor-pointer relative overflow-y-scroll scrollbar-hide"
     >
       <div
         className={`flex flex-col items-center p-4 rounded-lg transition-all duration-200 min-w-[80px] ${selected
-          ? "bg-blue-50 border-2 border-blue-200 shadow-md"
-          : "bg-gray-50 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
+          ? "bg-blue-100 border-2 border-blue-200 shadow-md"
+          : "bg-gray-100 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200"
           }`}
       >
         <div className="w-12 h-12 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
           <Image src={image ?? "/placeholder.svg"} alt={label} width={48} height={48} className="object-contain" />
-          {hasSubItems && (
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-              <ChevronRight className="h-2 w-2 text-white" />
-            </div>
-          )}
+
         </div>
         <span
           className={`text-xs text-center font-medium leading-tight max-w-[70px] line-clamp-2 ${selected ? "text-blue-700" : "text-gray-700"
@@ -373,11 +341,7 @@ function CategoryListItem({ label, selected, image, onClick, delay, hasSubItems 
         >
           {label}
         </span>
-        {hasSubItems && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ChevronDown className={`h-3 w-3 ${selected ? "text-blue-600" : "text-gray-400"}`} />
-          </motion.div>
-        )}
+
       </div>
     </motion.div>
   )

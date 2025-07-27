@@ -4,7 +4,7 @@ export const categories: Category[] = [
     {
         id: "vKvRUECQh9cC5XxYcDZR",
         name: "Men",
-        image: "/categories/man.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753591610/Men_Category_Photo__l7u0ej.png?height=60&width=60",
         icon: "👔",
         subcategories: [
             "Topwear",
@@ -45,7 +45,7 @@ export const categories: Category[] = [
             "Jumpsuits",
         ],
         subsubcategories: {
-            "Top wear": ["Tops", "T-Shirts", "Shirts", "Sweaters", "Hoodies & Sweatshirts", "Cardigans & Shrugs", "Blazers & Waistcoats"],
+            "Top wear": ["Top", "T-Shirts", "Shirts", "Jackets", "Hoodies & Sweatshirts", "Cardigans & Shrugs", "Blazers & Waistcoats"],
             "Bottom wear": ["Shorts", "Jeans", "Pants & Trousers", "Skirts", "Skorts", "Sweatpants", "Cargos & Joggers"],
             "Dresses": ["Midi", "Mini", "Maxi"],
             "Ethnic & Fusion Wear": ["Sarees", "Tops & Tunics", "Blouses", "Bottoms", "Kurtas", "Kurta Sets", "Co-ords"],

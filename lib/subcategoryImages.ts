@@ -7,21 +7,59 @@ export const subcategoryImages: Record<string, string> = {
     All: "/categories/subcategory/shirts.png",
 
     // Men's subcategories
-    Shirts: "/categories/subcategory/shirts.png",
-    Topwear: "/categories/subcategory/shirts.png",
-    Bottomwear: "/categories/subcategory/shirts.png",
-    Innerwear: "/categories/subcategory/shirts.png",
-    "Ethnic & Fusion Wear": "/categories/subcategory/shirts.png",
-    "Graphic T-Shirts": "/categories/subcategory/shirts.png",
-    Accessories: "/categories/subcategory/shirts.png",
-    Footwear: "/categories/subcategory/shirts.png",
+    "Topwear": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/Top_Wear_ogu0pi.png?height=48&width=48",
+    "Bottomwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Bottom_Wear_njaneq.png?height=48&width=48",
+    "Athleisure": "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=48&width=48",
+    "Ethnic & Fusion Wear": "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=48&width=48",
+    "Sleepwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sleepwear_irnvbc.png?height=48&width=48",
+    "Innerwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Innerwear_mi0xap.png?height=48&width=48",
+    "Co-ords": "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=48&width=48",
+
+    //Mens Topwear sub-subcategories
+    "T-Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/T-Shirts_zyy3fv.png?height=48&width=48",
+    "Jackets": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Jackets_ayghrc.png?height=48&width=48",
+    "Hoodies & Sweatshirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Hoodies_Sweatshirts_ac5sqg.png?height=48&width=48",
+    "Sweaters": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Sweaters_hcbbbf.png?height=48&width=48",
+    "Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/shirts_g2vxrv.jpg?height=48&width=48",
+    "Formal Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Formals_Shirts_wclfcs.jpg?height=48&width=48",
+
+    // Mens Bottomwear sub-subcategories
+    "Pants & Trousers": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Pants_Trousers_r12mey.png?height=48&width=48",
+    "Shorts": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Shorts_t6jy3u.png?height=48&width=48",
+    "Jeans": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Jeans_hmrdjc.png?height=48&width=48",
+    "Cargos & Joggers": "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Cargos_Joggers_Sweatpants__kdelzg.png?height=48&width=48",
+    "Sweatpants": "https://res.cloudinary.com/wishwell/image/upload/v1753592134/Sweatpants_k3yai7.png?height=48&width=48",
+    "Formal Pants": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Formals_Pants_weagmj.jpg?height=48&width=48",
+
+    //Mens Athleisure sub-subcategories
+    "Buttoms": "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=48&width=48",
+    "Tops": "https://res.cloudinary.com/wishwell/image/upload/v1753592373/Tops_sajpn0.png?height=48&width=48",
+
+    // Mens Ethnic & Fusion Wear sub-subcategories
+    "Kurta Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Kurta_Sets_bwvf7s.png?height=48&width=48",
+    "Kurta": "https://res.cloudinary.com/wishwell/image/upload/v1753592626/kurta_ghzecf.png?height=48&width=48",
+    "Sherwanis": "https://res.cloudinary.com/wishwell/image/upload/v1753592631/Sherwani_kqy8tl.png?height=48&width=48",
+    "Nehru Jackets": "https://res.cloudinary.com/wishwell/image/upload/v1753592626/Nehru_Jackets_g2yahq.png?height=48&width=48",
+
+    //Mens Sleepwear sub-subcategories
+    "Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=48&width=48",
+
+    // Mens Innerwear sub-subcategories
+    "Briefs & Trunks": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Briefs_Trunks_so7vjy.png?height=48&width=48",
+    "Vests": "https://res.cloudinary.com/wishwell/image/upload/v1753592926/Vests_ddhtpd.png?height=48&width=48",
+    "Boxers": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Boxers_slla9f.png?height=48&width=48",
+
+    // Mens Co-ords sub-subcategories
+    "Pant Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Pant_Sets_n5nu3s.png?height=48&width=48",
+    "Short Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593069/Short_Sets_dayzzi.png?height=48&width=48",
+
 
     // Women's subcategories
     "Top-wear": "/categories/subcategory/women-topwear.png",
     "Bottom-wear": "/categories/subcategory/women-bottomwear.png",
     Dresses: "/categories/subcategory/women-dresses.png",
     "Co-ords & Sleepwear": "/categories/subcategory/women-coords.png",
-    Athleisure: "/categories/subcategory/women-athleisure.png",
+
 
     // Kids subcategories
     Boys: "/categories/subcategory/kids-boys.png",
