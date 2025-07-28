@@ -30,27 +30,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
     return category.subsubcategories
   }, [category?.subsubcategories])
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true)
-      const params = new URLSearchParams()
-      if (category) params.set("category", category.name)
-      const response = await fetch(`/api/products?${params.toString()}`)
-      if (!response.ok) {
-        throw new Error("Failed to fetch products")
-      }
-      const data = await response.json()
-      setProducts(data.products)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [category])
 
   // Filter products by category, subcategory, and subsubcategory
   const baseProducts = useMemo(() => {
@@ -62,35 +41,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
     )
   }, [products, category?.name, selectedSub, selectedSubSub])
 
-  // Sort products after filtering
-  const sortedProducts = useMemo(() => {
-    const sorted = [...baseProducts]
-    switch (sortBy) {
-      case "price-low":
-        return sorted.sort((a, b) => a.price - b.price)
-      case "price-high":
-        return sorted.sort((a, b) => b.price - a.price)
-      case "rating":
-        return sorted.sort((a, b) => b.rating - a.rating)
-      case "newest":
-        return sorted.sort((a, b) => Number.parseInt(b.id) - Number.parseInt(a.id))
-      default:
-        return sorted // "featured" keeps original order
-    }
-  }, [baseProducts, sortBy])
-
-  // Handlers
-  const handleSortChange = (sort: string) => {
-    setLoading(true)
-    setSortBy(sort)
-    setTimeout(() => setLoading(false), 300) // simulate delay
-  }
-
-  const handleShowProducts = (subcategory: string, hasSubcategories: boolean) => {
-    console.log(`Showing products for: ${subcategory}, has subcategories: ${hasSubcategories}`)
-    setShowingProducts(true)
-    // Products will be filtered automatically by the baseProducts useMemo
-  }
 
   const handleSubSubcategoryChange = (subcategory: string | null, subsubcategory: string | null) => {
     setSelectedSub(subcategory)
@@ -112,7 +62,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       <div className="container mx-auto px-4 py-8 text-center">
         <h1 className="text-2xl font-bold mb-4 text-red-600">Error</h1>
         <p className="text-gray-600 mb-4">{error}</p>
-        <Button onClick={fetchProducts}>Try Again</Button>
       </div>
     )
   }
@@ -142,19 +91,16 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       {/* Filter / Sort / View bar */}
       <CategoryFilterBar
         categoryName={category.name}
-        category={category}
         subcategories={category.subcategories}
         subsubcategories={subsubcategories}
-        totalProducts={sortedProducts.length}
-        currentView={view}
-        onViewChange={setView}
-        onSortChange={handleSortChange}
         onSubcategoryChange={handleSubcategoryChange}
         onSubSubcategoryChange={handleSubSubcategoryChange}
-        onShowProducts={handleShowProducts}
-        sortedProducts={sortedProducts}
         view={view}
         loading={loading}
+        totalProducts={baseProducts.length}
+        onSortChange={setSortBy}
+        onViewChange={setView}
+        currentView={view}
       />
 
 

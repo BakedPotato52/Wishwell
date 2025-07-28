@@ -39,7 +39,6 @@ interface CategoryFilterBarProps {
   onViewChange: (view: "grid" | "list") => void
   onSubcategoryChange?: (subcategory: string | null) => void
   onSubSubcategoryChange?: (subcategory: string | null, subsubcategory: string | null) => void
-  onShowProducts?: (subcategory: string, hasSubcategories: boolean) => void
   currentView: "grid" | "list"
   sortedProducts?: UnifiedProduct[]
   view: "grid" | "list"
@@ -53,16 +52,8 @@ export function CategoryFilterBar({
   categoryName,
   subcategories = [],
   subsubcategories = {},
-  totalProducts,
-  onSortChange,
-  onViewChange,
   onSubcategoryChange,
   onSubSubcategoryChange,
-  onShowProducts,
-  currentView,
-  sortedProducts,
-  view,
-  loading,
 }: CategoryFilterBarProps) {
   /* -------------------------------- State -------------------------------- */
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
@@ -73,7 +64,6 @@ export function CategoryFilterBar({
     title: categoryName,
   })
   const [navigationHistory, setNavigationHistory] = useState<NavigationLevel[]>([])
-  const [sortBy, setSortBy] = useState("featured")
   const scrollRef = useRef<HTMLDivElement>(null)
 
   /* --------------------------- Keep scroller tidy ------------------------- */
@@ -81,19 +71,6 @@ export function CategoryFilterBar({
     scrollRef.current?.scrollTo({ left: 0, behavior: "smooth" })
   }, [currentLevel])
 
-  /* --------------------------- Auto-select on reload ------------------------- */
-  useEffect(() => {
-    // Auto-execute handleSubcategorySelect on component mount if there's a selected subcategory
-    // This ensures subsubcategories are displayed immediately after page reload
-    if (selectedSubcategory && subsubcategories[selectedSubcategory]?.length > 0) {
-      // Use setTimeout to ensure the component is fully mounted before executing
-      const timeoutId = setTimeout(() => {
-        handleSubcategorySelect(selectedSubcategory)
-      }, 0)
-
-      return () => clearTimeout(timeoutId)
-    }
-  }, []) // Empty dependency array ensures this only runs once on mount
 
   /* -------------------------------- Handlers ----------------------------- */
   const createSlug = (name: string) => {
@@ -120,25 +97,28 @@ export function CategoryFilterBar({
 
     // Prevent unnecessary re-execution if the same subcategory is already selected
     if (selectedSubcategory === subcategory) {
-      return
-    }
+      console.log("Already selected subcategory:", subcategory)
+      setSelectedSubcategory(subcategory)
 
+    }
     setSelectedSubcategory(subcategory)
     setSelectedSubSubcategory(null)
     onSubcategoryChange?.(subcategory)
     onSubSubcategoryChange?.(subcategory, null)
-    onShowProducts?.(subcategory, false)
   }
+
+  /* --------------------------- Auto-select first item ------------------------- */
+  useEffect(() => {
+    // Auto-select the first subcategory if none is selected and subcategories exist
+    if (!selectedSubcategory && subcategories.length > 0) {
+      handleSubcategorySelect(subcategories[0])
+    }
+  }, [subcategories, selectedSubcategory])
 
   /** User picked / cleared a 2nd‑level sub‑category ("Casual Shoes") */
   const handleSubSubcategorySelect = (subsubcategory: string | null) => {
     setSelectedSubSubcategory(subsubcategory)
     onSubSubcategoryChange?.(selectedSubcategory, subsubcategory)
-
-    // When a subsubcategory is selected, show products for that specific combination
-    if (subsubcategory && selectedSubcategory) {
-      onShowProducts?.(selectedSubcategory, true)
-    }
   }
 
   const navigateBack = () => {
@@ -151,12 +131,6 @@ export function CategoryFilterBar({
     if (prev.type === LEVELS.MAIN) {
       setSelectedSubSubcategory(null)
       onSubSubcategoryChange?.(selectedSubcategory, null)
-
-      // When going back to main, if we had a subcategory selected without subsubcategories,
-      // we should show products for that subcategory
-      if (selectedSubcategory && !subsubcategories?.[selectedSubcategory]?.length) {
-        onShowProducts?.(selectedSubcategory, false)
-      }
     }
   }
 
@@ -169,7 +143,7 @@ export function CategoryFilterBar({
       <div className="w-24 bg-white border-r shadow-sm">
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 max-h-dvh  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
+          <div className="p-2 max-h-[580px]  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -207,12 +181,19 @@ export function CategoryFilterBar({
                     currentLevel.type === LEVELS.MAIN &&
                     (selectedSubcategory === item || (selectedSubcategory === null && i === 0))
 
+                  const firstItem = i === 0 ? (() => {
+                    if (!selectedSubcategory) {
+                      handleSubcategorySelect(item)
+                    }
+                  })() : undefined
+
                   return (
                     <CategoryListItem
                       key={`${currentLevel.type}-${i}-${item || "empty"}`}
                       label={item}
                       selected={isSelected}
                       image={subcategoryImages[item] ?? "/placeholder.svg"}
+                      onload={() => firstItem}
                       onClick={() => currentLevel.type === LEVELS.MAIN && handleSubcategorySelect(item)}
                       delay={(i + 1) * 0.05}
                     />
@@ -225,7 +206,7 @@ export function CategoryFilterBar({
       </div>
 
       {/* Main Content Area */}
-      <section className="flex-1 p-3 max-h-dvh overflow-y-scroll scrollbar-hide">
+      <section className="flex-1 p-3 max-h-[580px] overflow-y-scroll scrollbar-hide" ref={scrollRef}>
         {/* Subsubcategories - Alternative display in main content area */}
         {currentLevel.type === LEVELS.MAIN &&
           selectedSubcategory &&
@@ -293,9 +274,10 @@ interface CategoryListItemProps {
   image: string
   onClick: () => void
   delay: number
+  onload?: () => void
 }
 
-function CategoryListItem({ label, selected, image, onClick, delay }: CategoryListItemProps) {
+function CategoryListItem({ label, selected, image, onClick, delay, onload }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -305,6 +287,7 @@ function CategoryListItem({ label, selected, image, onClick, delay }: CategoryLi
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      onLoad={onload}
       className="cursor-pointer relative"
     >
       <div
