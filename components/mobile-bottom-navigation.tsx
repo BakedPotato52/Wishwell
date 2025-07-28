@@ -5,10 +5,14 @@ import type React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Home, Grid3X3, User, ShoppingCart } from "lucide-react"
+import { Home, ShoppingCart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
+import { Grip } from "./icons/Grip"
+import { Users } from "./icons/Users"
+import { LayoutGrid } from "./icons/LayoutGrid"
+import CartIcon from "./icons/Cart"
 
 interface NavItem {
     id: string
@@ -33,20 +37,20 @@ export function MobileBottomNav() {
         {
             id: "categories",
             label: "Categories",
-            icon: <Grid3X3 className="h-5 w-5" />,
+            icon: <LayoutGrid className="h-5 w-5" />,
             href: "/categories",
         },
         {
             id: "cart",
             label: "Cart",
-            icon: <ShoppingCart className="h-5 w-5" />,
+            icon: <CartIcon className="h-5 w-5" />,
             href: "/cart",
             badge: cartState.items.length > 0 ? cartState.items.length : undefined,
         },
         {
             id: "profile",
             label: "Profile",
-            icon: <User className="h-5 w-5" />,
+            icon: <Users className="h-5 w-5" />,
             href: authState.isAuthenticated ? "/account" : "/login",
         },
     ]
@@ -80,7 +84,7 @@ export function MobileBottomNav() {
                             <Link key={item.id} href={item.href} className="flex-1">
                                 <motion.div
                                     whileTap={{ scale: 0.95 }}
-                                    className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-all duration-200 ${active ? "text-blue-600 bg-blue-50" : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+                                    className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-all duration-200 ${active ? "text-blue-600 bg-blue-100" : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
                                         }`}
                                 >
                                     <div className="relative">
