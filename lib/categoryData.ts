@@ -45,7 +45,7 @@ export const categories: Category[] = [
             "Jumpsuits",
         ],
         subsubcategories: {
-            "Top wear": ["Top", "T-Shirts", "Shirts", "Jackets", "Hoodies & Sweatshirts", "Cardigans & Shrugs", "Blazers & Waistcoats"],
+            "Top wear": ["Tops", "T-Shirts", "Shirts", "Jackets", "Hoodies & Sweatshirts", "Cardigans & Shrugs", "Blazers & Waistcoats"],
             "Bottom wear": ["Shorts", "Jeans", "Pants & Trousers", "Skirts", "Skorts", "Sweatpants", "Cargos & Joggers"],
             "Dresses": ["Midi", "Mini", "Maxi"],
             "Ethnic & Fusion Wear": ["Sarees", "Tops & Tunics", "Blouses", "Bottoms", "Kurtas", "Kurta Sets", "Co-ords"],
