@@ -361,3 +361,16 @@ export const batchMigrateProducts = async (): Promise<void> => {
     throw error
   }
 }
+
+export const updateUser = async (userId: string, userData: Record<string, any>): Promise<void> => {
+  try {
+    const userRef = doc(db, "users", userId)
+    await setDoc(userRef, {
+      ...userData,
+      updatedAt: serverTimestamp(),
+    })
+  } catch (error) {
+    console.error("Error updating user:", error)
+    throw error
+  }
+}

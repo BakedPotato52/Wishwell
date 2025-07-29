@@ -20,7 +20,7 @@ export default function AccountPage() {
   const [formData, setFormData] = useState({
     name: authState.user?.name,
     phone: authState.user?.phone || "+9153652365",
-    whatsapp: authState.user?.whatsapp || "+91763246723",
+    // whatsapp: authState.user?.whatsapp || "+91763246723",
     gender: authState.user?.gender || "Men",
     address: authState.user?.address || "North Duragamar, khowai",
     landmark: "near ABC school",
@@ -256,11 +256,11 @@ export default function AccountPage() {
                         </Label>
                         {isEditing ? (
                           <div className="flex space-x-2">
-                            <Input
+                            {/* <Input
                               value={formData.whatsapp}
                               onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                               className="border-slate-200 focus:border-blue-500 focus:ring-blue-500 flex-1"
-                            />
+                            /> */}
                             <Button
                               variant="outline"
                               size="sm"
@@ -270,7 +270,10 @@ export default function AccountPage() {
                             </Button>
                           </div>
                         ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.whatsapp}</p>
+                          // <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.whatsapp}</p>
+                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">
+                            NOne
+                          </p>
                         )}
                       </div>
                     </div>

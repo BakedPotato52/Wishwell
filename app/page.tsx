@@ -5,13 +5,116 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
-import { Download, Smartphone } from "lucide-react"
+import { Download, MapPin, Smartphone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
+import { updateUser } from "@/lib/firebase/firestore" // Add Firebase config
+import { useAuth } from "@/contexts/auth-context"
+
+interface LocationData {
+  latitude: number
+  longitude: number
+  timestamp: number
+  accuracy?: number
+}
+
+function LocationHandler() {
+  const [locationStatus, setLocationStatus] = useState<'idle' | 'requesting' | 'success' | 'error'>('idle')
+  const { firebaseUser } = useAuth()
+  const requestLocation = async () => {
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by this browser")
+      return
+    }
+
+    setLocationStatus('requesting')
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const locationData: LocationData = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            timestamp: Date.now(),
+            accuracy: position.coords.accuracy
+          }
+          let userId = firebaseUser?.uid
+          if (!userId) {
+            throw new Error("User not authenticated")
+          }
+          // Store location in Firebase
+          await updateUser(userId, {
+            address: locationData,
+            createdAt: new Date(),
+            userAgent: navigator.userAgent
+          })
+
+          setLocationStatus('success')
+          toast.success("Location saved successfully!")
+        } catch (error) {
+          console.error("Error saving location:", error)
+          setLocationStatus('error')
+          toast.error("Failed to save location")
+        }
+      },
+      (error) => {
+        setLocationStatus('error')
+        let errorMessage = "Location access denied"
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = "Location access denied by user"
+            break
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Location information unavailable"
+            break
+          case error.TIMEOUT:
+            errorMessage = "Location request timed out"
+            break
+        }
+
+        toast.error(errorMessage)
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    )
+  }
+
+  useEffect(() => {
+    // Auto-request location on component mount
+    requestLocation()
+  }, [])
+
+  return (
+    <div className="mb-4">
+      {locationStatus === 'requesting' && (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <MapPin className="w-4 h-4 animate-pulse" />
+          <span>Getting your location...</span>
+        </div>
+      )}
+
+      {locationStatus === 'error' && (
+        <Button
+          onClick={requestLocation}
+          size="sm"
+          variant="outline"
+          className="flex items-center gap-2"
+        >
+          <MapPin className="w-4 h-4" />
+          Enable Location
+        </Button>
+      )}
+    </div>
+  )
+}
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -147,6 +250,7 @@ export default function HomePage() {
       {/* PWA Components */}
       <div className="container mx-auto px-4 pt-4">
         <InstallPrompt />
+        <LocationHandler />
       </div>
 
       {/* Hero Carousel */}

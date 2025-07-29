@@ -122,22 +122,23 @@ export interface CartItem {
 
 export interface FirebaseUser {
   uid: string
-  email: string
+  email: string | null
   name: string
   phone: string
-  whatsapp?: string
   gender: "Men" | "Women"
   address: string
-  landmark?: string
+  dateOfBirth?: string | null
   photoURL: string | null
   emailVerified: boolean
-  createdAt: Timestamp | FieldValue
-  updatedAt: Timestamp | FieldValue
-  lastLoginAt?: Timestamp | FieldValue
+  phoneVerified?: boolean
+  createdAt: any
+  updatedAt: any
+  lastLoginAt?: any
   preferences: {
     notifications: boolean
     newsletter: boolean
   }
+  registrationMethod?: "email" | "phone"
 }
 
 export interface Order {
