@@ -247,7 +247,7 @@ export const categories: Category[] = [
     {
         id: "lZ2d1eCsMNTx85RvyXvZ",
         name: "Gifts",
-        image: "/categories/gifts.png?height=60&width=60",
+        image: "/categories/gifts.jpg?height=60&width=60",
         icon: "📱",
         subcategories: [
             "Birthday Gifts",

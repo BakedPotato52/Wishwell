@@ -35,6 +35,9 @@ const getSubsubcategoryFromSlug = (
                 for (const subsubcategory of subsubcategories) {
                     const subsubcategorySlug = createSlug(subsubcategory)
                     if (subsubcategorySlug === slug) {
+                        console.log(subsubcategory)
+                        console.log(subcategory)
+                        console.log(category)
                         return {
                             subsubcategory,
                             subcategory,
