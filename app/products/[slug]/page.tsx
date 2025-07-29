@@ -11,7 +11,7 @@ import { ProductGridSkeleton, ErrorMessage } from "@/components/loading-skeleton
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, Search, Grid, List, Home } from "lucide-react"
+import { ArrowLeft, Search, Grid, List, Home } from 'lucide-react'
 import { categories } from "@/lib/categoryData"
 import { subcategoryImages } from "@/lib/subcategoryImages"
 
@@ -136,7 +136,7 @@ export default function SubsubcategoryProductPage() {
                                     className="hover:text-blue-600 transition-colors flex items-center gap-1"
                                 >
                                     <Image
-                                        src={categoryInfo.image || "/placeholder.svg"}
+                                        src={categoryInfo.image || "/placeholder.svg?height=16&width=16"}
                                         alt={categoryInfo.name}
                                         width={16}
                                         height={16}
@@ -239,7 +239,7 @@ export default function SubsubcategoryProductPage() {
             </div>
 
             {/* Related Subsubcategories */}
-            {categoryInfo.subsubcategories?.[subsubcategoryInfo.subcategory] &&
+            {/* {categoryInfo.subsubcategories?.[subsubcategoryInfo.subcategory] &&
                 categoryInfo.subsubcategories[subsubcategoryInfo.subcategory].length > 1 && (
                     <section className="bg-white py-4">
                         <div className="container mx-auto px-4">
@@ -258,7 +258,11 @@ export default function SubsubcategoryProductPage() {
                                                 >
                                                     <div className="flex flex-col items-center text-center">
                                                         <Image
-                                                            src={subcategoryImages[subsubcategory] || "/placeholder.svg"}
+                                                            src={
+                                                                typeof subcategoryImages[subsubcategory] === 'string'
+                                                                    ? subcategoryImages[subsubcategory] as string
+                                                                    : (subcategoryImages[subsubcategory] as any)?.src || "/placeholder.svg?height=64&width=64"
+                                                            }
                                                             alt={subsubcategory}
                                                             width={64}
                                                             height={64}
@@ -273,7 +277,7 @@ export default function SubsubcategoryProductPage() {
                             </div>
                         </div>
                     </section>
-                )}
+                )} */}
 
             {/* Related Subcategories */}
             {categoryInfo.subcategories && categoryInfo.subcategories.length > 1 && (
@@ -294,7 +298,11 @@ export default function SubsubcategoryProductPage() {
                                             >
                                                 <div className="flex flex-col items-center text-center">
                                                     <Image
-                                                        src={subcategoryImages[subsubcategory] || "/placeholder.svg"}
+                                                        src={
+                                                            typeof subcategoryImages[subsubcategory] === 'string'
+                                                                ? subcategoryImages[subsubcategory] as string
+                                                                : (subcategoryImages[subsubcategory] as any)?.src || "/placeholder.svg?height=64&width=64"
+                                                        }
                                                         alt={subsubcategory}
                                                         width={64}
                                                         height={64}

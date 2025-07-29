@@ -79,6 +79,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
 
 
     Bottoms: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=64&width=64",
         contexts: {
             "Men-Athleisure":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=64&width=64",
@@ -91,6 +92,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     },
 
     Sets: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=64&width=64",
         contexts: {
             "Men-Sleepwear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=64&width=64",
