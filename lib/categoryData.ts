@@ -30,7 +30,7 @@ export const categories: Category[] = [
     {
         id: "YSXF9pgW3DZU2bSSIUnQ",
         name: "Women",
-        image: "/categories/women.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753772698/Women_Category_Photo__cvzkgu.png?height=64&width=64",
         icon: "👗",
         subcategories: [
             "Top wear",

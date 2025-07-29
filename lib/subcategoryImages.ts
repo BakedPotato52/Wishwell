@@ -1,64 +1,127 @@
-// Mapping of subcategory names to their image paths
-export const subcategoryImages: Record<string, string> = {
+// Enhanced mapping that supports context-aware image retrieval
+export interface SubcategoryImageConfig {
+    // Default image for when no context is provided
+    default?: string
+    // Context-specific images: parentCategory -> image
+    contexts?: Record<string, string>
+}
+
+// Enhanced subcategory images with context support
+export const subcategoryImages: Record<string, string | SubcategoryImageConfig> = {
     // Default fallback
     default: "/placeholder.svg?height=64&width=64",
 
     // All categories
     All: "/categories/subcategory/shirts.png",
 
-    // Men's subcategories
-    "Topwear": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/Top_Wear_ogu0pi.png?height=64&width=64",
-    "Bottomwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Bottom_Wear_njaneq.png?height=64&width=64",
-    "Athleisure": "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
-    "Ethnic & Fusion Wear": "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
-    "Sleepwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sleepwear_irnvbc.png?height=64&width=64",
-    "Innerwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Innerwear_mi0xap.png?height=64&width=64",
-    "Co-ords": "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=64&width=64",
-
-    //Mens Topwear sub-subcategories
-    "T-Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/T-Shirts_zyy3fv.png?height=64&width=64",
-    "Jackets": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Jackets_ayghrc.png?height=64&width=64",
-    "Hoodies & Sweatshirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Hoodies_Sweatshirts_ac5sqg.png?height=64&width=64",
-    "Sweaters": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Sweaters_hcbbbf.png?height=64&width=64",
-    "Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/shirts_g2vxrv.jpg?height=64&width=64",
-    "Formal Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Formals_Shirts_wclfcs.jpg?height=64&width=64",
-
-    // Mens Bottomwear sub-subcategories
-    "Pants & Trousers": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Pants_Trousers_r12mey.png?height=64&width=64",
-    "Shorts": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Shorts_t6jy3u.png?height=64&width=64",
-    "Jeans": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Jeans_hmrdjc.png?height=64&width=64",
-    "Cargos & Joggers": "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Cargos_Joggers_Sweatpants__kdelzg.png?height=64&width=64",
-    "Sweatpants": "https://res.cloudinary.com/wishwell/image/upload/v1753592134/Sweatpants_k3yai7.png?height=64&width=64",
-    "Formal Pants": "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Formals_Pants_weagmj.jpg?height=64&width=64",
-
-    //Mens Athleisure sub-subcategories
-    "Buttoms": "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=64&width=64",
-    "Tops": "https://res.cloudinary.com/wishwell/image/upload/v1753592373/Tops_sajpn0.png?height=64&width=64",
-
-    // Mens Ethnic & Fusion Wear sub-subcategories
-    "Kurta Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Kurta_Sets_bwvf7s.png?height=64&width=64",
-    "Kurta": "https://res.cloudinary.com/wishwell/image/upload/v1753592626/kurta_ghzecf.png?height=64&width=64",
-    "Sherwanis": "https://res.cloudinary.com/wishwell/image/upload/v1753592631/Sherwani_kqy8tl.png?height=64&width=64",
-    "Nehru Jackets": "https://res.cloudinary.com/wishwell/image/upload/v1753592626/Nehru_Jackets_g2yahq.png?height=64&width=64",
-
-    //Mens Sleepwear sub-subcategories
-    "Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=64&width=64",
-
-    // Mens Innerwear sub-subcategories
-    "Briefs & Trunks": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Briefs_Trunks_so7vjy.png?height=64&width=64",
-    "Vests": "https://res.cloudinary.com/wishwell/image/upload/v1753592926/Vests_ddhtpd.png?height=64&width=64",
-    "Boxers": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Boxers_slla9f.png?height=64&width=64",
-
-    // Mens Co-ords sub-subcategories
-    "Pant Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Pant_Sets_n5nu3s.png?height=64&width=64",
-    "Short Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593069/Short_Sets_dayzzi.png?height=64&width=64",
-
+    // Men's subcategories - these are unique so keep as strings
+    Topwear: "https://res.cloudinary.com/wishwell/image/upload/v1753591719/Top_Wear_ogu0pi.png?height=64&width=64",
+    Bottomwear: "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Bottom_Wear_njaneq.png?height=64&width=64",
 
     // Women's subcategories
-    "Top-wear": "/categories/subcategory/women-topwear.png",
-    "Bottom-wear": "/categories/subcategory/women-bottomwear.png",
-    Dresses: "/categories/subcategory/women-dresses.png",
-    "Co-ords & Sleepwear": "/categories/subcategory/women-coords.png",
+    "Top wear": "/placeholder.svg",
+    "Bottom wear": "/categories/subcategory/women-bottomwear.png",
+
+    // Context-aware subcategories that appear in multiple categories
+    Tops: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753591719/Tops_sajpn0.png?height=64&width=64",
+        contexts: {
+            "Men-Athleisure":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592373/Tops_sajpn0.png?height=64&width=64",
+            "Women-Athleisure": "/categories/subcategory/women-athleisure-tops.png",
+            "Women-Sleepwear": "/categories/subcategory/women-sleepwear-tops.png",
+        },
+    },
+
+    "Ethnic & Fusion Wear": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
+        contexts: {
+            "Men-Ethnic & Fusion Wear":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
+            "Women-Ethnic & Fusion Wear":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
+        },
+    },
+
+    Bottoms: {
+        contexts: {
+            "Men-Athleisure":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=64&width=64",
+            "Men-Ethnic & Fusion Wear": "/categories/subcategory/men-ethnic-bottoms.png",
+            "Men-Sleepwear": "/categories/subcategory/men-sleepwear-bottoms.png",
+            "Women-Athleisure": "/categories/subcategory/women-athleisure-bottoms.png",
+            "Women-Sleepwear": "/categories/subcategory/women-sleepwear-bottoms.png",
+            "Women-Ethnic & Fusion Wear": "/categories/subcategory/women-ethnic-bottoms.png",
+        },
+    },
+
+    Sets: {
+        contexts: {
+            "Men-Sleepwear":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=64&width=64",
+            "Women-Sleepwear": "/categories/subcategory/women-sleepwear-sets.png",
+            "Women-Innerwear": "/categories/subcategory/women-innerwear-sets.png",
+        },
+    },
+
+    Sleepwear: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sleepwear_irnvbc.png?height=64&width=64",
+        contexts: {
+            "Men-Sleepwear":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sleepwear_irnvbc.png?height=64&width=64",
+            "Women-Sleepwear": "/categories/subcategory/women-sleepwear.png",
+        },
+    },
+
+    Athleisure: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
+        contexts: {
+            "Men-Athleisure":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
+            "Women-Athleisure": "/categories/subcategory/Women-Athleisure.png",
+        },
+    },
+
+    Innerwear: {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Innerwear_mi0xap.png?height=64&width=64",
+        contexts: {
+            "Men-Innerwear":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Innerwear_mi0xap.png?height=64&width=64",
+            "Women-Innerwear": "/categories/subcategory/women-innerwear.png",
+        },
+    },
+
+    "Co-ords": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=64&width=64",
+        contexts: {
+            "Men-Co-ords":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=64&width=64",
+            "Women-Co-ords":
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Co-ords_Sets_women.png?height=64&width=64",
+        },
+    },
+
+    // Unique subcategories continue as strings
+    "T-Shirts": "https://res.cloudinary.com/wishwell/image/upload/v1753591719/T-Shirts_zyy3fv.png?height=64&width=64",
+    Jackets: "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Jackets_ayghrc.png?height=64&width=64",
+    "Hoodies & Sweatshirts":
+        "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Hoodies_Sweatshirts_ac5sqg.png?height=64&width=64",
+    Sweaters: "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Sweaters_hcbbbf.png?height=64&width=64",
+    Shirts: "https://res.cloudinary.com/wishwell/image/upload/v1753591719/shirts_g2vxrv.jpg?height=64&width=64",
+    "Formal Shirts":
+        "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Formals_Shirts_wclfcs.jpg?height=64&width=64",
+
+    // Continue with all other unique subcategories...
+    "Pants & Trousers":
+        "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Pants_Trousers_r12mey.png?height=64&width=64",
+    Shorts: "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Shorts_t6jy3u.png?height=64&width=64",
+    Jeans: "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Jeans_hmrdjc.png?height=64&width=64",
+    "Cargos & Joggers":
+        "https://res.cloudinary.com/wishwell/image/upload/v1753592132/Cargos_Joggers_Sweatpants__kdelzg.png?height=64&width=64",
+    Sweatpants: "https://res.cloudinary.com/wishwell/image/upload/v1753592134/Sweatpants_k3yai7.png?height=64&width=64",
+    "Formal Pants":
+        "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Formals_Pants_weagmj.jpg?height=64&width=64",
+
 
 
     // Kids subcategories
@@ -159,4 +222,47 @@ export const subcategoryImages: Record<string, string> = {
     "Toy Gifts": "/categories/subcategory/toy-gifts.png",
     "Home Decor Gifts": "/categories/subcategory/home-decor-gifts.png",
     "Festive Gifts": "/categories/subcategory/festive-gifts.png",
+}
+
+// Utility function to get the correct image for a subcategory
+export function getSubcategoryImage(
+    subcategoryName: string,
+    parentCategory?: string,
+    grandparentCategory?: string,
+): string {
+    const imageConfig = subcategoryImages[subcategoryName]
+
+    // If no config found, return default
+    if (!imageConfig) {
+        return subcategoryImages.default as string
+    }
+
+    // If it's a simple string, return it
+    if (typeof imageConfig === "string") {
+        return imageConfig
+    }
+
+    // If it's a config object, try to find context-specific image
+    if (imageConfig.contexts && parentCategory) {
+        // Try with grandparent-parent context first (most specific)
+        if (grandparentCategory) {
+            const contextKey = `${grandparentCategory}-${parentCategory}`
+            if (imageConfig.contexts[contextKey]) {
+                return imageConfig.contexts[contextKey]
+            }
+        }
+
+        // Try with just parent context
+        if (imageConfig.contexts[parentCategory]) {
+            return imageConfig.contexts[parentCategory]
+        }
+    }
+
+    // Fall back to default for this subcategory
+    return imageConfig.default || (subcategoryImages.default as string)
+}
+
+// Helper function to create context key
+export function createContextKey(parentCategory: string, grandparentCategory?: string): string {
+    return grandparentCategory ? `${grandparentCategory}-${parentCategory}` : parentCategory
 }

@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { subcategoryImages } from "@/lib/subcategoryImages"
+import { getSubcategoryImage } from "@/lib/subcategoryImages"
 import type { Category, UnifiedProduct } from "@/lib/types"
 
 /* -------------------------------------------------------------------------- */
@@ -71,7 +71,6 @@ export function CategoryFilterBar({
     scrollRef.current?.scrollTo({ left: 0, behavior: "smooth" })
   }, [currentLevel])
 
-
   /* -------------------------------- Handlers ----------------------------- */
   const createSlug = (name: string) => {
     return name
@@ -99,7 +98,6 @@ export function CategoryFilterBar({
     if (selectedSubcategory === subcategory) {
       console.log("Already selected subcategory:", subcategory)
       setSelectedSubcategory(subcategory)
-
     }
     setSelectedSubcategory(subcategory)
     setSelectedSubSubcategory(null)
@@ -143,7 +141,7 @@ export function CategoryFilterBar({
       <div className="w-24 bg-white border-r shadow-sm">
         {/* Navigation */}
         {currentLevel.items.length > 0 && (
-          <div className="p-2 max-h-[580px]  overflow-y-scroll scrollbar-hide" ref={scrollRef}>
+          <div className="p-2 max-h-[580px] overflow-y-scroll scrollbar-hide" ref={scrollRef}>
             {/* Navigation Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -181,18 +179,24 @@ export function CategoryFilterBar({
                     currentLevel.type === LEVELS.MAIN &&
                     (selectedSubcategory === item || (selectedSubcategory === null && i === 0))
 
-                  const firstItem = i === 0 ? (() => {
-                    if (!selectedSubcategory) {
-                      handleSubcategorySelect(item)
-                    }
-                  })() : undefined
+                  const firstItem =
+                    i === 0
+                      ? (() => {
+                        if (!selectedSubcategory) {
+                          handleSubcategorySelect(item)
+                        }
+                      })()
+                      : undefined
+
+                  // Get context-aware image
+                  const imageUrl = getSubcategoryImage(item, categoryName)
 
                   return (
                     <CategoryListItem
                       key={`${currentLevel.type}-${i}-${item || "empty"}`}
                       label={item}
                       selected={isSelected}
-                      image={subcategoryImages[item] ?? "/placeholder.svg"}
+                      image={imageUrl}
                       onload={() => firstItem}
                       onClick={() => currentLevel.type === LEVELS.MAIN && handleSubcategorySelect(item)}
                       delay={(i + 1) * 0.05}
@@ -216,6 +220,9 @@ export function CategoryFilterBar({
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                 {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => {
                   const slug = createSlug(subsubcategory)
+                  // Get context-aware image for subsubcategory
+                  const imageUrl = getSubcategoryImage(subsubcategory, selectedSubcategory, categoryName)
+
                   return (
                     <Link key={subsubcategory} href={`/products/${slug}`}>
                       <motion.div
@@ -237,7 +244,7 @@ export function CategoryFilterBar({
                         >
                           <div className="w-16 h-16 mb-2 rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-sm relative">
                             <Image
-                              src={subcategoryImages[subsubcategory] ?? "/placeholder.svg"}
+                              src={imageUrl || "/placeholder.svg"}
                               alt={subsubcategory}
                               width={64}
                               height={64}
@@ -258,8 +265,6 @@ export function CategoryFilterBar({
               </div>
             </div>
           )}
-
-        {/* Active Selection */}
       </section>
     </div>
   )
