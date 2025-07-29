@@ -19,7 +19,7 @@ export const categories: Category[] = [
             "Topwear": ["T-Shirts", "Jackets", "Hoodies & Sweatshirts", "Sweaters", "Shirts", "Formal Shirts"],
             "Bottomwear": ["Pants & Trousers", "Shorts", "Jeans", "Cargos & Joggers", "Sweatpants", "Formal Pants"],
             "Athleisure": ["T-Shirts", "Bottoms", "Tops"],
-            "Ethnic & Fusion Wear": ["Sherwanis", "Bottoms", "Nehru Jackets", "Kurta", "Kurta Sets"],
+            "Ethnic & Fusion Wear": ["Sherwanis", "Bottoms", "Nehru Jackets", "Kurtas", "Kurta Sets"],
             "Sleepwear": ["Bottoms", "Sets"],
             "Innerwear": ["Briefs & Trunks", "Boxers", "Vests"],
             "Co-ords": ["Pants Sets", "Shorts Sets"],
@@ -40,7 +40,7 @@ export const categories: Category[] = [
             "Athleisures",
             "Sleep wear",
             "Inner wear",
-            "Co-ords",
+            "Co ords",
             "Jumpsuits",
         ],
         subsubcategories: {
@@ -52,7 +52,7 @@ export const categories: Category[] = [
             "Athleisures": ["Tops", "Bottoms", "Playsuits"],
             "Sleep wear": ["Tops", "Bottoms", "Night Dresses", "Sets"],
             "Inner wear": ["Shapewear", "Briefs & Panties", "Bras & Camisoles", "Sets"],
-            "Co-ords": ["Pants Sets", "Shorts Sets", "Skirt Sets", "Night Dress Sets"],
+            "Co ords": ["Pants Sets", "Shorts Sets", "Skirt Sets", "Night Dress Sets"],
             "Jumpsuits": ["Western", "Ethnic"],
         }
     },
@@ -247,7 +247,7 @@ export const categories: Category[] = [
     {
         id: "lZ2d1eCsMNTx85RvyXvZ",
         name: "Gifts",
-        image: "/categories/gifts.svg?height=60&width=60",
+        image: "/categories/gifts.png?height=60&width=60",
         icon: "📱",
         subcategories: [
             "Birthday Gifts",

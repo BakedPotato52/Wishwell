@@ -23,11 +23,20 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Formal Pants":
         "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Formals_Pants_weagmj.jpg?height=64&width=64",
     "Ethnic & Fusion Wear":
-        "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphz.png?height=64&width=64",
+        "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
+    "Sherwanis": "https://res.cloudinary.com/wishwell/image/upload/v1753592631/Sherwani_kqy8tl.png?height=64&width=64",
+    "Nehru Jackets": "https://res.cloudinary.com/wishwell/image/upload/v1753592626/Nehru_Jackets_g2yahq.png?height=64&width=64",
+    "Briefs & Trunks": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Briefs_Trunks_so7vjy.png?height=64&width=64",
+    "Boxers": "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Boxers_slla9f.png?height=64&width=64",
+    "Vests": "https://res.cloudinary.com/wishwell/image/upload/v1753592926/Vests_ddhtpd.png?height=64&width=64",
+
 
     // Women's subcategories
     "Top wear": "https://res.cloudinary.com/wishwell/image/upload/v1753772909/Top_Wear_dfzz6v.png?height=64&width=64",
     "Bottom wear": "https://res.cloudinary.com/wishwell/image/upload/v1753773914/Bottom_Wear_bdifga.png?height=64&width=64",
+    "Sleep wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777361/Sleepwear_ogbrzj.png?height=64&width=64",
+    "Inner wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777671/Innerwear_h9i6ul.png?height=64&width=64",
+    "Co ords": "https://res.cloudinary.com/wishwell/image/upload/v1753777898/Co-ords_ubqyv3.png?height=64&width=64",
     "Cardigans & Shrugs": "https://res.cloudinary.com/wishwell/image/upload/v1753772905/Cardigans_Shrugs_lyu05f.png?height=64&width=64",
     "Blazers & Waistcoats": "https://res.cloudinary.com/wishwell/image/upload/v1753772905/Blazers_Waistcoats_lhu4r0.png?height=64&width=64",
     "Skirts": "https://res.cloudinary.com/wishwell/image/upload/v1753773921/Skirts_xeupmu.png?height=64&width=64",
@@ -45,7 +54,16 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Night Dress & Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753776725/Night_Dress_Sets_hzmcrp.png?height=64&width=64",
     "Swimwear": "https://res.cloudinary.com/wishwell/image/upload/v1753776729/Swimwear_vq3jsd.png?height=64&width=64",
     "Playsuits": "https://res.cloudinary.com/wishwell/image/upload/v1753776812/Playsuits_ppxf02.png?height=64&width=64",
+    "Night Dresses": "https://res.cloudinary.com/wishwell/image/upload/v1753777357/Night_Dresses_tg38pu.png?height=64&width=64",
+    "Shapewear": "https://res.cloudinary.com/wishwell/image/upload/v1753777676/Shapewears_hfpwpl.png?height=64&width=64",
+    "Briefs & Panties": "https://res.cloudinary.com/wishwell/image/upload/v1753777668/Bottoms_Panties_gxc3br.png?height=64&width=64",
+    "Bras & Camisoles": "https://res.cloudinary.com/wishwell/image/upload/v1753777668/Bras_Camisoles_khvn5h.png?height=64&width=64",
 
+    "Skirt Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753777905/Skirt_Sets_qi5az4.png?height=64&width=64",
+    "Night Dress Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753777898/Night_Dresses_Pant_Sets__sxbpxm.png?height=64&width=64",
+    "Jumpsuits": "https://res.cloudinary.com/wishwell/image/upload/v1753778120/Jumpsuits_ma3lvx.png?height=64&width=64",
+    "Western": "https://res.cloudinary.com/wishwell/image/upload/v1753778123/Western_Jumpsuits_zpkkxm.png?height=64&width=64",
+    "Ethnic": "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
     // Context-aware subcategories that appear in multiple categories
     Tops: {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753772910/Tops_qisl6t.png?height=64&width=64",
@@ -55,7 +73,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
             "Women-Top wear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753772910/Tops_qisl6t.png?height=64&width=64",
             "Women-Athleisures": "https://res.cloudinary.com/wishwell/image/upload/v1753776815/Tops_ene74n.png?height=64&width=64",
-            "Women-Sleep wear": "/categories/subcategory/women-sleepwear-tops.png",
+            "Women-Sleep wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777364/Tops_x6iyql.png?height=64&width=64",
         },
     },
 
@@ -64,10 +82,10 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         contexts: {
             "Men-Athleisure":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Bottoms_iq23y4.png?height=64&width=64",
-            "Men-Ethnic & Fusion Wear": "/categories/subcategory/men-ethnic-bottoms.png",
-            "Men-Sleepwear": "/categories/subcategory/men-sleepwear-bottoms.png",
+            "Men-Ethnic & Fusion Wear": "https://res.cloudinary.com/wishwell/image/upload/v1753592624/Bottoms_vk8lqe.png?height=64&width=64",
+            "Men-Sleepwear": "https://res.cloudinary.com/wishwell/image/upload/v1753592781/Bottoms_qax48e.png?height=64&width=64",
             "Women-Athleisures": "https://res.cloudinary.com/wishwell/image/upload/v1753776811/Bottoms_eqtpti.png?height=64&width=64",
-            "Women-Sleep wear": "/categories/subcategory/women-sleepwear-bottoms.png",
+            "Women-Sleep wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777357/Bottoms_pef4s3.png",
             "Women-Ethnic & Fusion-Wear": "https://res.cloudinary.com/wishwell/image/upload/v1753774640/Bottoms_k4tg0g.png",
         },
     },
@@ -76,8 +94,8 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         contexts: {
             "Men-Sleepwear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sets_k2ybjn.png?height=64&width=64",
-            "Women-Sleep wear": "/categories/subcategory/women-sleepwear-sets.png",
-            "Women-Inner wear": "/categories/subcategory/women-innerwear-sets.png",
+            "Women-Sleep wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777359/Sets_sbc6jr.png?height=64&width=64",
+            "Women-Inner wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777673/Sets_n16wjl.png?height=64&width=64",
         },
     },
 
@@ -86,18 +104,12 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         contexts: {
             "Men-Sleepwear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592782/Sleepwear_irnvbc.png?height=64&width=64",
-            "Women-Sleep wear": "/categories/subcategory/women-sleepwear.png",
+            "Women-Sleep wear": "https://res.cloudinary.com/wishwell/image/upload/v1753777361/Sleepwear_ogbrzj.png?height=64&width=64",
         },
     },
 
-    Athleisure: {
-        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
-        contexts: {
-            "Men-Athleisure":
-                "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
-            "Women-Athleisures": "https://res.cloudinary.com/wishwell/image/upload/v1753776810/Athleisure_r9yvst.png?height=64&width=64",
-        },
-    },
+    Athleisure: "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Athleisure_w20tdn.png?height=64&width=64",
+    Athleisures: "https://res.cloudinary.com/wishwell/image/upload/v1753776810/Athleisure_r9yvst.png?height=64&width=64",
 
     Innerwear: {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753592925/Innerwear_mi0xap.png?height=64&width=64",
@@ -109,31 +121,49 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     },
 
     "Kurtas": {
-        default: "https://res.cloudinary.com/wishwell/image/upload/v1753774476/Kurtas_w4q2te.png?height=64&width=64",
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592626/kurta_ghzecf.png?height=64&width=64",
         contexts: {
             "Men-Ethnic & Fusion Wear":
-                "https://res.cloudinary.com/wishwell/image/upload/v1753774476/Kurtas_w4q2te.png?height=64&width=64",
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592626/kurta_ghzecf.png?height=64&width=64",
             "Women-Ethnic & Fusion-Wear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753774646/Kurta_c3lj51.png?height=64&width=64"
         },
     },
 
     "Kurta Sets": {
-        default: "https://res.cloudinary.com/wishwell/image/upload/v1753774476/Kurta_Sets_w4q2te.png?height=64&width=64",
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Kurta_Sets_bwvf7s.png?height=64&width=64",
         contexts: {
             "Men-Ethnic & Fusion Wear":
-                "https://res.cloudinary.com/wishwell/image/upload/v1753774476/Kurta_Sets_w4q2te.png?height=64&width=64",
+                "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Kurta_Sets_bwvf7s.png?height=64&width=64",
             "Women-Ethnic & Fusion-Wear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753774646/Kurta_Sets_yekgve.png?height=64&width=64"
         },
     },
+
+    "Pants Sets": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Pant_Sets_n5nu3s.png?height=64&width=64",
+        contexts: {
+            "Men-Pants Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Pant_Sets_n5nu3s.png?height=64&width=64",
+            "Women-Pants Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753777900/Pant_Sets_dvyxq1.png?height=64&width=64",
+        },
+    },
+
+    "Shorts Sets": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753593069/Short_Sets_dayzzi.png?height=64&width=64",
+        contexts: {
+            "Men-Shorts Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753593069/Short_Sets_dayzzi.png?height=64&width=64",
+            "Women-Shorts Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753777904/Short_Sets_yuhzxz.png?height=64&width=64",
+        },
+    },
+
+
 
     "Co-ords": {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=64&width=64",
         contexts: {
             "Men-Co-ords":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753593068/Co-ords_c6k72q.png?height=64&width=64",
-            "Women-Co-ords":
+            "Women-Co ords":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753592302/Co-ords_Sets_women.png?height=64&width=64",
             "Women-Ethnic & Fusion-Wear":
                 "https://res.cloudinary.com/wishwell/image/upload/v1753774641/co-ords_u5gobk.png?height=64&width=64"
