@@ -1,7 +1,7 @@
 // Enhanced mapping that supports context-aware image retrieval
 export interface SubcategoryImageConfig {
     // Default image for when no context is provided
-    default?: string
+    default: string
     // Context-specific images: parentCategory -> image
     contexts?: Record<string, string>
 }
