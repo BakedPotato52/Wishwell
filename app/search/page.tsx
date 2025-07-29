@@ -35,10 +35,14 @@ function SearchPageContent() {
             const name = product.name.toLowerCase()
             const description = product.description.toLowerCase()
             const category = product.category.toLowerCase()
+            const subcategory = product.subcategory.toLowerCase()
+            const subsubcategory = product.subsubcategory?.toLowerCase() || ""
 
             if (name.includes(lowerQuery)) relevance += 3
             if (description.includes(lowerQuery)) relevance += 2
             if (category.includes(lowerQuery)) relevance += 1
+            if (subcategory.includes(lowerQuery)) relevance += 1
+            if (subsubcategory.includes(lowerQuery)) relevance += 2
 
             if (relevance > 0) {
                 // Apply price filter inline
@@ -104,22 +108,9 @@ function SearchPageContent() {
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <div className="bg-white border-b">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <Link href="/">
-                            <Button variant="ghost" size="sm">
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Back
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
 
             {/* Search Results Header */}
-            <div className="bg-white border-b py-4 mb-20 md:mb-0">
+            <div className="bg-white border-b py-4  md:mb-0">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between mb-4">
                         <div>

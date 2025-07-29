@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import type { Viewport } from 'next'
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
@@ -25,7 +26,15 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   manifest: "/manifest.json",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+}
+
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  // interactiveWidget: 'resizes-visual',
 }
 
 export default function RootLayout({

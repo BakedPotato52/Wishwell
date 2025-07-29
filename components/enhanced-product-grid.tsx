@@ -36,7 +36,7 @@ export function EnhancedProductGrid({ products, view, loading = false }: Enhance
   }
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-2">
       <div
         className={
           view === "grid"

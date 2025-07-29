@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -24,7 +24,6 @@ interface UnifiedProductDetailProps {
 export default function UnifiedProductDetail({ product }: UnifiedProductDetailProps) {
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({})
     const [quantity, setQuantity] = useState(1)
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
     // Get current price, stock, and variant based on product type and selected attributes
     const currentPrice = useMemo(() => getCurrentPrice(product, selectedAttributes), [product, selectedAttributes])
     const stockStatus = useMemo(() => getStockStatus(product, selectedAttributes), [product, selectedAttributes])
@@ -47,6 +46,60 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
         }
         return product.images || [product.image]
     }, [product, currentVariant])
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
+    const isScrollingRef = useRef(false)
+
+    const handleScroll = () => {
+        if (!scrollContainerRef.current || isScrollingRef.current) return
+
+        const container = scrollContainerRef.current
+        const scrollLeft = container.scrollLeft
+        const itemWidth = container.offsetWidth
+        const currentIndex = Math.round(scrollLeft / itemWidth)
+
+        // Handle infinite scroll
+        if (currentIndex >= productImages.length) {
+            isScrollingRef.current = true
+            container.scrollTo({ left: 0, behavior: "smooth" })
+            setSelectedImageIndex(0)
+            setTimeout(() => {
+                isScrollingRef.current = false
+            }, 300)
+        } else if (currentIndex < 0) {
+            isScrollingRef.current = true
+            const lastIndex = productImages.length - 1
+            container.scrollTo({ left: lastIndex * itemWidth, behavior: "smooth" })
+            setSelectedImageIndex(lastIndex)
+            setTimeout(() => {
+                isScrollingRef.current = false
+            }, 300)
+        } else {
+            setSelectedImageIndex(currentIndex)
+        }
+    }
+
+    useEffect(() => {
+        const container = scrollContainerRef.current
+        if (!container) return
+
+        // Add scroll event listener with throttling
+        let timeoutId: NodeJS.Timeout
+        const throttledScroll = () => {
+            clearTimeout(timeoutId)
+            timeoutId = setTimeout(handleScroll, 100)
+        }
+
+        container.addEventListener("scroll", throttledScroll)
+        return () => {
+            container.removeEventListener("scroll", throttledScroll)
+            clearTimeout(timeoutId)
+        }
+    }, [])
+
+    // Create extended array for infinite scroll effect
+    const extendedImages = [...productImages, productImages[0]]
 
     // Handle attribute selection
     const handleAttributeChange = (attributeId: string, value: string) => {
@@ -206,40 +259,53 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
             <div className="grid lg:grid-cols-2 gap-8">
                 {/* Product Images */}
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-                    {/* Main Image */}
-                    <div className="aspect-square overflow-hidden rounded-lg border">
-                        <Image
-                            src={productImages[selectedImageIndex] || "/placeholder.svg?height=600&width=600"}
-                            alt={product.name}
-                            width={600}
-                            height={600}
-                            className="h-full w-full object-cover"
-                        />
-                    </div>
+                    {/* Carousel Container */}
+                    <div className="relative overflow-hidden rounded-lg border">
+                        <div
+                            ref={scrollContainerRef}
+                            className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+                            style={{
+                                scrollbarWidth: "none",
+                                msOverflowStyle: "none",
+                            }}
+                        >
+                            {extendedImages.map((image, index) => (
+                                <div key={index} className="flex-shrink-0 w-full snap-center">
+                                    <div className="aspect-square">
+                                        <Image
+                                            src={image || "/placeholder.svg?height=600&width=600"}
+                                            alt={`${product.name} ${(index % productImages.length) + 1}`}
+                                            width={600}
+                                            height={600}
+                                            className="h-full w-full object-cover"
+                                        />
+                                    </div>
 
-                    {/* Thumbnail Images */}
-                    {productImages.length > 1 && (
-                        <div className="flex space-x-2 overflow-x-auto">
-                            {productImages.map((image, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setSelectedImageIndex(index)}
-                                    className={`
-                    flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors
-                    ${selectedImageIndex === index ? "border-primary" : "border-transparent"}
-                  `}
-                                >
-                                    <Image
-                                        src={image || "/placeholder.svg?height=100&width=100"}
-                                        alt={`${product.name} ${index + 1}`}
-                                        width={100}
-                                        height={100}
-                                        className="h-20 w-20 object-cover"
-                                    />
-                                </button>
+                                    {productImages.length > 1 && (
+                                        <div className="absolute bottom-4 left-0 right-0 flex rounded-full gap-2 justify-center">
+                                            {productImages.map((_, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => {
+                                                        if (scrollContainerRef.current) {
+                                                            const itemWidth = scrollContainerRef.current.offsetWidth
+                                                            scrollContainerRef.current.scrollTo({
+                                                                left: index * itemWidth,
+                                                                behavior: "smooth",
+                                                            })
+                                                        }
+                                                    }}
+                                                    className={`h-2 w-2 rounded-full transition-colors ${selectedImageIndex === index ? "bg-primary" : "bg-gray-300"
+                                                        }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+
+                                </div>
                             ))}
                         </div>
-                    )}
+                    </div>
                 </motion.div>
 
                 {/* Product Details */}
@@ -479,6 +545,16 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
                     </TabsContent>
                 </Tabs>
             </div>
+            <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
         </div>
+
     )
 }

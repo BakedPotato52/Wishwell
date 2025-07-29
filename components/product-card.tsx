@@ -6,9 +6,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { Star } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { UnifiedProduct } from "@/lib/types"
-import { isEnhancedProduct, getCurrentPrice, getStockStatus } from "@/utils/product-migration"
+import { getCurrentPrice, getStockStatus } from "@/utils/product-migration"
 import { AddToCartButton } from "@/components/add-to-cart-button"
 
 interface UnifiedProductCardProps {
@@ -44,7 +43,7 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
               {!stockStatus.inStock && <Badge className="absolute top-2 left-2 bg-red-500 text-xs">Out of Stock</Badge>}
             </div>
 
-            <div className="p-3 sm:p-4 flex-1">
+            <div className="p-2 sm:p-4 flex-1">
               <h3 className="font-semibold text-base sm:text-lg mb-1 line-clamp-1">{product.name}</h3>
               <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2">{product.description}</p>
 
@@ -98,7 +97,7 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
         </div>
 
         <div className="p-3 sm:p-4">
-          <h3 className="font-semibold text-sm sm:text-lg mb-2 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">{product.name}</h3>
+          <h3 className="font-semibold text-sm sm:text-lg mb-2 line-clamp-2 min-h-[1.5rem] sm:min-h-[2.5rem]">{product.name}</h3>
           <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">{product.description}</p>
 
           <div className="flex items-center mb-2">
