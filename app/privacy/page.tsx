@@ -119,7 +119,7 @@ export default function PrivacyPolicy() {
                         </Link>
                     </Button>
                     <h1 className="text-4xl font-bold text-slate-900 mb-4">Privacy Policy</h1>
-                    <p className="text-lg text-slate-600">Last updated: January 1, 2024</p>
+                    <p className="text-lg text-slate-600">Last updated: 30 July, 2025</p>
                 </motion.div>
 
                 {/* Introduction */}

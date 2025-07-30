@@ -2,11 +2,12 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { getSubcategoryImage } from "@/lib/subcategoryImages"
+import { createContextualSlug } from "@/utils/category-utils"
 import type { Category, UnifiedProduct } from "@/lib/types"
 
 /* -------------------------------------------------------------------------- */
@@ -72,13 +73,6 @@ export function CategoryFilterBar({
   }, [currentLevel])
 
   /* -------------------------------- Handlers ----------------------------- */
-  const createSlug = (name: string) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "")
-  }
-
   const handleSubcategorySelect = (subcategory: string | null) => {
     if (!subcategory) {
       setSelectedSubcategory(null)
@@ -97,8 +91,9 @@ export function CategoryFilterBar({
     // Prevent unnecessary re-execution if the same subcategory is already selected
     if (selectedSubcategory === subcategory) {
       console.log("Already selected subcategory:", subcategory)
-      setSelectedSubcategory(subcategory)
+      return
     }
+
     setSelectedSubcategory(subcategory)
     setSelectedSubSubcategory(null)
     onSubcategoryChange?.(subcategory)
@@ -179,15 +174,6 @@ export function CategoryFilterBar({
                     currentLevel.type === LEVELS.MAIN &&
                     (selectedSubcategory === item || (selectedSubcategory === null && i === 0))
 
-                  const firstItem =
-                    i === 0
-                      ? (() => {
-                        if (!selectedSubcategory) {
-                          handleSubcategorySelect(item)
-                        }
-                      })()
-                      : undefined
-
                   // Get context-aware image
                   const imageUrl = getSubcategoryImage(item, categoryName)
 
@@ -197,7 +183,6 @@ export function CategoryFilterBar({
                       label={item}
                       selected={isSelected}
                       image={imageUrl}
-                      onload={() => firstItem}
                       onClick={() => currentLevel.type === LEVELS.MAIN && handleSubcategorySelect(item)}
                       delay={(i + 1) * 0.05}
                     />
@@ -219,12 +204,13 @@ export function CategoryFilterBar({
               <h2 className="text-lg font-semibold mb-2">{selectedSubcategory}</h2>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                 {subsubcategories[selectedSubcategory]?.map((subsubcategory, index) => {
-                  const slug = createSlug(subsubcategory)
+                  // Use contextual URL generation
+                  const contextualSlug = createContextualSlug(categoryName, selectedSubcategory, subsubcategory)
                   // Get context-aware image for subsubcategory
                   const imageUrl = getSubcategoryImage(subsubcategory, selectedSubcategory, categoryName)
 
                   return (
-                    <Link key={subsubcategory} href={`/products/${slug}`}>
+                    <Link key={subsubcategory} href={`/products/${contextualSlug}`}>
                       <motion.div
                         key={subsubcategory}
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -279,10 +265,9 @@ interface CategoryListItemProps {
   image: string
   onClick: () => void
   delay: number
-  onload?: () => void
 }
 
-function CategoryListItem({ label, selected, image, onClick, delay, onload }: CategoryListItemProps) {
+function CategoryListItem({ label, selected, image, onClick, delay }: CategoryListItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -292,7 +277,6 @@ function CategoryListItem({ label, selected, image, onClick, delay, onload }: Ca
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      onLoad={onload}
       className="cursor-pointer relative"
     >
       <div

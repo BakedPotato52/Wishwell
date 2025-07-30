@@ -1,6 +1,6 @@
 "use client"
 
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -9,55 +9,29 @@ import { useProducts } from "@/hooks/use-products"
 import { ProductGrid } from "@/components/product-grid"
 import { ProductGridSkeleton, ErrorMessage } from "@/components/loading-skeleton"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, Search, Grid, List, Home } from 'lucide-react'
 import { categories } from "@/lib/categoryData"
 import { subcategoryImages } from "@/lib/subcategoryImages"
-
-// Helper functions for slug conversion
-const createSlug = (text: string): string => {
-    return text
-        .toLowerCase()
-        .replace(/&/g, "and") // Replace & with "and"
-        .replace(/,/g, "") // Remove commas
-        .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
-        .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
-}
-
-const getSubsubcategoryFromSlug = (
-    slug: string,
-): { subsubcategory: string; subcategory: string; category: string } | null => {
-    // Create a mapping of all possible subsubcategories to their slugs
-    for (const category of categories) {
-        if (category.subsubcategories) {
-            for (const [subcategory, subsubcategories] of Object.entries(category.subsubcategories)) {
-                for (const subsubcategory of subsubcategories) {
-                    const subsubcategorySlug = createSlug(subsubcategory)
-                    if (subsubcategorySlug === slug) {
-                        console.log(subsubcategory)
-                        console.log(subcategory)
-                        console.log(category)
-                        return {
-                            subsubcategory,
-                            subcategory,
-                            category: category.name,
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return null
-}
+import {
+    createSlug,
+    getSubsubcategoryFromSlug,
+    parseContextualSlug,
+    createContextualSlug
+} from "@/utils/category-utils"
 
 export default function SubsubcategoryProductPage() {
     const params = useParams()
-    const router = useRouter()
-    const slug = params.slug as string
+    const slugArray = Array.isArray(params.slug) ? params.slug : [params.slug]
+
+    // Handle both old single slug format and new contextual format
+    const isContextualUrl = slugArray.length === 3
+    const slug = isContextualUrl ? slugArray.join('/') : slugArray[0]
 
     // Get the actual subsubcategory info from slug
-    const subsubcategoryInfo = getSubsubcategoryFromSlug(slug)
+    const subsubcategoryInfo = isContextualUrl && slug
+        ? parseContextualSlug(slug)
+        : slugArray[0] ? getSubsubcategoryFromSlug(slugArray[0]) : null
 
     // Find the full category info
     const [categoryInfo, setCategoryInfo] = useState<any>(null)
@@ -123,7 +97,6 @@ export default function SubsubcategoryProductPage() {
             <div className="bg-white shadow-sm sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4 mb-4">
-
                         <div className="flex-1">
                             {/* Breadcrumb */}
                             <div className="flex items-center gap-2 mb-2 text-sm text-gray-500">
@@ -157,7 +130,7 @@ export default function SubsubcategoryProductPage() {
                             <div className="flex gap-2 p-2">
                                 <div className="flex-1">
                                     <h1 className="text-xl md:text-2xl font-bold">{subsubcategoryInfo.subsubcategory}</h1>
-                                    <p className="text-sm text-gray-600">in {subsubcategoryInfo.subcategory}</p>
+                                    <p className="text-sm text-gray-600">in {subsubcategoryInfo.subcategory} - {subsubcategoryInfo.category}</p>
                                 </div>
                                 <Button
                                     variant={viewMode === "grid" ? "default" : "outline"}
@@ -174,14 +147,11 @@ export default function SubsubcategoryProductPage() {
                                     <List className="h-4 w-4" />
                                 </Button>
                             </div>
-
                         </div>
-
                     </div>
 
                     {/* Search and Filter Bar */}
                     <div className="flex flex-col sm:flex-row gap-4">
-
                         <Select value={`${sortBy}-${sortOrder}`} onValueChange={handleSortChange}>
                             <SelectTrigger className="w-full sm:w-48">
                                 <SelectValue placeholder="Sort by" />
@@ -238,47 +208,6 @@ export default function SubsubcategoryProductPage() {
                 )}
             </div>
 
-            {/* Related Subsubcategories */}
-            {/* {categoryInfo.subsubcategories?.[subsubcategoryInfo.subcategory] &&
-                categoryInfo.subsubcategories[subsubcategoryInfo.subcategory].length > 1 && (
-                    <section className="bg-white py-4">
-                        <div className="container mx-auto px-4">
-                            <h2 className="text-xl font-bold mb-6">More in {subsubcategoryInfo.subcategory}</h2>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                {categoryInfo.subcategories
-                                    .filter((sub: string) => sub !== subsubcategoryInfo.subsubcategory)
-                                    .slice(0, 6)
-                                    .map((subsubcategory: string) => {
-                                        const subsubSlug = createSlug(subsubcategory)
-                                        return (
-                                            <Link key={subsubcategory} href={`/products/${subsubSlug}`}>
-                                                <motion.div
-                                                    whileHover={{ scale: 1.02 }}
-                                                    className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-                                                >
-                                                    <div className="flex flex-col items-center text-center">
-                                                        <Image
-                                                            src={
-                                                                typeof subcategoryImages[subsubcategory] === 'string'
-                                                                    ? subcategoryImages[subsubcategory] as string
-                                                                    : (subcategoryImages[subsubcategory] as any)?.src || "/placeholder.svg?height=64&width=64"
-                                                            }
-                                                            alt={subsubcategory}
-                                                            width={64}
-                                                            height={64}
-                                                            className="mb-2 rounded-lg"
-                                                        />
-                                                        <span className="text-sm font-medium line-clamp-2">{subsubcategory}</span>
-                                                    </div>
-                                                </motion.div>
-                                            </Link>
-                                        )
-                                    })}
-                            </div>
-                        </div>
-                    </section>
-                )} */}
-
             {/* Related Subcategories */}
             {categoryInfo.subcategories && categoryInfo.subcategories.length > 1 && (
                 <section className="bg-gray-100 py-4">
@@ -289,9 +218,14 @@ export default function SubsubcategoryProductPage() {
                                 .filter((sub: string) => sub !== subsubcategoryInfo.subsubcategory)
                                 .slice(0, 6)
                                 .map((subsubcategory: string) => {
-                                    const subSlug = createSlug(subsubcategory)
+                                    // Use contextual URL generation
+                                    const contextualSlug = createContextualSlug(
+                                        categoryInfo.name,
+                                        subsubcategoryInfo.subcategory,
+                                        subsubcategory
+                                    )
                                     return (
-                                        <Link key={subsubcategory} href={`/products/${subSlug}`}>
+                                        <Link key={subsubcategory} href={`/products/${contextualSlug}`}>
                                             <motion.div
                                                 whileHover={{ scale: 1.02 }}
                                                 className="p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer shadow-sm"

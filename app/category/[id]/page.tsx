@@ -49,7 +49,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   }
 
   const handleSubcategoryChange = (subcategory: string | null) => {
-    setSelectedSub(subcategory)
+    // setSelectedSub(subcategory)
     setSelectedSubSub(null) // Reset subsubcategory when subcategory changes
     if (subcategory === null) {
       setShowingProducts(false) // Hide products when clearing all filters
