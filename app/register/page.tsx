@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Eye, EyeOff, Loader2, CheckCircle, ShoppingCart } from "lucide-react"
+import { Eye, EyeOff, Loader2, CheckCircle, ShoppingCart, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -34,6 +34,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null)
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const [agreeToTerms, setAgreeToTerms] = useState(false)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
 
   const { firebaseUser, login } = useAuth()
   const { executeAfterAuth } = useAuthGuard()
@@ -50,8 +51,6 @@ export default function RegisterPage() {
     return () => { active = false }
   }, [])
 
-
-
   // Get redirect parameters from URL
   const returnUrl = searchParams?.get("returnUrl") || "/"
   const action = searchParams?.get("action")
@@ -65,6 +64,97 @@ export default function RegisterPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebaseUser])
+
+  const getAddressFromCoordinates = async (latitude: number, longitude: number): Promise<string> => {
+    try {
+      const response = await fetch(
+        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`
+      )
+
+      if (!response.ok) {
+        throw new Error('Geocoding failed')
+      }
+
+      const data = await response.json()
+
+      if (data.results && data.results.length > 0) {
+        return data.results[0].formatted
+      }
+
+      throw new Error('No address found')
+    } catch (error) {
+      // Fallback: try with a free service (less accurate)
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+        )
+
+        if (!response.ok) {
+          throw new Error('Fallback geocoding failed')
+        }
+
+        const data = await response.json()
+
+        if (data.display_name) {
+          return data.display_name
+        }
+
+        throw new Error('No address found in fallback')
+      } catch (fallbackError) {
+        throw new Error('Unable to get address from location')
+      }
+    }
+  }
+
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by this browser")
+      return
+    }
+
+    setIsGettingLocation(true)
+    setError(null)
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords
+          const address = await getAddressFromCoordinates(latitude, longitude)
+
+          setFormData(prev => ({
+            ...prev,
+            address: address
+          }))
+        } catch (error) {
+          setError("Unable to get address from your location. Please enter manually.")
+        } finally {
+          setIsGettingLocation(false)
+        }
+      },
+      (error) => {
+        setIsGettingLocation(false)
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setError("Location access denied. Please enable location permissions and try again.")
+            break
+          case error.POSITION_UNAVAILABLE:
+            setError("Location information is unavailable.")
+            break
+          case error.TIMEOUT:
+            setError("Location request timed out. Please try again.")
+            break
+          default:
+            setError("An unknown error occurred while getting location.")
+            break
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    )
+  }
 
   const handlePostRegistrationRedirect = () => {
     // Execute any pending actions immediately after registration
@@ -352,16 +442,36 @@ export default function RegisterPage() {
 
             <div>
               <Label htmlFor="address">Address</Label>
-              <Input
-                id="address"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                required
-                disabled={isLoading}
-                className="mt-1"
-                placeholder="Enter your address"
-                autoComplete="address-line1"
-              />
+              <div className="flex gap-2 mt-1">
+                <Input
+                  id="address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  required
+                  disabled={isLoading || isGettingLocation}
+                  className="flex-1"
+                  placeholder="Enter your address"
+                  autoComplete="address-line1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={getCurrentLocation}
+                  disabled={isLoading || isGettingLocation}
+                  className="px-3"
+                  title="Get current location"
+                >
+                  {isGettingLocation ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <MapPin className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+              {isGettingLocation && (
+                <p className="text-xs text-blue-600 mt-1">Getting your location...</p>
+              )}
             </div>
 
             <div className="flex items-center space-x-2">
