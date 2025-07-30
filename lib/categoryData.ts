@@ -121,7 +121,7 @@ export const categories: Category[] = [
     {
         id: "kCxJLwMwO86hlBK6gvrV",
         name: "Accessories",
-        image: "/categories/accessories.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753884416/Accessories_Category_Photo__vzshsx.png?height=64&width=64",
         icon: "👜",
         subcategories: [
             "Womems Jwellery",
@@ -132,8 +132,8 @@ export const categories: Category[] = [
         subsubcategories: {
             "Womems Jwellery": ["Pendants", "Necklace & Chains", "Rings", "Bracelets", "Waist Chains", "Anklets", "Chains & Charms", "Earrings", "Bangles", "Jewellery Sets"],
             "Men's Jewellery": ["Rings", "Chains & Pendants", "Bracelets", "Earrings"],
+            "Women's Accessories": ["Belts", "Handbags & Wallets", "Caps & Hats", "Watches", "Perfumes", "Stockings", "Charms Brooches & Pins", "Hair Accessories", "Wallets", "Socks", "Eyewear"],
             "Men's Accessories": ["Watches", "Wallets", "Belts", "Perfumes", "Caps & Hats", "Socks", "Tie & Brooches", "Eyewear"],
-            "Women's Accessories": ["Belts", "Handbags & Wallets", "Caps & Hats", "Watches", "Perfumes", "Stockings", "Charms Brooches & Pins", "Hair Accessories", "Wallets", "Socks", "Eyewear"]
         }
 
     },
@@ -247,7 +247,7 @@ export const categories: Category[] = [
     {
         id: "lZ2d1eCsMNTx85RvyXvZ",
         name: "Gifts",
-        image: "/categories/gifts.jpg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753886208/nice-gift-with-red-ribbon-ready-birthday_tomwgc.jpg?height=64&width=64",
         icon: "📱",
         subcategories: [
             "Birthday Gifts",

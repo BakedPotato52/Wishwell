@@ -292,24 +292,112 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Health & Pharma": "/categories/subcategory/health.png",
 
     // Accessories subcategories
-    "For Him": "/categories/subcategory/accessories-him.png",
-    "For Her": "/categories/subcategory/accessories-her.png",
+    "Women's Jewellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885357/Women_s_Jewellery__j2sqsr.png?height=64&width=64",
+    "Men's Jewellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885311/Men_s_Jewellery__ejt2zu.png?height=64&width=64",
+    "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Men_s_Accessories_m0tdpm.png?height=64&width=64",
+    "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885337/Women_s_Accessories_lfvzvl.png?height=64&width=64",
 
-    // Sub-subcategories for Accessories - For Him
-    Necklaces: "/categories/subcategory/necklaces.png",
-    Bracelets: "/categories/subcategory/bracelets.png",
-    Sunglasses: "/categories/subcategory/sunglasses.png",
-    Watches: "/categories/subcategory/watches.png",
-    Earrings: "/categories/subcategory/earrings.png",
-    Wallets: "/categories/subcategory/wallets.png",
-    Belts: "/categories/subcategory/belts.png",
-    Ties: "/categories/subcategory/ties.png",
+    "Rings": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885311/Rings_ffkkbk.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885311/Rings_ffkkbk.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885354/Rings_hbtz7c.png?height=64&width=64",
+        }
+    },
 
-    // Sub-subcategories for Accessories - For Her
-    "Necklace and Chains": "/categories/subcategory/necklace-chains.png",
-    "Jewellery Sets": "/categories/subcategory/jewellery-sets.png",
-    "Handbags & Wallets": "/categories/subcategory/handbags.png",
-    Rings: "/categories/subcategory/rings.png",
+    "Bracelets": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Bracelets_mgyg8l.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Bracelets_mgyg8l.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885351/Bracelets_xus1zg.png?height=64&width=64",
+        }
+    },
+
+    "Earrings": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Earrings_dlqhei.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Earrings_dlqhei.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/earrings_kprejq.png?height=64&width=64",
+        }
+    },
+
+    // Sub-subcategories for Women's Jwellery
+    "Pendants": "https://res.cloudinary.com/wishwell/image/upload/v1753885353/Pendants_wx2kwd.png?height=64&width=64",
+    "Necklace & Chains": "https://res.cloudinary.com/wishwell/image/upload/v1753885353/Necklace_And_Chains_ctiind.png?height=64&width=64",
+    "Waist Chains": "https://res.cloudinary.com/wishwell/image/upload/v1753885354/Waist_Chains_wnts2l.png?height=64&width=64",
+    "Anklets": "https://res.cloudinary.com/wishwell/image/upload/v1753885348/Anklets_ishu4b.png?height=64&width=64",
+    "Chains & Charms": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/Chains_Charms_efhypj.png?height=64&width=64",
+    "Bangles": "https://res.cloudinary.com/wishwell/image/upload/v1753885350/Bangles_zerq3a.png?height=64&width=64",
+    "Jewellery Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/Jewellery_Set_cjr4l4.png?height=64&width=64",
+
+    // Sub-subcategories for men's Jwellery
+    "Chains & Pendants": "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Chains_Pendants_pior1x.png?height=64&width=64",
+
+    //sub-subcategories for womens accessories
+    "Stockings": "https://res.cloudinary.com/wishwell/image/upload/v1753885333/Stockings_u5dnwo.png?height=64&width=64",
+    "Handbags & Wallets": "https://res.cloudinary.com/wishwell/image/upload/v1753885331/Handbags_Wallets_y5aka9.png?height=64&width=64",
+    "Charms Brooches & Pins": "https://res.cloudinary.com/wishwell/image/upload/v1753885329/Charms_Brooches_Pins_py7agr.png?height=64&width=64",
+    "Hair Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885331/Hair_Accessories_tsrobk.png?height=64&width=64",
+
+    "Watches": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885335/Watches_jypwak.png?height=64&width=64",
+        contexts: {
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885335/Watches_jypwak.png?height=64&width=64",
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Watches_zpijtd.png?height=64&width=64",
+        }
+    },
+
+    "Wallets": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Wallets_zoipwz.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Wallets_zoipwz.png?height=64&width=64",
+            "Women's Accessories": "/categories/subcategory/womens-wallets.png",
+        }
+    },
+
+    "Belts": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Belts_brbvil.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Belts_brbvil.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885334/Wallets_rvlvho.png?height=64&width=64",
+        }
+    },
+
+    "Perfumes": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885290/Perfumes_fen8f1.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885290/Perfumes_fen8f1.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885332/Perfumes_svt5ut.png?height=64&width=64",
+        }
+    },
+
+    "Caps & Hats": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Caps_Hats_efoero.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Caps_Hats_efoero.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885329/Caps_Hats_vusx4n.png?height=64&width=64",
+        }
+    },
+
+    "Socks": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Socks_yhyaej.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Socks_yhyaej.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885333/Socks_jynb1n.png?height=64&width=64",
+        }
+    },
+
+    "Eyewear": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753885290/Eyewear_l4aogf.png?height=64&width=64",
+        contexts: {
+            "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885290/Eyewear_l4aogf.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885330/Eyewear_bsztr4.png",
+        }
+    },
+
+    // Sub-subcategories for mens accessories
+    "Tie & Brooches": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Tie_Brooches_oe8qly.png?height=64&width=64",
+
 
     // Sub-subcategories for Footwear
     "Casual Shoes": "/categories/subcategory/casual-shoes.png",
