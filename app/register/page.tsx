@@ -68,7 +68,7 @@ export default function RegisterPage() {
   const getAddressFromCoordinates = async (latitude: number, longitude: number): Promise<string> => {
     try {
       const response = await fetch(
-        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`
+        `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${process.env.NEXT_PUBLIC_GEOCODE_API_KEY}`
       )
 
       if (!response.ok) {

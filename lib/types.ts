@@ -146,13 +146,20 @@ export interface Order {
   userId: string
   items: CartItem[]
   total: number
+  subtotal: number
+  additionalFees?: number
   status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled"
   deliveryAddress: string
   paymentMethod?: string
   paymentStatus?: "pending" | "completed" | "failed"
-  createdAt: Timestamp | FieldValue
-  updatedAt: Timestamp | FieldValue
-  estimatedDelivery?: Timestamp | FieldValue
+  createdAt: Date | Timestamp | FieldValue
+  updatedAt: Date | Timestamp | FieldValue
+  estimatedDelivery?: Date | Timestamp | FieldValue
+  trackingSteps?: Array<{
+    status: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled"
+    timestamp: Date | Timestamp | FieldValue
+    description: string
+  }>
 }
 
 export interface Category {

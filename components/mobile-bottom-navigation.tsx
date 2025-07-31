@@ -68,7 +68,7 @@ export function MobileBottomNav() {
     return (
         <>
             {/* Spacer to prevent content overlap */}
-            <div className="h-20 md:hidden" />
+            <div className="h-16 md:hidden" />
 
             {/* Bottom Navigation */}
             <motion.nav
