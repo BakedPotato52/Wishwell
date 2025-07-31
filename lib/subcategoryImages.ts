@@ -63,7 +63,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Night Dress Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753777898/Night_Dresses_Pant_Sets__sxbpxm.png?height=64&width=64",
     "Jumpsuits": "https://res.cloudinary.com/wishwell/image/upload/v1753778120/Jumpsuits_ma3lvx.png?height=64&width=64",
     "Western": "https://res.cloudinary.com/wishwell/image/upload/v1753778123/Western_Jumpsuits_zpkkxm.png?height=64&width=64",
-    "Ethnic": "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
+
     // Context-aware subcategories that appear in multiple categories
     Tops: {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753772910/Tops_qisl6t.png?height=64&width=64",
@@ -399,13 +399,45 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Tie & Brooches": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Tie_Brooches_oe8qly.png?height=64&width=64",
 
 
-    // Sub-subcategories for Footwear
-    "Casual Shoes": "/categories/subcategory/casual-shoes.png",
-    "Formal Shoes": "/categories/subcategory/formal-shoes.png",
-    "Sandals and Floaters": "/categories/subcategory/sandals.png",
-    "Flip Flops & Slippers": "/categories/subcategory/flip-flops.png",
-    Heels: "/categories/subcategory/heels.png",
-    Flats: "/categories/subcategory/flats.png",
+    // subcategories for Footwear
+    "Women's Footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939745/women_s_footwear_egguen.png?height=64&width=64",
+    "Men's Footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/men_s_footwear_wmbqzn.png?height=64&width=64",
+
+    // subsubcategories for women's footwear
+    "Heels": "https://res.cloudinary.com/wishwell/image/upload/v1753939744/heels_ajnds6.png?height=64&width=64",
+
+    // subsubcategories for men's footwear
+    "Formals": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Formals_oojqjc.png?height=64&width=64",
+
+    "Ethnic": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
+        contexts: {
+            "women-jumpsuits": "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Ethnic_wtf1x8.png?height=64&width=64",
+        }
+    },
+
+    "Flats & Sandals": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753939745/Flats_Sandals_v795uz.png?height=64&width=64",
+        contexts: {
+            "women-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939745/Flats_Sandals_v795uz.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Flats_Sandals_mn7szj.png?height=64&width=64",
+        }
+    },
+    "Flip Flops": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Flip_Flops_vefxvi.png?height=64&width=64",
+        contexts: {
+            "women-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939745/Flip_Flops_qwna6o.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Flip_Flops_vefxvi.png?height=64&width=64",
+        }
+    },
+    "Casual Shoes": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Casual_Shoes_lgo6kl.png?height=64&width=64",
+        contexts: {
+            "women-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939744/Casual_Shoes_njxakx.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Casual_Shoes_lgo6kl.png?height=64&width=64",
+        }
+    },
 
     // Grocery subcategories
     "Fresh Vegetables": "/categories/subcategory/vegetables.png",

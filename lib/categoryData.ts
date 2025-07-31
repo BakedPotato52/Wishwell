@@ -124,13 +124,13 @@ export const categories: Category[] = [
         image: "https://res.cloudinary.com/wishwell/image/upload/v1753884416/Accessories_Category_Photo__vzshsx.png?height=64&width=64",
         icon: "👜",
         subcategories: [
-            "Womems Jwellery",
+            "Women's Jwellery",
             "Men's Jewellery",
             "Men's Accessories",
             "Women's Accessories",
         ],
         subsubcategories: {
-            "Womems Jwellery": ["Pendants", "Necklace & Chains", "Rings", "Bracelets", "Waist Chains", "Anklets", "Chains & Charms", "Earrings", "Bangles", "Jewellery Sets"],
+            "Women's Jwellery": ["Pendants", "Necklace & Chains", "Rings", "Bracelets", "Waist Chains", "Anklets", "Chains & Charms", "Earrings", "Bangles", "Jewellery Sets"],
             "Men's Jewellery": ["Rings", "Chains & Pendants", "Bracelets", "Earrings"],
             "Women's Accessories": ["Belts", "Handbags & Wallets", "Caps & Hats", "Watches", "Perfumes", "Stockings", "Charms Brooches & Pins", "Hair Accessories", "Wallets", "Socks", "Eyewear"],
             "Men's Accessories": ["Watches", "Wallets", "Belts", "Perfumes", "Caps & Hats", "Socks", "Tie & Brooches", "Eyewear"],
@@ -140,7 +140,7 @@ export const categories: Category[] = [
     {
         id: "XOI5U08K2tpZiqM94Snd",
         name: "Footwear",
-        image: "/categories/footwear.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753939673/Footwear_Category_Photo__mnau8u.png?height=64&width=64",
         icon: "👟",
         subcategories: [
             "Women's Footwear",
@@ -202,13 +202,13 @@ export const categories: Category[] = [
             "Paan Corner"
         ],
         subsubcategories: {
-            "Cold Drinks and Juices": ["Top Deals", "Soft Drinks", "Juices & Drinks", "Energy Drinks", "Mango Drinks", "Fresh Juice", "Soda & Mixers", "Coconut Water", "Diet Soft Drinks", "Hydration", "Water & Ice Cubes", "Non Alcoholic", "Ice Tea & Kombucha", "Drink Mixes", "Milk Drinks", "Cold Coffee"],
+            "Cold Drinks and Juices": ["Soft Drinks", "Juices & Drinks", "Energy Drinks", "Mango Drinks", "Fresh Juice", "Soda & Mixers", "Coconut Water", "Diet Soft Drinks", "Hydration", "Water & Ice Cubes", "Non Alcoholic", "Ice Tea & Kombucha", "Drink Mixes", "Milk Drinks", "Cold Coffee"],
             "Ice Creams and Frozen Desserts": ["Rare Finds", "Tubs & Party Packs", "Cones", "Sticks", "Guilt Free", "Kulfi", "Premium", "Cups", "Cakes & Sandwiches", "Regional Favourites", "Brownies & Cakes", "Syrups"],
             "Chips and Namkeens": ["Bestseller", "Chips & Crisps", "Nachos", "Puffs & Crunchies", "Bhujia & Namkeens", "Premium Brands", "Nuts & Makhana", "Indian Snacks", "Popcorn", "Gift Hampers", "Snack Bars", "Healthy Snacking", "Party Pack"],
-            "Chocolates": ["Top Deals", "Bestseller", "Dark", "Gift Boxes", "Premium", "Milk", "Shared Packs", "Imported", "Gourmet", "Wafers", "Candies", "Gums & Mint"],
-            "Noodles, Pasta, Vermicelli": ["Top Deals", "Instant Noodles", "Cup Noodles", "Korean", "Hakka", "Pasta", "Vermicelli", "Soups", "Ready to Eat"],
-            "Frozen Food": ["Top Deals", "Veg Frozen", "Non Veg", "Cold Cuts", "Kebabs", "Roti", "Paranthas & Sheets", "Frozen Veg", "Momos & Bao"],
-            "Sweets": ["Top Deals", "Kaju Katli & Barfi", "Rasgulla", "Gulab Jamun", "Mysore Pak", "Ladoos", "Pedhas", "Chikki", "Rasmalai", "Cakes"],
+            "Chocolates": ["Bestseller", "Dark", "Gift Boxes", "Premium", "Milk", "Shared Packs", "Imported", "Gourmet", "Wafers", "Candies", "Gums & Mint"],
+            "Noodles, Pasta, Vermicelli": ["Instant Noodles", "Cup Noodles", "Korean", "Hakka", "Pasta", "Vermicelli", "Soups", "Ready to Eat"],
+            "Frozen Food": ["Veg Frozen", "Non Veg", "Cold Cuts", "Kebabs", "Roti", "Paranthas & Sheets", "Frozen Veg", "Momos & Bao"],
+            "Sweets": ["Kaju Katli & Barfi", "Rasgulla", "Gulab Jamun", "Mysore Pak", "Ladoos", "Pedhas", "Chikki", "Rasmalai", "Cakes"],
             "Paan Corner": ["Regular Cigarettes", "Flavour Cigarettes", "Smoking Accessories", "Nicotine Alternatives", "Paan & Mouth Fresheners", "Cookies & Cakes", "Chips & Crisps", "Cold Drinks & Juices"]
         }
     },
