@@ -12,109 +12,7 @@ import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
-// import { updateUser } from "@/lib/firebase/firestore" // Add Firebase config
-// import { useAuth } from "@/contexts/auth-context"
 
-// interface LocationData {
-//   latitude: number
-//   longitude: number
-//   timestamp: number
-//   accuracy?: number
-// }
-
-// function LocationHandler() {
-//   const [locationStatus, setLocationStatus] = useState<'idle' | 'requesting' | 'success' | 'error'>('idle')
-//   const { firebaseUser } = useAuth()
-//   const requestLocation = async () => {
-//     if (!navigator.geolocation) {
-//       toast.error("Geolocation is not supported by this browser")
-//       return
-//     }
-
-//     setLocationStatus('requesting')
-
-//     navigator.geolocation.getCurrentPosition(
-//       async (position) => {
-//         try {
-//           const locationData: LocationData = {
-//             latitude: position.coords.latitude,
-//             longitude: position.coords.longitude,
-//             timestamp: Date.now(),
-//             accuracy: position.coords.accuracy
-//           }
-//           let userId = firebaseUser?.uid
-//           if (!userId) {
-//             throw new Error("User not authenticated")
-//           }
-//           // Store location in Firebase
-//           await updateUser(userId, {
-//             address: locationData,
-//             createdAt: new Date(),
-//             userAgent: navigator.userAgent
-//           })
-
-//           setLocationStatus('success')
-//           toast.success("Location saved successfully!")
-//         } catch (error) {
-//           console.error("Error saving location:", error)
-//           setLocationStatus('error')
-//           toast.error("Failed to save location")
-//         }
-//       },
-//       (error) => {
-//         setLocationStatus('error')
-//         let errorMessage = "Location access denied"
-
-//         switch (error.code) {
-//           case error.PERMISSION_DENIED:
-//             errorMessage = "Location access denied by user"
-//             break
-//           case error.POSITION_UNAVAILABLE:
-//             errorMessage = "Location information unavailable"
-//             break
-//           case error.TIMEOUT:
-//             errorMessage = "Location request timed out"
-//             break
-//         }
-
-//         toast.error(errorMessage)
-//       },
-//       {
-//         enableHighAccuracy: true,
-//         timeout: 10000,
-//         maximumAge: 60000
-//       }
-//     )
-//   }
-
-//   useEffect(() => {
-//     // Auto-request location on component mount
-//     requestLocation()
-//   }, [])
-
-//   return (
-//     <div className="mb-4">
-//       {locationStatus === 'requesting' && (
-//         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-//           <MapPin className="w-4 h-4 animate-pulse" />
-//           <span>Getting your location...</span>
-//         </div>
-//       )}
-
-//       {locationStatus === 'error' && (
-//         <Button
-//           onClick={requestLocation}
-//           size="sm"
-//           variant="outline"
-//           className="flex items-center gap-2"
-//         >
-//           <MapPin className="w-4 h-4" />
-//           Enable Location
-//         </Button>
-//       )}
-//     </div>
-//   )
-// }
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -312,64 +210,18 @@ export default function HomePage() {
                       duration: 0.2,
                       ease: "easeInOut",
                     }}
-                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
+                    className="bg-white rounded-xl p-2 md:p-4 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
                   >
-                    <div className="flex flex-col items-center text-center">
-                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
+                    <div className="flex-1 flex items-center justify-center mb-2 md:mb-4 relative">
+                      <div className="relative w-full h-full flex items-center justify-center">
                         <Image
                           src={category.image || "/placeholder.svg"}
                           alt={subcategory}
-                          width={70}
-                          height={70}
-                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          width={64}
+                          height={64}
+                          className="w-16 h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
-
-                    </div>
-                    <div className="text-center overflow-hidden">
-                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
-                      </h3>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
-            })}
-          </div>
-        </section>
-      )}
-
-      {homeCategory && (
-        <section className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{homeCategory.name}</h1>
-          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
-            {homeCategory.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory)
-              return (
-                <Link key={subcategory} href={`/subcategory/${slug}`}>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.03,
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{
-                      duration: 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
-                        <Image
-                          src={homeCategory.image || "/placeholder.svg"}
-                          alt={subcategory}
-                          width={70}
-                          height={70}
-                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
-                        />
-                      </div>
-
                     </div>
                     <div className="text-center">
                       <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
@@ -409,9 +261,9 @@ export default function HomePage() {
                         <Image
                           src={snacksCategory.image || "/placeholder.svg"}
                           alt={subcategory}
-                          width={70}
-                          height={70}
-                          className="w-12 h-12 md:w-16 md:h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          width={64}
+                          height={64}
+                          className="w-16 h-16 object-cover bg-[#ff7d4a] rounded-lg group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
                     </div>
@@ -419,6 +271,51 @@ export default function HomePage() {
                       <h4 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
                         {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
                       </h4>
+                    </div>
+                  </motion.div>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {homeCategory && (
+        <section className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{homeCategory.name}</h1>
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
+            {homeCategory.subcategories?.map((subcategory) => {
+              const slug = createSlug(subcategory)
+              return (
+                <Link key={subcategory} href={`/subcategory/${slug}`}>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
+                        <Image
+                          src={homeCategory.image || "/placeholder.svg"}
+                          alt={subcategory}
+                          width={64}
+                          height={64}
+                          className="w-16 h-16 object-cover bg-[#4ac6ff] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                        />
+                      </div>
+
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
+                        {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
+                      </h3>
                     </div>
                   </motion.div>
                 </Link>
