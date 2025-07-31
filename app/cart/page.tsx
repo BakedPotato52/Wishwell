@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -16,40 +16,9 @@ import { useToast } from "@/hooks/use-toast"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { createOrder } from "@/lib/firebase/firestore"
+import LocationAddressInput from "@/components/location-address-input"
 import { useLocation } from "@/hooks/use-location"
-
-const getAddressFromCoordinates = async (latitude: number, longitude: number): Promise<string> => {
-  try {
-    const response = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`,
-    )
-    if (!response.ok) {
-      throw new Error("Geocoding failed")
-    }
-    const data = await response.json()
-    if (data.results && data.results.length > 0) {
-      return data.results[0].formatted
-    }
-    throw new Error("No address found")
-  } catch (error) {
-    // Fallback: try with a free service (less accurate)
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
-      )
-      if (!response.ok) {
-        throw new Error("Fallback geocoding failed")
-      }
-      const data = await response.json()
-      if (data.display_name) {
-        return data.display_name
-      }
-      throw new Error("No address found in fallback")
-    } catch (fallbackError) {
-      throw new Error("Unable to get address from location")
-    }
-  }
-}
+import { formatCoordinatesString } from "@/components/coordinate-display"
 
 export default function CheckoutPage() {
   const { state: cartState, dispatch: cartDispatch } = useCart()
@@ -68,15 +37,16 @@ export default function CheckoutPage() {
     phone: "",
   })
 
-  // Remove the old location state and functions, replace with:
-  const {
-    address: currentLocationAddress,
-    isLoading: isGettingLocation,
-    error: locationError,
-    getCurrentAddress,
-    clearError: clearLocationError,
-    isSupported: isLocationSupported,
-  } = useLocation()
+  const { address } = useLocation()
+
+  useEffect(() => {
+    if (address) {
+      setNewAddress((prev) => ({
+        ...prev,
+        address: address,
+      }))
+    }
+  }, [address])
 
   const additionalFees = 50
   const orderTotal = cartState.total + additionalFees
@@ -87,28 +57,7 @@ export default function CheckoutPage() {
     setNewAddress({ name: "", address: "", phone: "" })
   }
 
-  // Update the getCurrentLocation function to use the hook:
-  const handleGetCurrentLocation = async () => {
-    try {
-      await getCurrentAddress()
-      if (currentLocationAddress) {
-        setNewAddress((prev) => ({
-          ...prev,
-          address: currentLocationAddress,
-        }))
-        toast({
-          title: "Location Found",
-          description: "Your current address has been automatically filled.",
-        })
-      }
-    } catch (error) {
-      toast({
-        title: "Location Error",
-        description: "Unable to get address from your location. Please enter manually.",
-        variant: "destructive",
-      })
-    }
-  }
+
 
   const handlePlaceOrder = async () => {
     if (!authState.user) {
@@ -259,15 +208,15 @@ export default function CheckoutPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {authState.user?.address && (
+              {address && (
                 <div className="p-4 bg-blue-50 rounded-lg border">
                   <h4 className="font-semibold mb-2">Your Saved Address</h4>
-                  <p className="text-sm text-gray-700 mb-3">{authState.user.address}</p>
+                  <p className="text-sm text-gray-700 mb-3">{address}</p>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      setDeliveryAddress(authState?.user?.address || "")
+                      setDeliveryAddress(address || "")
                       setIsAddressDialogOpen(false)
                     }}
                   >
@@ -279,7 +228,7 @@ export default function CheckoutPage() {
               <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="w-full">
-                    {authState.user?.address ? "Add New Address" : "Select Delivery Address"}
+                    {address ? "Add New Address" : "Select Delivery Address"}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -296,12 +245,13 @@ export default function CheckoutPage() {
                     <div className="text-sm font-medium">+ ADD NEW DELIVERY ADDRESS</div>
 
                     {/* Add this button for current location */}
+                    {/*
                     <Button
                       type="button"
                       variant="outline"
                       className="w-full bg-transparent"
                       onClick={handleGetCurrentLocation}
-                      disabled={isGettingLocation || !isLocationSupported}
+                      disabled={isGettingLocation || !LocationService.isGeolocationSupported()}
                     >
                       {isGettingLocation ? (
                         <>
@@ -311,12 +261,22 @@ export default function CheckoutPage() {
                       ) : (
                         <>
                           <MapPin className="h-4 w-4 mr-2" />
-                          {isLocationSupported ? "Use Current Location" : "Location Not Supported"}
+                          {LocationService.isGeolocationSupported() ? "Use Current Location" : "Location Not Supported"}
                         </>
                       )}
                     </Button>
 
-                    {locationError && <div className="text-sm text-red-600 bg-red-50 p-2 rounded">{locationError}</div>}
+                    {locationError && (
+                      <Alert variant="destructive">
+                        <AlertDescription className="flex items-center justify-between">
+                          {locationError}
+                          <Button variant="ghost" size="sm" onClick={clearLocationError}>
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                    */}
 
                     <div className="space-y-3">
                       <div>
@@ -329,15 +289,19 @@ export default function CheckoutPage() {
                         />
                       </div>
 
-                      <div>
-                        <Label htmlFor="address">Full Address</Label>
-                        <Input
-                          id="address"
-                          value={newAddress.address}
-                          onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
-                          placeholder="Enter your full address"
-                        />
-                      </div>
+                      {/* In the Dialog content, replace the address input section with: */}
+                      <LocationAddressInput
+                        value={address}
+                        onChange={(address) => setNewAddress((prev) => ({ ...prev, address }))}
+                        placeholder="Enter your full address"
+                        label="Full Address"
+                        onLocationDetected={(address, coords) => {
+                          console.log("Location detected:", {
+                            address,
+                            formattedCoords: formatCoordinatesString(coords),
+                          })
+                        }}
+                      />
 
                       <div>
                         <Label htmlFor="phone">Phone Number</Label>
@@ -414,7 +378,7 @@ export default function CheckoutPage() {
       </Card>
 
       {/* Action Buttons */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 md:relative md:border-0 md:p-0">
+      <div className="fixed max-md:bottom-16 left-0 right-0 bg-white border-t p-4 md:relative md:border-0 md:p-0">
         <div className="container mx-auto">
           {step === 1 ? (
             <Button
