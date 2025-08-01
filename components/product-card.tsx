@@ -16,11 +16,9 @@ interface UnifiedProductCardProps {
 }
 
 export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps) {
-  const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({})
 
-  // Get current price and stock based on product type and selected attributes
-  const currentPrice = useMemo(() => getCurrentPrice(product, selectedAttributes), [product, selectedAttributes])
-  const stockStatus = useMemo(() => getStockStatus(product, selectedAttributes), [product, selectedAttributes])
+  const stockStatus = useMemo(() => getStockStatus(product), [product])
+  const currentPrice = useMemo(() => getCurrentPrice(product), [product])
 
   if (view === "list") {
     return (
@@ -64,7 +62,6 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
                 <span className="text-lg sm:text-xl font-bold text-blue-600">₹{currentPrice}</span>
                 <AddToCartButton
                   product={product}
-                  selectedAttributes={selectedAttributes}
                   size="sm"
                   disabled={!stockStatus.inStock}
                 />
@@ -117,7 +114,6 @@ export function ProductCard({ product, view = "grid" }: UnifiedProductCardProps)
             <span className="text-lg sm:text-xl font-bold text-blue-600">₹{currentPrice}</span>
             <AddToCartButton
               product={product}
-              selectedAttributes={selectedAttributes}
               size="sm"
               disabled={!stockStatus.inStock}
               className="w-full sm:w-auto"

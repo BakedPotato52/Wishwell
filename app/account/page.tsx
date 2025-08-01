@@ -1,328 +1,339 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import { ArrowLeft, Camera, Edit, LogOut, Check, X, MapPin, Phone, MessageCircle, User } from "lucide-react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { User, Phone, MapPin, Edit3, Save, X, LogOut, Package, Calendar, CreditCard, Truck } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
+import { Order } from "@/lib/types"
+import { getUserOrders } from "@/lib/firebase/firestore"
 
-export default function AccountPage() {
+
+export default function ProfilePage() {
   const { state: authState, updateUser, logout } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
     name: authState.user?.name,
     phone: authState.user?.phone || "+9153652365",
-    // whatsapp: authState.user?.whatsapp || "+91763246723",
     gender: authState.user?.gender || "Men",
     address: authState.user?.address || "North Duragamar, khowai",
-    landmark: "near ABC school",
   })
+  const [orders, setOrders] = useState<Order[]>([])
+  const [ordersLoading, setOrdersLoading] = useState(true)
+  const [ordersError, setOrdersError] = useState<string | null>(null)
 
-  const handleSave = async () => {
-    try {
-      await updateUser(formData)
-      setIsEditing(false)
-    } catch (error) {
-      console.error("Error updating profile:", error)
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (authState.user?.uid) {
+        setOrdersLoading(true)
+        setOrdersError(null)
+        try {
+          const userOrders = await getUserOrders(authState.user.uid)
+          setOrders(userOrders)
+        } catch (error) {
+          setOrdersError("Failed to load orders")
+          console.error("Error fetching orders:", error)
+        } finally {
+          setOrdersLoading(false)
+        }
+      }
+    }
+
+    fetchOrders()
+  }, [authState.user?.uid])
+
+  const handleSave = () => {
+    updateUser(formData)
+    setIsEditing(false)
+  }
+
+  const handleCancel = () => {
+    setFormData({
+      name: authState.user?.name,
+      phone: authState.user?.phone || "+9153652365",
+      gender: authState.user?.gender || "Men",
+      address: authState.user?.address || "North Duragamar, khowai",
+    })
+    setIsEditing(false)
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "delivered":
+        return "bg-green-100 text-green-800"
+      case "shipped":
+        return "bg-blue-100 text-blue-800"
+      case "processing":
+        return "bg-yellow-100 text-yellow-800"
+      default:
+        return "bg-gray-100 text-gray-800"
     }
   }
 
-  const handleLogout = async () => {
-    try {
-      await logout()
-    } catch (error) {
-      console.error("Error logging out:", error)
-    }
-  }
-
-  if (!authState.isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-        <Card className="w-full max-w-md mx-4">
-          <CardContent className="pt-6 text-center space-y-4">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
-              <User className="w-8 h-8 text-slate-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-semibold text-slate-900">Access Required</h1>
-              <p className="text-slate-600 mt-2">Please login to view your account</p>
-            </div>
-            <Link href="/login">
-              <Button className="w-full">Login to Continue</Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    )
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="container mx-auto px-4 py-8 max-w-4xl"
-      >
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/">
-            <Button variant="ghost" className="text-slate-600 hover:text-slate-900">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src="/placeholder.svg?height=64&width=64" />
+                <AvatarFallback className="text-lg font-semibold">
+                  {getInitials(authState.user?.name || "User")}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">{authState.user?.name}</h1>
+                <p className="text-gray-600">{authState.user?.email}</p>
+              </div>
+            </div>
+            <Button variant="outline" onClick={logout} className="flex items-center space-x-2 bg-transparent">
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
             </Button>
-          </Link>
-          <div className="flex items-center space-x-3">
-            <AnimatePresence mode="wait">
-              {isEditing ? (
-                <motion.div
-                  key="editing"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="flex space-x-2"
-                >
-                  <Button onClick={handleSave} size="sm" className="bg-green-600 hover:bg-green-700">
-                    <Check className="h-4 w-4 mr-1" />
-                    Save
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(false)}
-                    className="border-red-200 text-red-600 hover:bg-red-50"
-                  >
-                    <X className="h-4 w-4 mr-1" />
-                    Cancel
-                  </Button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="not-editing"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="flex space-x-2"
-                >
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(true)}
-                    className="border-blue-200 text-blue-600 hover:bg-blue-50"
-                  >
-                    <Edit className="h-4 w-4 mr-1" />
-                    Edit Profile
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="border-red-200 text-red-600 hover:bg-red-50 bg-transparent"
-                  >
-                    <LogOut className="h-4 w-4 mr-1" />
-                    Logout
-                  </Button>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Profile Card */}
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-slate-50">
-              <CardContent className="pt-8 pb-6">
-                <div className="text-center space-y-4">
-                  <div className="relative inline-block">
-                    <Avatar className="w-24 h-24 border-4 border-white shadow-lg">
-                      <AvatarImage src="/placeholder-user.jpg" />
-                      <AvatarFallback className="text-2xl font-semibold bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-                        {formData.name?.charAt(0) || 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                    {isEditing && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -bottom-2 -right-2">
-                        <Button size="sm" className="rounded-full w-8 h-8 p-0 bg-blue-600 hover:bg-blue-700">
-                          <Camera className="h-4 w-4" />
-                        </Button>
-                      </motion.div>
+        <Tabs defaultValue="profile" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="profile">Profile Information</TabsTrigger>
+            <TabsTrigger value="orders">Order History</TabsTrigger>
+          </TabsList>
+
+          {/* Profile Information Tab */}
+          <TabsContent value="profile">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Account Information</CardTitle>
+                    <CardDescription>Manage your personal information and preferences</CardDescription>
+                  </div>
+                  {!isEditing ? (
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsEditing(true)}
+                      className="flex items-center space-x-2"
+                    >
+                      <Edit3 className="h-4 w-4" />
+                      <span>Edit</span>
+                    </Button>
+                  ) : (
+                    <div className="flex space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCancel}
+                        className="flex items-center space-x-1 bg-transparent"
+                      >
+                        <X className="h-4 w-4" />
+                        <span>Cancel</span>
+                      </Button>
+                      <Button size="sm" onClick={handleSave} className="flex items-center space-x-1">
+                        <Save className="h-4 w-4" />
+                        <span>Save</span>
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span>Full Name</span>
+                    </Label>
+                    {isEditing ? (
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Enter your full name"
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{formData.name}</p>
                     )}
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-900">{formData.name}</h2>
-                    <Badge variant="secondary" className="mt-2 bg-blue-100 text-blue-700">
-                      {formData.gender}
-                    </Badge>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="flex items-center space-x-2">
+                      <Phone className="h-4 w-4" />
+                      <span>Phone Number</span>
+                    </Label>
+                    {isEditing ? (
+                      <Input
+                        id="phone"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="Enter your phone number"
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{formData.phone}</p>
+                    )}
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="gender">Gender</Label>
+                    {isEditing ? (
+                      <Select
+                        value={formData.gender}
+                        onValueChange={(value) => setFormData({ ...formData, gender: value as "Men" | "Women" | "Other" | "Prefer not to say" })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Men">Men</SelectItem>
+                          <SelectItem value="Women">Women</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                          <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{formData.gender}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{authState.user?.email}</p>
+                    <p className="text-xs text-gray-500">Email cannot be changed</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>Address</span>
+                  </Label>
+                  {isEditing ? (
+                    <Textarea
+                      id="address"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      placeholder="Enter your address"
+                      rows={3}
+                    />
+                  ) : (
+                    <p className="text-sm text-gray-900 bg-gray-50 p-3 rounded-md">{formData.address}</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </TabsContent>
 
-          {/* Details Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-2"
-          >
-            <Card className="border-0 shadow-xl">
-              <CardContent className="p-8">
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-6">Personal Information</h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {/* Name Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700 flex items-center">
-                          <User className="w-4 h-4 mr-2 text-slate-400" />
-                          Full Name
-                        </Label>
-                        {isEditing ? (
-                          <Input
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="border-slate-200 focus:border-blue-500 focus:ring-blue-500"
-                          />
-                        ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.name}</p>
-                        )}
-                      </div>
-
-                      {/* Gender Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700">Gender</Label>
-                        {isEditing ? (
-                          <RadioGroup
-                            value={formData.gender}
-                            onValueChange={(value) => setFormData({ ...formData, gender: value as "Men" | "Women" })}
-                            className="flex space-x-6 pt-2"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="Men" id="men" />
-                              <Label htmlFor="men" className="font-normal">
-                                Men
-                              </Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="Women" id="women" />
-                              <Label htmlFor="women" className="font-normal">
-                                Women
-                              </Label>
-                            </div>
-                          </RadioGroup>
-                        ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.gender}</p>
-                        )}
-                      </div>
+          {/* Order History Tab */}
+          <TabsContent value="orders">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Package className="h-5 w-5" />
+                  <span>Order History</span>
+                </CardTitle>
+                <CardDescription>View and track your recent orders</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {ordersLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                      <span className="ml-2">Loading orders...</span>
                     </div>
-                  </div>
-
-                  <Separator />
-
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-6">Contact Information</h3>
-                    <div className="space-y-6">
-                      {/* Phone Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700 flex items-center">
-                          <Phone className="w-4 h-4 mr-2 text-slate-400" />
-                          Phone Number
-                        </Label>
-                        {isEditing ? (
-                          <Input
-                            value={formData.phone}
-                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            className="border-slate-200 focus:border-blue-500 focus:ring-blue-500"
-                          />
-                        ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.phone}</p>
-                        )}
-                      </div>
-
-                      {/* WhatsApp Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700 flex items-center">
-                          <MessageCircle className="w-4 h-4 mr-2 text-green-500" />
-                          WhatsApp Number
-                        </Label>
-                        {isEditing ? (
-                          <div className="flex space-x-2">
-                            {/* <Input
-                              value={formData.whatsapp}
-                              onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                              className="border-slate-200 focus:border-blue-500 focus:ring-blue-500 flex-1"
-                            /> */}
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-green-200 text-green-600 hover:bg-green-50 bg-transparent"
-                            >
-                              Verify
-                            </Button>
+                  ) : ordersError ? (
+                    <div className="text-center py-8">
+                      <p className="text-red-600">{ordersError}</p>
+                      <Button variant="outline" onClick={() => window.location.reload()} className="mt-2">
+                        Try Again
+                      </Button>
+                    </div>
+                  ) : orders.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600">No orders found</p>
+                    </div>
+                  ) : (
+                    orders.map((order, index) => (
+                      <div key={order.id}>
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center space-x-4">
+                            <div>
+                              <h3 className="font-semibold text-lg">Order {order.id}</h3>
+                              <div className="flex items-center space-x-4 text-sm text-gray-600">
+                                <span className="flex items-center space-x-1">
+                                  <Calendar className="h-4 w-4" />
+                                  <span>
+                                    {order.createdAt && typeof order.createdAt === 'object' && 'toDate' in order.createdAt
+                                      ? order.createdAt.toDate().toLocaleDateString()
+                                      : order.createdAt instanceof Date
+                                        ? order.createdAt.toLocaleDateString()
+                                        : typeof order.createdAt === 'string' || typeof order.createdAt === 'number'
+                                          ? new Date(order.createdAt).toLocaleDateString()
+                                          : 'N/A'}
+                                  </span>
+                                </span>
+                                <span className="flex items-center space-x-1">
+                                  <CreditCard className="h-4 w-4" />
+                                  <span>${order.total.toFixed(2)}</span>
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        ) : (
-                          // <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.whatsapp}</p>
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">
-                            NOne
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                          <div className="flex items-center space-x-3">
+                            <Badge className={getStatusColor(order.status)}>
+                              <Truck className="h-3 w-3 mr-1" />
+                              {order.status}
+                            </Badge>
+                          </div>
+                        </div>
 
-                  <Separator />
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-medium mb-3">Items Ordered:</h4>
+                          <div className="space-y-2">
+                            {order.items.map((item, itemIndex) => (
+                              <div key={itemIndex} className="flex justify-between items-center">
+                                <div className="flex items-center space-x-3">
+                                  <div className="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center">
+                                    <Package className="h-6 w-6 text-gray-500" />
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{item.product.name}</p>
+                                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                                  </div>
+                                </div>
+                                <p className="font-semibold">${item.product.price.toFixed(2)}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-6">Address Information</h3>
-                    <div className="space-y-6">
-                      {/* Address Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700 flex items-center">
-                          <MapPin className="w-4 h-4 mr-2 text-slate-400" />
-                          Address
-                        </Label>
-                        {isEditing ? (
-                          <Input
-                            value={formData.address}
-                            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                            className="border-slate-200 focus:border-blue-500 focus:ring-blue-500"
-                          />
-                        ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.address}</p>
-                        )}
+                        {index < orders.length - 1 && <Separator className="mt-6" />}
                       </div>
-
-                      {/* Landmark Field */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium text-slate-700">Landmark</Label>
-                        {isEditing ? (
-                          <Input
-                            value={formData.landmark}
-                            onChange={(e) => setFormData({ ...formData, landmark: e.target.value })}
-                            className="border-slate-200 focus:border-blue-500 focus:ring-blue-500"
-                            placeholder="Nearby landmark or reference point"
-                          />
-                        ) : (
-                          <p className="text-slate-900 font-medium bg-slate-50 p-3 rounded-lg">{formData.landmark}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
-        </div>
-      </motion.div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

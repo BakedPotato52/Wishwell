@@ -4,34 +4,197 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, MapPin, X } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, MapPin, X, CreditCard, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useToast } from "@/hooks/use-toast"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
+import { createOrder } from "@/lib/firebase/firestore"
+
+
 
 export default function CheckoutPage() {
-  const { state: cartState } = useCart()
+  const { state: cartState, dispatch: cartDispatch } = useCart()
   const { state: authState } = useAuth()
+  const { toast } = useToast()
+  const router = useRouter()
+
   const [step, setStep] = useState(1)
   const [deliveryAddress, setDeliveryAddress] = useState("")
   const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("card")
+  const [isProcessing, setIsProcessing] = useState(false)
   const [newAddress, setNewAddress] = useState({
     name: "",
     address: "",
     phone: "",
   })
+  const [error, setError] = useState<string | null>(null)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
+
 
   const additionalFees = 50
   const orderTotal = cartState.total + additionalFees
+
+  const getAddressFromCoordinates = async (latitude: number, longitude: number): Promise<string> => {
+    try {
+      const response = await fetch(
+        `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${process.env.NEXT_PUBLIC_GEOCODE_API_KEY}`
+      )
+
+      if (!response.ok) {
+        throw new Error('Geocoding failed')
+      }
+
+      const data = await response.json()
+
+      if (data.results && data.results.length > 0) {
+        return data.results[0].formatted
+      }
+
+      throw new Error('No address found')
+    } catch (error) {
+      // Fallback: try with a free service (less accurate)
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+        )
+
+        if (!response.ok) {
+          throw new Error('Fallback geocoding failed')
+        }
+
+        const data = await response.json()
+
+        if (data.display_name) {
+          return data.display_name
+        }
+
+        throw new Error('No address found in fallback')
+      } catch (fallbackError) {
+        throw new Error('Unable to get address from location')
+      }
+    }
+  }
+
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by this browser")
+      return
+    }
+
+    setIsGettingLocation(true)
+    setError(null)
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords
+          const address = await getAddressFromCoordinates(latitude, longitude)
+
+          setNewAddress(prev => ({
+            ...prev,
+            address: address
+          }))
+        } catch (error) {
+          setError("Unable to get address from your location. Please enter manually.")
+        } finally {
+          setIsGettingLocation(false)
+        }
+      },
+      (error) => {
+        setIsGettingLocation(false)
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setError("Location access denied. Please enable location permissions and try again.")
+            break
+          case error.POSITION_UNAVAILABLE:
+            setError("Location information is unavailable.")
+            break
+          case error.TIMEOUT:
+            setError("Location request timed out. Please try again.")
+            break
+          default:
+            setError("An unknown error occurred while getting location.")
+            break
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    )
+  }
 
   const handleAddressSubmit = () => {
     setDeliveryAddress(`${newAddress.name}, ${newAddress.address}, ${newAddress.phone}`)
     setIsAddressDialogOpen(false)
     setNewAddress({ name: "", address: "", phone: "" })
+  }
+
+  const handlePlaceOrder = async () => {
+    if (!authState.user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to place an order.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsProcessing(true)
+
+    try {
+      const orderData = {
+        userId: authState.user.uid,
+        items: cartState.items,
+        deliveryAddress,
+        paymentMethod,
+        total: orderTotal,
+        subtotal: cartState.total,
+        additionalFees,
+        status: "confirmed" as const,
+        estimatedDelivery: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+        trackingSteps: [
+          {
+            status: "confirmed" as const,
+            timestamp: new Date(),
+            description: "Order confirmed and payment received",
+          },
+        ],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+
+      const orderId = await createOrder(authState.user.uid, orderData)
+
+      // Clear cart after successful order
+      cartDispatch({ type: "CLEAR_CART" })
+
+      toast({
+        title: "Order Placed Successfully!",
+        description: `Your order #${orderId.slice(-8)} has been confirmed.`,
+      })
+
+      // Redirect to order tracking page
+      router.push(`/orders/${orderId}`)
+    } catch (error) {
+      console.error("Error placing order:", error)
+      toast({
+        title: "Order Failed",
+        description: "There was an error placing your order. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   if (cartState.items.length === 0) {
@@ -86,7 +249,7 @@ export default function CheckoutPage() {
           {cartState.items.map((item) => (
             <div key={item.id} className="flex items-center space-x-4 mb-4 last:mb-0">
               <Image
-                src={item.product.image || "/placeholder.svg"}
+                src={item.product.image || "/placeholder.svg?height=60&width=60"}
                 alt={item.product.name}
                 width={60}
                 height={60}
@@ -143,7 +306,8 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Add new address section */}
+
+
               <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="w-full">
@@ -154,9 +318,7 @@ export default function CheckoutPage() {
                   <DialogHeader>
                     <DialogTitle className="flex items-center justify-between">
                       Select Delivery Address
-                      <Button variant="ghost" size="sm" onClick={() => setIsAddressDialogOpen(false)}>
-                        <X className="h-4 w-4" />
-                      </Button>
+
                     </DialogTitle>
                   </DialogHeader>
 
@@ -176,12 +338,32 @@ export default function CheckoutPage() {
 
                       <div>
                         <Label htmlFor="address">Full Address</Label>
-                        <Input
-                          id="address"
-                          value={newAddress.address}
-                          onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
-                          placeholder="Enter your full address"
-                        />
+                        <div className="flex gap-2">
+                          <Input
+                            id="address"
+                            value={newAddress.address}
+                            onChange={(e) => setNewAddress({ ...newAddress, address: e.target.value })}
+                            placeholder="Enter your full address"
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={getCurrentLocation}
+                            disabled={isGettingLocation}
+                            className="px-3"
+                            title="Get current location"
+                          >
+                            {isGettingLocation ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <MapPin className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                        {isGettingLocation && (
+                          <p className="text-xs text-blue-600 mt-1">Getting your location...</p>
+                        )}
                       </div>
 
                       <div>
@@ -206,6 +388,34 @@ export default function CheckoutPage() {
         </CardContent>
       </Card>
 
+      {/* Payment Method */}
+      {step === 2 && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <CreditCard className="h-5 w-5 mr-2" />
+              Payment Method
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="card" id="card" />
+                <Label htmlFor="card">Credit/Debit Card</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="upi" id="upi" />
+                <Label htmlFor="upi">UPI</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="cod" id="cod" />
+                <Label htmlFor="cod">Cash on Delivery</Label>
+              </div>
+            </RadioGroup>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Price Details */}
       <Card className="mb-6">
         <CardHeader>
@@ -215,41 +425,23 @@ export default function CheckoutPage() {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>Total Product Price</span>
-              <span>+{cartState.total}</span>
+              <span>₹{cartState.total}</span>
             </div>
             <div className="flex justify-between">
               <span>Additional Fees</span>
-              <span>+{additionalFees}</span>
+              <span>₹{additionalFees}</span>
             </div>
             <hr />
             <div className="flex justify-between font-bold text-lg">
               <span>Order Total</span>
-              <span>+{orderTotal}</span>
+              <span>₹{orderTotal}</span>
             </div>
           </div>
         </CardContent>
       </Card>
-      <div className="relative max-md:hidden left-0 right-0 bg-white border-t p-4">
-        <div className="container mx-auto">
-          {step === 1 ? (
-            <Button
-              size="lg"
-              className="w-full bg-blue-600 hover:bg-blue-700"
-              onClick={() => setStep(2)}
-              disabled={!deliveryAddress}
-            >
-              Proceed to Payment
-            </Button>
-          ) : (
-            <Button size="lg" className="w-full bg-green-600 hover:bg-green-700">
-              Place Order
-            </Button>
-          )}
-        </div>
-      </div>
 
       {/* Action Buttons */}
-      <div className="fixed max-sm:bottom-16 left-0 right-0 bg-white border-t p-4">
+      <div className="fixed md:hidden max-md:bottom-16 left-0 right-0 bg-white border-t p-4 md:relative md:border-0 md:p-0">
         <div className="container mx-auto">
           {step === 1 ? (
             <Button
@@ -264,19 +456,10 @@ export default function CheckoutPage() {
             <Button
               size="lg"
               className="w-full bg-green-600 hover:bg-green-700"
-              onClick={() => {
-                const order = {
-                  items: cartState.items,
-                  deliveryAddress,
-                  total: orderTotal,
-                  additionalFees,
-                  user: authState.user,
-                  timestamp: new Date().toISOString()
-                }
-                console.log('Order placed:', order)
-              }}
+              onClick={handlePlaceOrder}
+              disabled={isProcessing}
             >
-              Place Order
+              {isProcessing ? "Processing..." : "Place Order"}
             </Button>
           )}
         </div>

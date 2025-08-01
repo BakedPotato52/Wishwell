@@ -125,7 +125,7 @@ export interface FirebaseUser {
   email: string | null
   name: string
   phone: string
-  gender: "Men" | "Women"
+  gender: "Men" | "Women" | "Other" | "Prefer not to say"
   address: string
   dateOfBirth?: string | null
   photoURL: string | null
