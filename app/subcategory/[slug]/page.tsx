@@ -46,9 +46,6 @@ export default function SubcategoryPage() {
     // Get the actual subcategory name from slug
     const subcategoryName = getSubcategoryFromSlug(slug)
 
-    console.log("Slug:", slug)
-    console.log("Subcategory Name:", subcategoryName)
-
     // Find the category and subcategory info
     const [categoryInfo, setCategoryInfo] = useState<any>(null)
     const [searchQuery, setSearchQuery] = useState("")

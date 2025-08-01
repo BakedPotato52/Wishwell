@@ -139,8 +139,10 @@ export default function HomePage() {
   const createSlug = (name: string) => {
     return name
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "")
+      .replace(/&/g, "and") // Replace & with "and"
+      .replace(/,/g, "") // Remove commas
+      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
+      .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
   }
 
   return (

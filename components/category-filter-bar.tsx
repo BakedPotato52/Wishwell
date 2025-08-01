@@ -90,7 +90,6 @@ export function CategoryFilterBar({
 
     // Prevent unnecessary re-execution if the same subcategory is already selected
     if (selectedSubcategory === subcategory) {
-      console.log("Already selected subcategory:", subcategory)
       return
     }
 
