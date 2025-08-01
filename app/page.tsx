@@ -193,133 +193,130 @@ export default function HomePage() {
 
       {/* Grocery & Kitchen Subcategories */}
       {category && (
-        <section className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{category.name}</h1>
-          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
+        <section className="container mx-auto px-4 py-4">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
+            {category.name}
+          </h1>
+
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
             {category.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory)
+              const slug = createSlug(subcategory);
               return (
-                <Link key={subcategory} href={`/subcategory/${slug}`}>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.03,
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{
-                      duration: 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className="bg-white rounded-xl p-2 md:p-4 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
-                  >
-                    <div className="flex-1 flex items-center justify-center mb-2 md:mb-4 relative">
-                      <div className="relative w-full h-full flex items-center justify-center">
+                <>
+                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.02,
+                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
                         <Image
                           src={category.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="w-16 h-16 object-cover bg-[#F4F0E6] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
-                      </h3>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
+
+                    </motion.div>
+                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
+                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                    </h4>
+                  </Link>
+                </>
+              );
             })}
           </div>
         </section>
       )}
 
+
       {snacksCategory && (
         <section className="container mx-auto px-4 py-4">
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6 tracking-tight">{snacksCategory.name}</h1>
-          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 ">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
+            {snacksCategory.name}
+          </h1>
+
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
             {snacksCategory.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory)
+              const slug = createSlug(subcategory);
               return (
-                <Link key={subcategory} href={`/subcategory/${slug}`}>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.03,
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{
-                      duration: 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className=" rounded-xl p-2 md:p-4 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
-                  >
-                    <div className="flex-1 flex items-center justify-center mb-2 md:mb-4 relative">
-                      <div className="relative w-full h-full flex items-center justify-center">
+                <>
+                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.02,
+                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
                         <Image
                           src={snacksCategory.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="w-16 h-16 object-cover bg-[#ff7d4a] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
-                    </div>
-                    <div className="text-center">
-                      <h4 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
-                      </h4>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
+
+                    </motion.div>
+                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
+                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                    </h4>
+                  </Link>
+                </>
+              );
             })}
           </div>
         </section>
       )}
 
       {homeCategory && (
-        <section className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-8 tracking-tight">{homeCategory.name}</h1>
-          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-4">
+        <section className="container mx-auto px-4 py-4">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
+            {homeCategory.name}
+          </h1>
+
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
             {homeCategory.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory)
+              const slug = createSlug(subcategory);
               return (
-                <Link key={subcategory} href={`/subcategory/${slug}`}>
-                  <motion.div
-                    whileHover={{
-                      scale: 1.03,
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{
-                      duration: 0.2,
-                      ease: "easeInOut",
-                    }}
-                    className=" rounded-xl p-2 cursor-pointer shadow-sm hover:shadow-md transition-all duration-200 aspect-square flex flex-col"
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <div className="relative mb-2 md:mb-3 overflow-hidden rounded-lg">
+                <>
+                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.02,
+                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
                         <Image
                           src={homeCategory.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="w-16 h-16 object-cover bg-[#4ac6ff] rounded-lg group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
                         />
                       </div>
 
-                    </div>
-                    <div className="text-center">
-                      <h3 className="text-sm md:text-base font-medium text-gray-700 leading-tight px-1">
-                        {subcategory.slice(0, 14)}{subcategory.length > 14 ? "..." : ""}
-                      </h3>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
+                    </motion.div>
+                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
+                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                    </h4>
+                  </Link>
+                </>
+              );
             })}
           </div>
         </section>

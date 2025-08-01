@@ -88,10 +88,10 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-screen mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap sm:flex-nowrap space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage src="/placeholder.svg?height=64&width=64" />
