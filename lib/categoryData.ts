@@ -87,7 +87,7 @@ export const categories: Category[] = [
     {
         id: "TuaQdrS7gWIJpjN4Ycax",
         name: "Beauty & Personal care",
-        image: "/categories/beauty.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754035793/Photo_Category__Beauty_Personal_Care__ukx9rz.png?height=64&width=64",
         icon: "💄",
         subcategories: [
             "Skincare",

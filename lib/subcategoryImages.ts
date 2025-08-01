@@ -278,18 +278,73 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Character Shop": "/categories/subcategory/character.png",
 
     // Beauty subcategories
-    "Bath & Body": "/categories/subcategory/bath-body.png",
-    "Hair Care": "/categories/subcategory/hair-care.png",
-    Skincare: "/categories/subcategory/skincare.png",
-    Makeup: "/categories/subcategory/makeup.png",
-    "Oral Care": "/categories/subcategory/oral-care.png",
-    Grooming: "/categories/subcategory/grooming.png",
-    "Baby Care": "/categories/subcategory/baby-care.png",
-    Fragrances: "/categories/subcategory/fragrances.png",
-    "Protein & Supplements": "/categories/subcategory/supplements.png",
-    "Feminine Hygiene": "/categories/subcategory/feminine.png",
-    "Sexual Wellness": "/categories/subcategory/wellness.png",
-    "Health & Pharma": "/categories/subcategory/health.png",
+    "Skincare": "https://res.cloudinary.com/wishwell/image/upload/v1754035859/Skincare_h5rlsj.png?height=64&width=64",
+    "Makeup": "https://res.cloudinary.com/wishwell/image/upload/v1754036011/Makeup_qpvmyb.png?height=64&width=64",
+    "Hair Care": "https://res.cloudinary.com/wishwell/image/upload/v1754036111/Hair_Care_ammmrt.png?height=64&width=64",
+    "Fragrances": "https://res.cloudinary.com/wishwell/image/upload/v1754036306/Fragrances_fn4ne9.png?height=64&width=64",
+    "Bath & Body": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Bath_Body_qqqj1l.png?height=64&width=64",
+    "Oral Care": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Oral_Care_qqqj1l.png?height=64&width=64",
+    "Grooming": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Grooming_qqqj1l.png?height=64&width=64",
+    "Baby Care": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Baby_Care_qqqj1l.png?height=64&width=64",
+    "Protein & Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Protein_Supplements_qqqj1l.png?height=64&width=64",
+    "Feminine Hygiene": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Feminine_Hygiene_qqqj1l.png?height=64&width=64",
+    "Sexual Wellness": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Sexual_Wellness_qqqj1l.png?height=64&width=64",
+    "Health & Pharma": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Health_Pharma_qqqj1l.png?height=64&width=64",
+
+    // skincare subcategories
+    "Facewash & scrubs": "https://res.cloudinary.com/wishwell/image/upload/v1754035860/Facewash_scrubs_mlsobq.png?height=64&width=64",
+    "Masks & Cleansers": "https://res.cloudinary.com/wishwell/image/upload/v1754035863/Masks_Cleansers_hqgkhj.png?height=64&width=64",
+    "Serums & Toners": "https://res.cloudinary.com/wishwell/image/upload/v1754035859/Serums_Toners_gnpwvq.png?height=64&width=64",
+    "Creams & Moisturizers": "https://res.cloudinary.com/wishwell/image/upload/v1754035859/Creams_Moisturizers_alscxq.png?height=64&width=64",
+    "Sunscreen": "https://res.cloudinary.com/wishwell/image/upload/v1754035861/Sunscreen_vgwguh.png?height=64&width=64",
+    "Body Lotions": "https://res.cloudinary.com/wishwell/image/upload/v1754035858/Body_Lotions_gkesiu.png?height=64&width=64",
+    "Beauty Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754035860/Beauty_Supplements_h8senw.png?height=64&width=64",
+
+    // makeup subcategories
+    "Lips": "https://res.cloudinary.com/wishwell/image/upload/v1754036012/Lips_pgcfak.png?height=64&width=64",
+    "Eyes": "https://res.cloudinary.com/wishwell/image/upload/v1754036012/Eyes_ltovho.png?height=64&width=64",
+    "Face": "https://res.cloudinary.com/wishwell/image/upload/v1754036013/Face_zhflti.png?height=64&width=64",
+    "Nails": "https://res.cloudinary.com/wishwell/image/upload/v1754036014/Nails_zquotd.png?height=64&width=64",
+    "Tools & Brushes": "https://res.cloudinary.com/wishwell/image/upload/v1754036016/Tools_Brushes_khnpdo.png?height=64&width=64",
+
+    // hair care subcategories
+    "Hair Oils & Serums": "https://res.cloudinary.com/wishwell/image/upload/v1754036116/Hair_Oils_Serums_qxdad9.png?height=64&width=64",
+    "Shampoo": "https://res.cloudinary.com/wishwell/image/upload/v1754036118/Shampoo_rswdiz.png?height=64&width=64",
+    "Conditioners & Masks": "https://res.cloudinary.com/wishwell/image/upload/v1754036113/Conditioners_Masks_srvi86.png?height=64&width=64",
+    "Hair Colour": "https://res.cloudinary.com/wishwell/image/upload/v1754036111/Hair_Colour_xgp2ig.png?height=64&width=64",
+    "Hair Styling Gels & Creams": "https://res.cloudinary.com/wishwell/image/upload/v1754036118/Hair_Styling_Gels_Creams_w1obv5.pngheight=64&width=64",
+    "Combs & Brushes": "https://res.cloudinary.com/wishwell/image/upload/v1754036122/Combs_Brushes_ubbwsp.png?height=64&width=64",
+    "Hair Dryers and Stylers": "https://res.cloudinary.com/wishwell/image/upload/v1754036115/Hair_Dryers_and_Stylers_o3iul7.png?height=64&width=64",
+    "Hair Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754036117/Hair_Supplements_xitngb.png?height=64&width=64",
+
+    // fragrances subcategories
+    "Men's Perfume": "https://res.cloudinary.com/wishwell/image/upload/v1754036307/Men_s_Perfume_igjgqh.jpg?height=64&width=64",
+    "Women's Perfume": "https://res.cloudinary.com/wishwell/image/upload/v1754036310/Women_s_Perfume_mnkooi.jpg?height=64&width=64",
+    "Men's Deo": "https://res.cloudinary.com/wishwell/image/upload/v1754036307/Men_s_Deo_c1brjr.png?height=64&width=64",
+    "Women's Deo": "https://res.cloudinary.com/wishwell/image/upload/v1754036309/Women_s_Deo_gzto7j.png?height=64&width=64",
+    "Roll On": "https://res.cloudinary.com/wishwell/image/upload/v1754036307/Roll_On_qcn7xg.jpg?height=64&width=64",
+    "Talc": "https://res.cloudinary.com/wishwell/image/upload/v1754036308/Talc_a07rwm.png?height=64&width=64",
+
+    // bath & body subcategories
+    "Soaps": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Soaps_qqqj1l.png?height=64&width=64",
+    "Shower Gels & Body Wash": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Shower_Gels_Body_Wash_qqqj1l.png?height=64&width=64",
+    "Body Lotion": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Body_Lotion_qqqj1l.png?height=64&width=64",
+    "Body Scrub": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Body_Scrub_qqqj1l.png?height=64&width=64",
+    "Baby Bathing": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Baby_Bathing_qqqj1l.png?height=64&width=64",
+    "Talcs": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Talcs_qqqj1l.png?height=64&width=64",
+    "Hand wash & Sanitizers": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Hand_Wash_Sanitizers_qqqj1l.png?height=64&width=64",
+    "Face Wash & Scrubs": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Face_Wash_Scrubs_qqqj1l.png?height=64&width=64",
+    "Conditioner & Mask": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Conditioner_Mask_qqqj1l.png?height=64&width=64",
+    "Bath Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Bath_Accessories_qqqj1l.png?height=64&width=64",
+    "Kits/Gifts": "https://res.cloudinary.com/wishwell/image/upload/v1753885358/Kits_Gifts_qqqj1l.png?height=64&width=64",
+    "Premium Brands": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754036115/Premium_Brands_kih9ve.png?height=64&width=64",
+        contexts: {
+            "Fragrences": "https://res.cloudinary.com/wishwell/image/upload/v1754036306/Premium_Brands_ovukiu.jpg?height=64&width=64",
+            "Haircare": "https://res.cloudinary.com/wishwell/image/upload/v1754036115/Premium_Brands_kih9ve.png?height=64&width=64",
+        },
+    },
+
 
     // Accessories subcategories
     "Women's Jewellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885357/Women_s_Jewellery__j2sqsr.png?height=64&width=64",
