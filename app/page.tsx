@@ -5,14 +5,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { toast } from "sonner"
-import { Download, MapPin, Smartphone } from "lucide-react"
+import { Download, Smartphone, Star, TrendingUp, Zap, Gift, ShoppingBag, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
 import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
-
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -126,7 +126,6 @@ export default function HomePage() {
   const homeCategory = categories.find((c) => c.name === "Household Essentials")
   const snacksCategory = categories.find((c) => c.name === "Snacks & Drinks")
 
-
   useEffect(() => {
     if (adImages.length <= 1) return
     const interval = setInterval(() => {
@@ -139,40 +138,94 @@ export default function HomePage() {
   const createSlug = (name: string) => {
     return name
       .toLowerCase()
-      .replace(/&/g, "and") // Replace & with "and"
-      .replace(/,/g, "") // Remove commas
-      .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
-      .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
+      .replace(/&/g, "and")
+      .replace(/,/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
   }
 
+
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white"
+    >
       {/* PWA Components */}
       <div className="container mx-auto px-4 pt-4">
         <InstallPrompt />
       </div>
 
-      {/* Hero Carousel */}
-      <section className="container mx-auto px-4 pb-2">
-        <div className="rounded-lg overflow-hidden">
-          <Carousel />
-        </div>
+      {/* Welcome Banner */}
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl p-4 text-white text-center shadow-lg"
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Zap className="w-5 h-5 text-yellow-300" />
+            <h2 className="text-lg font-bold">Welcome to WishWell!</h2>
+            <Zap className="w-5 h-5 text-yellow-300" />
+          </div>
+          <p className="text-sm opacity-90">Discover amazing deals and shop your favorites</p>
+        </motion.div>
       </section>
 
-      {/* Advertisement Section */}
-      <section className="container mx-auto px-4">
+      {/* Hero Carousel */}
+      <section className="container mx-auto px-4 pb-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="rounded-2xl overflow-hidden shadow-xl"
+        >
+          <Carousel />
+        </motion.div>
+      </section>
+
+      {/* Flash Sale Banner */}
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-r from-red-500 to-orange-500 rounded-xl p-4 text-white shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 rounded-full p-2">
+                <Gift className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">Flash Sale!</h3>
+                <p className="text-sm opacity-90">Up to 70% off on selected items</p>
+              </div>
+            </div>
+            <Button variant="secondary" size="sm" className="bg-white text-red-600 hover:bg-gray-100">
+              Shop Now
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Enhanced Advertisement Section */}
+      <section className="container mx-auto px-4 py-2">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative w-full h-24 md:h-28 lg:h-32 rounded-xl overflow-hidden shadow"
+          transition={{ delay: 0.4 }}
+          className="relative w-full h-32 md:h-36 lg:h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
         >
           {adImages.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"
+              className={`absolute inset-0 transition-all duration-1000 ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
                 }`}
             >
               <Image src={slide.image || "/placeholder.svg"} alt={slide.alt} fill className="object-cover" priority />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
           ))}
           {adImages.length > 1 && (
@@ -180,7 +233,7 @@ export default function HomePage() {
               {adImages.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? "bg-white" : "bg-white/50"
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
                     }`}
                   onClick={() => setCurrentSlide(index)}
                 />
@@ -190,131 +243,254 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Categories - Desktop only, mobile has horizontal nav */}
-      <CategoryGrid />
+      {/* Categories with enhanced styling */}
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+        <CategoryGrid />
+      </motion.div>
 
-      {/* Grocery & Kitchen Subcategories */}
+      {/* Trending Badge */}
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+          className="flex items-center justify-center gap-2 mb-4"
+        >
+          <Badge
+            variant="secondary"
+            className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 text-sm font-semibold"
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Trending Categories
+          </Badge>
+        </motion.div>
+      </section>
+
+      {/* Enhanced Grocery & Kitchen Section */}
       {category && (
         <section className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
-            {category.name}
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7 }}
+            className="flex items-center justify-between mb-6"
+          >
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+                {category.name}
+              </h1>
+              <p className="text-gray-600 text-sm">Fresh ingredients for your kitchen</p>
+            </div>
+            <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
+              View All
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </motion.div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-            {category.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory);
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {category.subcategories?.map((subcategory, index) => {
+              const slug = createSlug(subcategory)
               return (
-                <div key={subcategory}>
+                <motion.div
+                  key={subcategory}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + index * 0.05 }}
+                >
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
                         <Image
                           src={category.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-
+                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-green-700 transition-colors">
+                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                      </h4>
                     </motion.div>
-                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                    </h4>
                   </Link>
-                </div>
-              );
+                </motion.div>
+              )
             })}
           </div>
         </section>
       )}
 
+      {/* Special Offer Banner */}
+      <section className="container mx-auto px-4 py-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.2 }}
+          className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 rounded-2xl p-6 text-center text-white shadow-xl"
+        >
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Star className="w-6 h-6 text-white" />
+            <h3 className="text-xl font-bold">Special Weekend Deals</h3>
+            <Star className="w-6 h-6 text-white" />
+          </div>
+          <p className="text-sm opacity-90 mb-4">Get extra 20% off on your first order above $50</p>
+          <Button variant="secondary" className="bg-white text-orange-600 hover:bg-gray-100 font-semibold">
+            <ShoppingBag className="w-4 h-4 mr-2" />
+            Start Shopping
+          </Button>
+        </motion.div>
+      </section>
 
+      {/* Enhanced Snacks & Drinks Section */}
       {snacksCategory && (
         <section className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
-            {snacksCategory.name}
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.3 }}
+            className="flex items-center justify-between mb-6"
+          >
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                {snacksCategory.name}
+              </h1>
+              <p className="text-gray-600 text-sm">Satisfy your cravings anytime</p>
+            </div>
+            <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
+              View All
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </motion.div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-            {snacksCategory.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory);
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {snacksCategory.subcategories?.map((subcategory, index) => {
+              const slug = createSlug(subcategory)
               return (
-                <div key={subcategory}>
+                <motion.div
+                  key={subcategory}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.4 + index * 0.05 }}
+                >
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
                         <Image
                           src={snacksCategory.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-
+                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
+                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                      </h4>
                     </motion.div>
-                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                    </h4>
                   </Link>
-                </div>
-              );
+                </motion.div>
+              )
             })}
           </div>
         </section>
       )}
 
+      {/* Enhanced Household Essentials Section */}
       {homeCategory && (
-        <section className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-6 tracking-tight">
-            {homeCategory.name}
-          </h1>
+        <section className="container mx-auto px-4 py-4 pb-8">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.8 }}
+            className="flex items-center justify-between mb-6"
+          >
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+                {homeCategory.name}
+              </h1>
+              <p className="text-gray-600 text-sm">Everything you need for your home</p>
+            </div>
+            <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
+              View All
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </motion.div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-            {homeCategory.subcategories?.map((subcategory) => {
-              const slug = createSlug(subcategory);
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {homeCategory.subcategories?.map((subcategory, index) => {
+              const slug = createSlug(subcategory)
               return (
-                <div key={subcategory}>
+                <motion.div
+                  key={subcategory}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.9 + index * 0.05 }}
+                >
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-[#F4F0E6] rounded-sm mb-3">
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl mb-3 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300">
                         <Image
                           src={homeCategory.image || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-200"
+                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-
+                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
+                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                      </h4>
                     </motion.div>
-                    <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                    </h4>
                   </Link>
-                </div>
-              );
+                </motion.div>
+              )
             })}
           </div>
         </section>
       )}
 
+      {/* Bottom CTA Section */}
+      <section className="container mx-auto px-4 py-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.2 }}
+          className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-8 text-center text-white shadow-2xl"
+        >
+          <h3 className="text-2xl font-bold mb-3">Ready to Start Shopping?</h3>
+          <p className="text-lg opacity-90 mb-6">Join thousands of happy customers and discover amazing deals</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100 font-semibold">
+              <ShoppingBag className="w-5 h-5 mr-2" />
+              Browse All Categories
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-purple-600 bg-transparent"
+            >
+              Download App
+              <Download className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+        </motion.div>
+      </section>
     </motion.div>
   )
 }
+
