@@ -4,7 +4,7 @@ export const categories: Category[] = [
     {
         id: "vKvRUECQh9cC5XxYcDZR",
         name: "Men",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1753591610/Men_Category_Photo__l7u0ej.png?height=64&width=64",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754146448/Men_Category_Photo_mtmtkc.png?height=64&width=64",
         icon: "👔",
         subcategories: [
             "Topwear",

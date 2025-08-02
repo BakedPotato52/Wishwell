@@ -207,10 +207,7 @@ export default function HomePage() {
                 <div key={subcategory}>
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-                      whileHover={{
-                        scale: 1.02,
-                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
-                      }}
+
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
@@ -251,10 +248,7 @@ export default function HomePage() {
                 <div key={subcategory}>
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-                      whileHover={{
-                        scale: 1.02,
-                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
-                      }}
+
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"
@@ -294,10 +288,7 @@ export default function HomePage() {
                 <div key={subcategory}>
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
-                      whileHover={{
-                        scale: 1.02,
-                        boxShadow: "0 6px 20px rgba(0, 0, 0, 0.08)",
-                      }}
+
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="rounded-2xl flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all"

@@ -48,22 +48,22 @@ export function Footer() {
             <h4 className="text-lg font-semibold mb-4">Categories</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/category/women" className="text-gray-400 hover:text-white">
+                <Link href="/category/YSXF9pgW3DZU2bSSIUnQ" className="text-gray-400 hover:text-white">
                   Women
                 </Link>
               </li>
               <li>
-                <Link href="/category/men" className="text-gray-400 hover:text-white">
+                <Link href="/category/vKvRUECQh9cC5XxYcDZR" className="text-gray-400 hover:text-white">
                   Men
                 </Link>
               </li>
               <li>
-                <Link href="/category/kids" className="text-gray-400 hover:text-white">
+                <Link href="/category/E4pNgzjp1mMFalyRfTjc" className="text-gray-400 hover:text-white">
                   Kids
                 </Link>
               </li>
               <li>
-                <Link href="/category/accessories" className="text-gray-400 hover:text-white">
+                <Link href="/category/kCxJLwMwO86hlBK6gvrV" className="text-gray-400 hover:text-white">
                   Accessories
                 </Link>
               </li>
@@ -76,11 +76,13 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">customerservicewishwell@gmail.com</span>
+                <a href="mailto:customerservicewishwell@gmail.com" className="text-gray-400 hover:text-white">
+                  customerservicewishwell@gmail.com
+                </a>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">+91 12345 67890</span>
+                <span className="text-gray-400">+91 93661 55112</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />

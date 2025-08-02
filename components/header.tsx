@@ -36,7 +36,7 @@ export function Header() {
           </Link>
           <div className="sm:hidden flex items-center  sm:gap-4 ">
             <Link
-              href="https://wa.me/918798634773"
+              href="https://wa.me/919366155112"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5  bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
@@ -70,7 +70,7 @@ export function Header() {
             </div>
 
             <Link
-              href="https://wa.me/918798634773"
+              href="https://wa.me/919366155112"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-2.5 bg-green-100 text-green-700 font-medium sm:font-semibold text-xs sm:text-sm rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out animate-fade-in"
