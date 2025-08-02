@@ -110,11 +110,11 @@ export const categories: Category[] = [
             "Fragrances": ["Men's Perfume", "Women's Perfume", "Men's Deo", "Women's Deo", "Premium Brands", "Roll On", "Talc"],
             "Bath & Body": ["Soaps", "Shower Gels & Body Wash", "Body Lotion", "Body Scrub", "Premium Brands", "Baby Bathing", "Talcs", "Hand wash & Sanitizers", "Face Wash & Scrubs", "Shampoo", "Conditioner & Mask", "Bath Accessories", "Kits/Gifts"],
             "Oral Care": ["Toothpaste", "Toothbrushes", "Mouthwash", "Oral Care Accessories", "Kids Toothbrush", "Kids Toothpaste"],
-            "Grooming": ["Shaving Cartridges", "Men's Razor", "Shaving Foam & Creams", "Brush & kit", "After shave", "Men's Hair removal", "Hair styling", "Beard Styling", "Women's Hair removal cream", "Women’s Razor", "Women’s Waxing", "Trimmers/Shavers", "Epilators", "Multi Groomers"],
+            "Grooming": ["Shaving Cartridges", "Men's Razor", "Shaving Foam & Creams", "Brush & kit", "After shave", "Men's Hair removal", "Hair styling", "Beard Styling", "Women's Hair removal cream", "Women's Razor", "Women's Waxing", "Trimmers/Shavers", "Epilators", "Multi Groomers"],
             "Baby Care": ["Diapers", "Food & Formula", "Bathing", "Wipes", "Cream & Lotions", "Oral Care", "Oil & Talc", "Pharma", "Feeding & Teething", "Books/Toys", "Baby Hygiene", "Mom Care", "Travel/Baby Gear", "Clothes / Accessories"],
             "Protein & Supplements": ["Protein & Nutrition", "Immunity & Energy Boosters", "Multivitamins", "Ayurvedic", "Gummies", "Bone & Joint Supplements", "Hair/Nail/Skin Supplements", "Sleep Supplements", "Bars", "Superfoods", "Weight Management"],
             "Feminine Hygiene": ["Pads", "Panties & Liners", "Hair Removal", "Menstrual Cups & Tampons", "Intimate Wipes & Wash", "Disposal Bags", "Cramp Relief"],
-            "Sexual Wellness": ["Condoms", "Lubricants", "Massagers", "Enhancers", "Gift Kits", "Contraceptives"],
+            "Sexual Wellness": ["Condoms", "Lubricants", "Massagers", "Enhancers", "Gift Kits"],
             "Health & Pharma": ["Cough Cold/Fever", "Stomach", "Calcium/Vitamin D", "Wound/Pain Relief", "Oral/Dental", "Derma", "ENT", "Digestives", "Masks/Sanitizers", "Pregnancy Kit", "Medical Devices", "Adult Diapers", "Handwash", "Wellness", "Protein", "Boosters", "Sexual enhancers", "Nutritional Supplements"]
         }
     },
