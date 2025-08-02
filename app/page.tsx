@@ -204,8 +204,8 @@ export default function HomePage() {
             {category.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
-                <>
-                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                <div key={subcategory}>
+                  <Link href={`/subcategory/${slug}`}>
                     <motion.div
                       whileHover={{
                         scale: 1.02,
@@ -230,7 +230,7 @@ export default function HomePage() {
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
-                </>
+                </div>
               );
             })}
           </div>
@@ -248,8 +248,8 @@ export default function HomePage() {
             {snacksCategory.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
-                <>
-                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                <div key={subcategory}>
+                  <Link href={`/subcategory/${slug}`}>
                     <motion.div
                       whileHover={{
                         scale: 1.02,
@@ -274,7 +274,7 @@ export default function HomePage() {
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
-                </>
+                </div>
               );
             })}
           </div>
@@ -291,8 +291,8 @@ export default function HomePage() {
             {homeCategory.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
-                <>
-                  <Link key={subcategory} href={`/subcategory/${slug}`}>
+                <div key={subcategory}>
+                  <Link href={`/subcategory/${slug}`}>
                     <motion.div
                       whileHover={{
                         scale: 1.02,
@@ -317,7 +317,7 @@ export default function HomePage() {
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
-                </>
+                </div>
               );
             })}
           </div>

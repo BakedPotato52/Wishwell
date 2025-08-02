@@ -11,7 +11,7 @@ import { ProductGridSkeleton, ErrorMessage } from "@/components/loading-skeleton
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, Search, Grid, List } from "lucide-react"
+import { ArrowLeft, Search, Grid, List, Home } from "lucide-react"
 import { categories } from "@/lib/categoryData"
 
 // Helper functions for slug conversion
@@ -105,10 +105,9 @@ export default function SubcategoryPage() {
             <div className="bg-white shadow-sm sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center gap-4 mb-4">
-                        <Button variant="ghost" size="sm" className="gap-2" onClick={() => router.back()}>
-                            <ArrowLeft className="h-4 w-4" />
-                            Back
-                        </Button>
+                        <Link href="/" className="hover:text-blue-600 transition-colors">
+                            <Home className="h-4 w-4" />
+                        </Link>
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                                 <Image
