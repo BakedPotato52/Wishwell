@@ -111,8 +111,8 @@ export default function SubsubcategoryProductPage() {
                                     <Image
                                         src={categoryInfo.image || "/placeholder.svg?height=16&width=16"}
                                         alt={categoryInfo.name}
-                                        width={16}
-                                        height={16}
+                                        width={20}
+                                        height={20}
                                         className="rounded"
                                     />
                                     {categoryInfo.name}

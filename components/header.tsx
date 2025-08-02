@@ -26,7 +26,12 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div whileHover={{ scale: 1.05 }} className="text-2xl font-bold text-blue-600">
-              <Image src={'/logo.png'} alt="WishWell" width={120} height={40} />
+              <Image
+                src="https://res.cloudinary.com/wishwell/image/upload/v1754114330/logo_qjqetu.png?height=40&width=120"
+                alt="WishWell"
+                width={120}
+                height={40}
+              />
             </motion.div>
           </Link>
           <div className="sm:hidden flex items-center  sm:gap-4 ">

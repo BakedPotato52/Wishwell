@@ -200,7 +200,7 @@ export default function HomePage() {
             {category.name}
           </h1>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
             {category.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
@@ -227,7 +227,7 @@ export default function HomePage() {
 
                     </motion.div>
                     <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
                 </>
@@ -244,7 +244,7 @@ export default function HomePage() {
             {snacksCategory.name}
           </h1>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
             {snacksCategory.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
@@ -271,7 +271,7 @@ export default function HomePage() {
 
                     </motion.div>
                     <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
                 </>
@@ -287,7 +287,7 @@ export default function HomePage() {
             {homeCategory.name}
           </h1>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
             {homeCategory.subcategories?.map((subcategory) => {
               const slug = createSlug(subcategory);
               return (
@@ -314,7 +314,7 @@ export default function HomePage() {
 
                     </motion.div>
                     <h4 className="text-center text-sm font-normal text-gray-700 leading-snug">
-                      {subcategory.length > 18 ? `${subcategory.slice(0, 16)}...` : subcategory}
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </h4>
                   </Link>
                 </>
