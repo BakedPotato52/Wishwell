@@ -8,6 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { getSubcategoryImage, subcategoryImages } from "@/lib/subcategoryImages"
 import { Category } from "@/lib/types"
+import { StylizedText } from "./elements/animated-text"
 
 export default function CategoryCarousel({ category }: { category?: Category }) {
     // Create slug from subcategory name
@@ -24,10 +25,19 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
         <div className="w-full max-w-7xl mx-auto px-4 py-8 select-none">
             {/* Header */}
             <div className="text-center mb-8">
-                <h1 className="text-2xl md:text-2xl font-bold mb-2">
+                <h1 className="text-2xl md:text-4xl font-bold mb-2">
                     <span className="text-black">SHOP BY</span> <span className="italic text-black">Category</span>
                 </h1>
-                <p className="text-gray-600 text-sm">Trending categories on <br /> WishWell: {category?.name}</p>
+                <p className="text-gray-600 text-lg">Trending categories on WishWell:</p>
+                <StylizedText className="text-4xl md:text-5xl lg:text-6xl">{category?.name}</StylizedText>
+            </div>
+
+            <div className="text-center mb-8 md:hidden">
+                <h1 className="text-2xl font-bold mb-2">
+                    <span className="text-black">SHOP BY</span> <span className="italic text-black">Category</span>
+                </h1>
+                <p className="text-gray-600 text-lg">Trending categories on WishWell: <StylizedText className="text-4xl md:text-5xl lg:text-6xl">{category?.name}</StylizedText></p>
+
             </div>
 
             {/* Category Carousel */}
@@ -59,7 +69,7 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
 
                                                 {/* Shop Now Button */}
                                                 <Link
-                                                    href={`/category/${slug}`}
+                                                    href={`/subcategory/${slug}`}
                                                     className="absolute bottom-4 left-4 right-4 z-20"
                                                 >
                                                     <Button
@@ -79,8 +89,7 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
 
 
                     </CarouselContent>
-                    <CarouselPrevious className="hidden md:flex" />
-                    <CarouselNext className="hidden md:flex" />
+
                 </Carousel>
             )}
 
