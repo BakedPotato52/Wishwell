@@ -32,13 +32,6 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                 <StylizedText className="text-4xl md:text-5xl lg:text-6xl">{category?.name}</StylizedText>
             </div>
 
-            <div className="text-center mb-8 md:hidden">
-                <h1 className="text-2xl font-bold mb-2">
-                    <span className="text-black">SHOP BY</span> <span className="italic text-black">Category</span>
-                </h1>
-                <p className="text-gray-600 text-lg">Trending categories on WishWell: <StylizedText className="text-4xl md:text-5xl lg:text-6xl">{category?.name}</StylizedText></p>
-
-            </div>
 
             {/* Category Carousel */}
             {category && (
