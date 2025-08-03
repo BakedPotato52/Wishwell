@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import type { Viewport } from 'next'
-import { Inter } from "next/font/google"
+import { Inter, Pacifico } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
 import { Header } from "@/components/header"
@@ -12,6 +12,11 @@ import { MobileBottomNav } from "@/components/mobile-bottom-navigation"
 import { ProductProvider } from "@/hooks/use-product-context"
 
 const inter = Inter({ subsets: ["latin"] })
+const pacifico = Pacifico({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-pacifico",
+})
 
 export const metadata: Metadata = {
   title: "WishWell - Your Ultimate Shopping Destination",
@@ -44,7 +49,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${pacifico.variable}`}>
         <AuthProvider>
           <CartProvider>
             <ProductProvider>
