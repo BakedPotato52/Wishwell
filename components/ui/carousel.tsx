@@ -82,7 +82,7 @@ export function Carousel() {
       {bannerImages.map((slide, index) => (
         <motion.div
           key={slide.id}
-          className={`absolute inset-0 transition-all duration-500 ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
+          className={`absolute ${background} inset-0 transition-all duration-500 ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
             }`}
           animate={{
             x: `${(index - currentSlide) * 100}%`,

@@ -13,6 +13,7 @@ import { Carousel } from "@/components/ui/carousel"
 import { CategoryGrid } from "@/components/category-grid"
 import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
+import CategoryCarousel from "@/components/category-carousel"
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -121,7 +122,8 @@ function InstallPrompt() {
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
-
+  const men = categories.find((c) => c.name === "Men")
+  const women = categories.find((c) => c.name === "Women")
   const category = categories.find((c) => c.name === "Grocery & Kitchen")
   const homeCategory = categories.find((c) => c.name === "Household Essentials")
   const snacksCategory = categories.find((c) => c.name === "Snacks & Drinks")
@@ -184,32 +186,6 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Flash Sale Banner */}
-      <section className="container mx-auto px-4 py-2">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-gradient-to-r from-red-500 to-orange-500 rounded-xl p-4 text-white shadow-lg"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/20 rounded-full p-2">
-                <Gift className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">Flash Sale!</h3>
-                <p className="text-sm opacity-90">Up to 70% off on selected items</p>
-              </div>
-            </div>
-            <Button variant="secondary" size="sm" className="bg-white text-red-600 hover:bg-gray-100">
-              Shop Now
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
-          </div>
-        </motion.div>
-      </section>
-
       {/* Enhanced Advertisement Section */}
       <section className="container mx-auto px-4 py-2">
         <motion.div
@@ -249,7 +225,7 @@ export default function HomePage() {
       </motion.div>
 
       {/* Trending Badge */}
-      <section className="container mx-auto px-4 py-2">
+      <section className="container mx-auto px-4 py-2 select-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -263,6 +239,28 @@ export default function HomePage() {
             <TrendingUp className="w-4 h-4 mr-2" />
             Trending Categories
           </Badge>
+        </motion.div>
+      </section>
+
+      {/* Category Carousel Women */}
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <CategoryCarousel category={women} />
+        </motion.div>
+      </section>
+
+      {/* Category Carousel Men */}
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <CategoryCarousel category={men} />
         </motion.div>
       </section>
 

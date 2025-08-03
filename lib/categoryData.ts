@@ -4,7 +4,7 @@ export const categories: Category[] = [
     {
         id: "vKvRUECQh9cC5XxYcDZR",
         name: "Men",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1754146448/Men_Category_Photo_mtmtkc.png?height=64&width=64",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754146448/Men_Category_Photo_mtmtkc.png",
         icon: "👔",
         subcategories: [
             "Topwear",
@@ -29,7 +29,7 @@ export const categories: Category[] = [
     {
         id: "YSXF9pgW3DZU2bSSIUnQ",
         name: "Women",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1753772698/Women_Category_Photo__cvzkgu.png?height=64&width=64",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1753772698/Women_Category_Photo__cvzkgu.png",
         icon: "👗",
         subcategories: [
             "Top wear",
