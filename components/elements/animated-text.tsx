@@ -15,7 +15,7 @@ const pacifico = Pacifico({
 })
 
 const michroma = Michroma({
-
+    subsets: ["latin"],
     weight: ["400"],
     variable: "--font-michroma",
 })
