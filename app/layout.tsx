@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import type { Viewport } from 'next'
-import { Inter, Pacifico } from "next/font/google"
+import { Inter, Pacifico, Zain } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
 import { Header } from "@/components/header"
@@ -16,6 +16,12 @@ const pacifico = Pacifico({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-pacifico",
+})
+
+const zain = Zain({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-zain",
 })
 
 export const metadata: Metadata = {
@@ -49,7 +55,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${pacifico.variable}`}>
+      <body className={`${inter.className} ${pacifico.variable} ${zain.variable} antialiased`}>
         <AuthProvider>
           <CartProvider>
             <ProductProvider>
