@@ -5,11 +5,25 @@ import type React from "react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Pacifico } from "next/font/google"
+import { Michroma } from "next/font/google"
+import { Zain } from "next/font/google"
 
 const pacifico = Pacifico({
     subsets: ["latin"],
     weight: ["400"],
     variable: "--font-pacifico",
+})
+
+const michroma = Michroma({
+
+    weight: ["400"],
+    variable: "--font-michroma",
+})
+
+const zain = Zain({
+    subsets: ["latin"],
+    weight: ["400"],
+    variable: "--font-zain",
 })
 
 export const fadeUpVariants = {
@@ -29,12 +43,12 @@ export function AnimatedHeading({
     children,
     className,
     index = 0,
-    gradient = false,
+    gradient
 }: {
     children: React.ReactNode
     className?: string
     index?: number
-    gradient?: boolean
+    gradient?: string
 }) {
     return (
         <motion.h2
@@ -42,8 +56,7 @@ export function AnimatedHeading({
             initial="hidden"
             animate="visible"
             className={cn(
-                "text-3xl md:text-4xl font-bold",
-                gradient && "bg-clip-text text-transparent bg-gradient-to-r from-teal-300 via-white/90 to-teal-300",
+                `text-3xl md:text-4xl font-bold ${gradient} bg-clip-text text-transparent`,
                 className,
             )}
         >
@@ -90,5 +103,39 @@ export function StylizedText({
         >
             {children}
         </span>
+    )
+}
+
+export function PlaywriteStylizedText({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <span
+            className={cn(
+                "bg-clip-text text-transparent ",
+                michroma.className,
+                className,
+            )}
+        >
+            {children}
+        </span>
+    )
+}
+
+export function ParagraphText({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <p className={cn("text-base text-white/60", zain.className, className)}>
+            {children}
+        </p>
     )
 }

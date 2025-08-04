@@ -14,6 +14,7 @@ import { CategoryGrid } from "@/components/category-grid"
 import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
 import CategoryCarousel from "@/components/category-carousel"
+import { ParagraphText, PlaywriteStylizedText } from "@/components/elements/animated-text"
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -89,7 +90,7 @@ function InstallPrompt() {
         <DialogTitle asChild>
           <span className="sr-only">Install App</span>
         </DialogTitle>
-        <DialogContent className="max-w-sm">
+        <DialogContent className="max-w-sm radius-lg p-6 bg-white shadow-lg">
           <div className="flex items-center gap-2 mb-3">
             <Smartphone className="w-4 h-4" />
             <h3 className="font-semibold">Install App</h3>
@@ -157,22 +158,6 @@ export default function HomePage() {
       <div className="container mx-auto px-4 pt-4">
         <InstallPrompt />
       </div>
-
-      {/* Welcome Banner */}
-      <section className="container mx-auto px-4 py-2">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl p-4 text-white text-center shadow-lg"
-        >
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Zap className="w-5 h-5 text-yellow-300" />
-            <h2 className="text-lg font-bold">Welcome to WishWell!</h2>
-            <Zap className="w-5 h-5 text-yellow-300" />
-          </div>
-          <p className="text-sm opacity-90">Discover amazing deals and shop your favorites</p>
-        </motion.div>
-      </section>
 
       {/* Hero Carousel */}
       <section className="container mx-auto px-4 pb-2">
@@ -274,10 +259,10 @@ export default function HomePage() {
             className="flex items-center justify-between mb-6"
           >
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-green-600 via-lime-400 to-emerald-600 ">
                 {category.name}
-              </h1>
-              <p className="text-gray-600 text-sm">Fresh ingredients for your kitchen</p>
+              </PlaywriteStylizedText> <br />
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Fresh ingredients for your kitchen</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -300,7 +285,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
+                      className="bg-white rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
                         <Image
@@ -308,13 +293,13 @@ export default function HomePage() {
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-green-700 transition-colors">
-                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                      </h4>
                     </motion.div>
+                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-green-700 transition-colors">
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                    </ParagraphText>
                   </Link>
                 </motion.div>
               )
@@ -323,26 +308,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Special Offer Banner */}
-      <section className="container mx-auto px-4 py-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.2 }}
-          className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 rounded-2xl p-6 text-center text-white shadow-xl"
-        >
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <Star className="w-6 h-6 text-white" />
-            <h3 className="text-xl font-bold">Special Weekend Deals</h3>
-            <Star className="w-6 h-6 text-white" />
-          </div>
-          <p className="text-sm opacity-90 mb-4">Get extra 20% off on your first order above $50</p>
-          <Button variant="secondary" className="bg-white text-orange-600 hover:bg-gray-100 font-semibold">
-            <ShoppingBag className="w-4 h-4 mr-2" />
-            Start Shopping
-          </Button>
-        </motion.div>
-      </section>
+
 
       {/* Enhanced Snacks & Drinks Section */}
       {snacksCategory && (
@@ -354,10 +320,10 @@ export default function HomePage() {
             className="flex items-center justify-between mb-6"
           >
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 mb-2">
                 {snacksCategory.name}
-              </h1>
-              <p className="text-gray-600 text-sm">Satisfy your cravings anytime</p>
+              </PlaywriteStylizedText> <br />
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -388,12 +354,12 @@ export default function HomePage() {
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
+                      <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
                         {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                      </h4>
+                      </ParagraphText>
                     </motion.div>
                   </Link>
                 </motion.div>
@@ -413,10 +379,10 @@ export default function HomePage() {
             className="flex items-center justify-between mb-6"
           >
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-400 to-cyan-600 mb-2">
                 {homeCategory.name}
-              </h1>
-              <p className="text-gray-600 text-sm">Everything you need for your home</p>
+              </PlaywriteStylizedText> <br />
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Everything you need for your home</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -447,12 +413,12 @@ export default function HomePage() {
                           alt={subcategory}
                           width={64}
                           height={64}
-                          className="object-contain w-12 h-12 group-hover:scale-110 transition-transform duration-300"
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <h4 className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
+                      <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
                         {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                      </h4>
+                      </ParagraphText>
                     </motion.div>
                   </Link>
                 </motion.div>
@@ -481,6 +447,9 @@ export default function HomePage() {
               size="lg"
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-purple-600 bg-transparent"
+              onClick={() => {
+                toast.info("To install the app, look for the install prompt or check your browser's menu for 'Install App' option.")
+              }}
             >
               Download App
               <Download className="w-5 h-5 ml-2" />

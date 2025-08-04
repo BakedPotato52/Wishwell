@@ -26,31 +26,31 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
             .replace(/^-+|-+$/g, "")
     }
 
-    const [api, setApi] = React.useState<CarouselApi>()
+    // const [api, setApi] = React.useState<CarouselApi>()
 
-    // Pause auto-scroll on hover
-    const [isPaused, setIsPaused] = React.useState(false)
+    // // Pause auto-scroll on hover
+    // const [isPaused, setIsPaused] = React.useState(false)
 
-    const handleMouseEnter = useCallback(() => {
-        if (!api) return
-        setIsPaused(true)
-    }, [api])
+    // const handleMouseEnter = useCallback(() => {
+    //     if (!api) return
+    //     setIsPaused(true)
+    // }, [api])
 
-    const handleMouseLeave = useCallback(() => {
-        if (!api) return
-        setIsPaused(false)
-    }, [api])
+    // const handleMouseLeave = useCallback(() => {
+    //     if (!api) return
+    //     setIsPaused(false)
+    // }, [api])
 
-    // Auto-scroll functionality with pause
-    useEffect(() => {
-        if (!api || isPaused) return
+    // // Auto-scroll functionality with pause
+    // useEffect(() => {
+    //     if (!api || isPaused) return
 
-        const autoScroll = setInterval(() => {
-            api.scrollNext()
-        }, 10000) // Auto-scroll every 10 seconds
+    //     const autoScroll = setInterval(() => {
+    //         api.scrollNext()
+    //     }, 10000) // Auto-scroll every 10 seconds
 
-        return () => clearInterval(autoScroll)
-    }, [api, isPaused])
+    //     return () => clearInterval(autoScroll)
+    // }, [api, isPaused])
 
     return (
         <div className="w-full max-w-7xl mx-auto px-4 py-8 select-none">
@@ -65,69 +65,62 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
 
             {/* Category Carousel */}
             {category && (
-                <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    <Carousel
-                        className="w-full"
-                        setApi={setApi}
-                        opts={{
-                            align: "start",
-                            loop: true,
-                            skipSnaps: false,
-                            dragFree: false,
-                            containScroll: "trimSnaps",
-                            duration: 10,
-                        }}
-                    >
-                        <CarouselContent className="-ml-2 md:-ml-4">
-                            {category.subcategories?.map((subcategory, index) => {
-                                // const contextualSlug = createContextualSlug(category.name, subcategory, (category.subsubcategories?.[subcategory] || []).join('-'))
-                                const slug = createSlug(subcategory)
+                <Carousel
+                    className="w-full"
+                    opts={{
+                        align: "start",
 
-                                const imageUrl = getSubcategoryImage(subcategory, category.name)
+                    }}
+                >
+                    <CarouselContent className="-ml-2 md:-ml-4">
+                        {category.subcategories?.map((subcategory, index) => {
+                            // const contextualSlug = createContextualSlug(category.name, subcategory, (category.subsubcategories?.[subcategory] || []).join('-'))
+                            const slug = createSlug(subcategory)
 
-                                return (
-                                    <CarouselItem key={subcategory} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                                        <Card className="h-full overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu">
-                                            <CardContent className="p-0 h-full">
-                                                <div className="relative h-80 overflow-hidden">
-                                                    {/* Category Image */}
-                                                    <Image
-                                                        src={imageUrl || subcategoryImages[subcategory]?.toString() || "/placeholder.png"}
-                                                        alt={subcategory}
-                                                        fill
-                                                        className="object-cover transition-transform duration-700 group-hover:scale-110 z-10"
-                                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                                        priority={index < 3} // Prioritize first 3 images
-                                                    />
+                            const imageUrl = getSubcategoryImage(subcategory, category.name)
 
-                                                    {/* Overlay for better text readability */}
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity duration-300 group-hover:from-black/70"></div>
+                            return (
+                                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                                    <div className="h-full overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu">
+                                        <CardContent className="p-0 h-full">
+                                            <div className="relative h-80 overflow-hidden">
+                                                {/* Category Image */}
+                                                <Image
+                                                    src={imageUrl || subcategoryImages[subcategory]?.toString() || "/placeholder.png"}
+                                                    alt={subcategory}
+                                                    fill
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-110 z-10"
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                                    priority={index < 3} // Prioritize first 3 images
+                                                />
 
-                                                    {/* Category Title */}
-                                                    <div className="absolute top-4 left-4 transform transition-transform duration-300 group-hover:translate-y-[-2px]">
-                                                        <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-zinc-800 to-stone-800 text-xl font-bold drop-shadow-lg">{subcategory}</h3>
-                                                    </div>
+                                                {/* Overlay for better text readability */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-rose-400 via-blue-200 to-transparent transition-opacity duration-300 group-hover:from-rose-500"></div>
 
-                                                    {/* Shop Now Button */}
-                                                    <Link href={`/products/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
-                                                        <Button className="w-full bg-black/80 hover:bg-black text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:bg-black group-hover:shadow-lg transform group-hover:translate-y-[-2px]">
-                                                            SHOP NOW
-                                                            <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                                                        </Button>
-                                                    </Link>
+                                                {/* Category Title */}
+                                                <div className="absolute top-4 left-4 transform transition-transform duration-300 group-hover:translate-y-[-2px]">
+                                                    <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-zinc-800 to-stone-800 text-xl font-bold drop-shadow-lg">{subcategory}</h3>
                                                 </div>
-                                            </CardContent>
-                                        </Card>
-                                    </CarouselItem>
-                                )
-                            })}
-                        </CarouselContent>
 
-                        {/* Navigation Buttons */}
-                        <CarouselPrevious className="left-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
-                        <CarouselNext className="right-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
-                    </Carousel>
-                </div>
+                                                {/* Shop Now Button */}
+                                                <Link href={`/products/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
+                                                    <Button className="w-full bg-black/80 hover:bg-black text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:bg-black group-hover:shadow-lg transform group-hover:translate-y-[-2px]">
+                                                        SHOP NOW
+                                                        <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        </CardContent>
+                                    </div>
+                                </CarouselItem>
+                            )
+                        })}
+                    </CarouselContent>
+
+                    {/* Navigation Buttons */}
+                    <CarouselPrevious className="left-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
+                    <CarouselNext className="right-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
+                </Carousel>
             )}
         </div>
     )
