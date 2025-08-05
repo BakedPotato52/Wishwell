@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, Search, Grid, List, Home } from "lucide-react"
 import { categories } from "@/lib/categoryData"
+import { getSubcategoryImage, subcategoryImages } from "@/lib/subcategoryImages"
 
 // Helper functions for slug conversion
 const createSlug = (text: string): string => {
@@ -25,6 +26,7 @@ const createSlug = (text: string): string => {
 }
 
 const getSubcategoryFromSlug = (slug: string): string | null => {
+
     // Create a mapping of all possible subcategories to their slugs
     const subcategoryMap = new Map<string, string>()
 
@@ -42,6 +44,7 @@ export default function SubcategoryPage() {
     const params = useParams()
     const router = useRouter()
     const slug = params.slug as string
+    console.log("Subcategory slug:", slug)
 
     // Get the actual subcategory name from slug
     const subcategoryName = getSubcategoryFromSlug(slug)
@@ -216,6 +219,8 @@ export default function SubcategoryPage() {
                                 .slice(0, 6)
                                 .map((subcategory: string) => {
                                     const subSlug = createSlug(subcategory)
+                                    const imageUrl = getSubcategoryImage(subcategory, categoryInfo.name)
+
                                     return (
                                         <Link key={subcategory} href={`/subcategory/${subSlug}`}>
                                             <motion.div
@@ -224,7 +229,7 @@ export default function SubcategoryPage() {
                                             >
                                                 <div className="flex flex-col items-center text-center">
                                                     <Image
-                                                        src={categoryInfo.image || "/placeholder.svg"}
+                                                        src={imageUrl || subcategoryImages[subcategory]?.toString() || "/placeholder.png"}
                                                         alt={subcategory}
                                                         width={48}
                                                         height={48}

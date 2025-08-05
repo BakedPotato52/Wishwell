@@ -270,7 +270,7 @@ export default function HomePage() {
             </Button>
           </motion.div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
             {category.subcategories?.map((subcategory, index) => {
               const slug = createSlug(subcategory)
               return (
@@ -285,7 +285,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-white rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
+                      className="bg-black rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
                         <Image

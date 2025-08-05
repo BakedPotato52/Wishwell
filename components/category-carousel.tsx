@@ -8,12 +8,9 @@ import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useCallback, useEffect } from "react"
-import type { CarouselApi } from "@/components/ui/carousel-ui"
 import { getSubcategoryImage, subcategoryImages } from "@/lib/subcategoryImages"
 import type { Category } from "@/lib/types"
 import { StylizedText } from "./elements/animated-text"
-import { createContextualSlug } from "@/utils/category-utils"
 
 export default function CategoryCarousel({ category }: { category?: Category }) {
     // Create slug from subcategory name
@@ -25,32 +22,6 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/^-+|-+$/g, "")
     }
-
-    // const [api, setApi] = React.useState<CarouselApi>()
-
-    // // Pause auto-scroll on hover
-    // const [isPaused, setIsPaused] = React.useState(false)
-
-    // const handleMouseEnter = useCallback(() => {
-    //     if (!api) return
-    //     setIsPaused(true)
-    // }, [api])
-
-    // const handleMouseLeave = useCallback(() => {
-    //     if (!api) return
-    //     setIsPaused(false)
-    // }, [api])
-
-    // // Auto-scroll functionality with pause
-    // useEffect(() => {
-    //     if (!api || isPaused) return
-
-    //     const autoScroll = setInterval(() => {
-    //         api.scrollNext()
-    //     }, 10000) // Auto-scroll every 10 seconds
-
-    //     return () => clearInterval(autoScroll)
-    // }, [api, isPaused])
 
     return (
         <div className="w-full max-w-7xl mx-auto px-4 py-8 select-none">
@@ -81,7 +52,7 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
 
                             return (
                                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                                    <div className="h-full overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu">
+                                    <Card className="h-full overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu">
                                         <CardContent className="p-0 h-full">
                                             <div className="relative h-80 overflow-hidden">
                                                 {/* Category Image */}
@@ -95,7 +66,7 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                                                 />
 
                                                 {/* Overlay for better text readability */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-rose-400 via-blue-200 to-transparent transition-opacity duration-300 group-hover:from-rose-500"></div>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-rose-400 via-blue-200 to-transparent transition-opacity duration-300 group-hover:from-rose-500 group-hover:via-sky-300 group-hover:to-transparent"></div>
 
                                                 {/* Category Title */}
                                                 <div className="absolute top-4 left-4 transform transition-transform duration-300 group-hover:translate-y-[-2px]">
@@ -103,7 +74,7 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                                                 </div>
 
                                                 {/* Shop Now Button */}
-                                                <Link href={`/products/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
+                                                <Link href={`/subcategory/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
                                                     <Button className="w-full bg-black/80 hover:bg-black text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:bg-black group-hover:shadow-lg transform group-hover:translate-y-[-2px]">
                                                         SHOP NOW
                                                         <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -111,15 +82,14 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                                                 </Link>
                                             </div>
                                         </CardContent>
-                                    </div>
+                                    </Card>
                                 </CarouselItem>
                             )
                         })}
                     </CarouselContent>
 
                     {/* Navigation Buttons */}
-                    <CarouselPrevious className="left-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
-                    <CarouselNext className="right-2 bg-white/90 hover:bg-white shadow-lg border-0 transition-all duration-300 hover:scale-110" />
+
                 </Carousel>
             )}
         </div>
