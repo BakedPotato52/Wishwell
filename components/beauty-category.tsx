@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { getSubcategoryImage } from "@/lib/subcategoryImages"
 import { categories } from "@/lib/categoryData"
+import { PlaywriteStylizedText, StylizedText } from "./elements/animated-text"
 
 // Get the Beauty & Personal Care category
 const beautyCategory = categories.find((cat) => cat.name === "Beauty & Personal care")
@@ -45,21 +46,21 @@ export default function BeautyCategoryVertical() {
     }
 
     return (
-        <div className="w-full max-w-7xl mx-auto px-4 py-8 select-none">
+        <div className="w-full max-w-7xl mx-auto px-4 py-4 select-none">
             {/* Header */}
             <div className="text-center mb-8">
                 <h1 className="text-2xl md:text-4xl font-bold mb-2">
                     <span className="text-black">SHOP BY</span> <span className="italic text-black">Category</span>
                 </h1>
                 <p className="text-gray-600 text-lg mb-4">Trending categories on WishWell:</p>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2">
+                <StylizedText className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2">
                     {beautyCategory.name}
-                </h2>
+                </StylizedText>
             </div>
 
             {/* Horizontal Scrolling Container */}
             <div className="relative">
-                <div className="flex flex-row overflow-x-scroll scrollbar-hide gap-4 md:gap-6 pb-4">
+                <div className="flex flex-row overflow-x-scroll scrollbar-hide gap-3 md:gap-6 pb-2">
                     {beautyCategory.subcategories?.map((subcategory, index) => {
                         const slug = createSlug(subcategory)
                         const imageUrl = getSubcategoryImage(subcategory, beautyCategory.name)
@@ -142,8 +143,8 @@ export default function BeautyCategoryVertical() {
             </div>
 
             {/* Scroll hint for mobile */}
-            <div className="text-center mt-4 md:hidden">
-                <p className="text-sm text-gray-500">← Swipe to explore more categories →</p>
+            <div className="text-center mt-2 md:hidden">
+                <PlaywriteStylizedText className="text-sm text-gray-500">← Swipe to explore more categories →</PlaywriteStylizedText>
             </div>
         </div>
     )

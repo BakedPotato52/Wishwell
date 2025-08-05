@@ -399,17 +399,20 @@ export default function CheckoutPage() {
           </CardHeader>
           <CardContent>
             <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="card" id="card" />
-                <Label htmlFor="card">Credit/Debit Card</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="upi" id="upi" />
-                <Label htmlFor="upi">UPI</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="cod" id="cod" />
-                <Label htmlFor="cod">Cash on Delivery</Label>
+
+              <div
+                className={`p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === "cod"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-gray-300"
+                  }`}
+                onClick={() => setPaymentMethod("cod")}
+              >
+                <div className="flex items-center space-x-3">
+                  <RadioGroupItem value="cod" id="cod" />
+                  <Label htmlFor="cod" className="cursor-pointer flex-1">
+                    Cash on Delivery
+                  </Label>
+                </div>
               </div>
             </RadioGroup>
           </CardContent>
