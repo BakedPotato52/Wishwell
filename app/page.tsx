@@ -15,6 +15,7 @@ import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
 import CategoryCarousel from "@/components/category-carousel"
 import { ParagraphText, PlaywriteStylizedText } from "@/components/elements/animated-text"
+import BeautyCategory from "@/components/beauty-category"
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -238,6 +239,16 @@ export default function HomePage() {
         </motion.div>
       </section>
 
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <BeautyCategory />
+        </motion.div>
+      </section>
+
       {/* Category Carousel Men */}
       <section className="container mx-auto px-4 py-2">
         <motion.div
@@ -279,13 +290,14 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.05 }}
+                  className="w-16 h-20"
                 >
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-black rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
+                      className="bg-white rounded-2xl flex flex-col items-center justify-center transition-all duration-300 group"
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
                         <Image
@@ -346,7 +358,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
                         <Image
@@ -357,10 +369,10 @@ export default function HomePage() {
                           className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
-                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                      </ParagraphText>
                     </motion.div>
+                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                    </ParagraphText>
                   </Link>
                 </motion.div>
               )
@@ -405,7 +417,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 border border-gray-100 group"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 group"
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl mb-3 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300">
                         <Image
@@ -416,10 +428,10 @@ export default function HomePage() {
                           className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
-                        {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
-                      </ParagraphText>
                     </motion.div>
+                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                    </ParagraphText>
                   </Link>
                 </motion.div>
               )

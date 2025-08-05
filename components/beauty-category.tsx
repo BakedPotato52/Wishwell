@@ -12,7 +12,7 @@ import { categories } from "@/lib/categoryData"
 // Get the Beauty & Personal Care category
 const beautyCategory = categories.find(cat => cat.name === "Beauty & Personal care")
 
-export default function BeautyCategoryVertical() {
+export default function BeautyCategory() {
     // Create slug from subcategory name
     const createSlug = (name: string) => {
         return name
@@ -43,7 +43,20 @@ export default function BeautyCategoryVertical() {
     }
 
     if (!beautyCategory) {
-        return <div>Category not found</div>
+        return (
+            <div className="min-h-screen bg-gray-50">
+                <div className="container mx-auto px-4 py-8">
+                    <div className="text-center py-12">
+                        <div className="text-6xl mb-4">🔍</div>
+                        <h3 className="text-xl font-semibold mb-2">Category not found</h3>
+                        <p className="text-gray-600 mb-4">The subcategory you're looking for doesn't exist.</p>
+                        <Link href="/">
+                            <Button>Go Back Home</Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -60,7 +73,7 @@ export default function BeautyCategoryVertical() {
             </div>
 
             {/* Vertical Scrolling Container */}
-            <div className="flex flex-col overflow-y-scroll scrollbar-hide max-h-[80vh] space-y-4 md:space-y-6">
+            <div className="flex flex-row overflow-x-scroll scrollbar-hide max-h-[80vh] space-x-4 md:space-x-6">
                 {beautyCategory.subcategories?.map((subcategory, index) => {
                     const slug = createSlug(subcategory)
                     const imageUrl = getSubcategoryImage(subcategory, beautyCategory.name)
