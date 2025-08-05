@@ -402,13 +402,12 @@ export default function CheckoutPage() {
 
               <div
                 className={`p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === "cod"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300"
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-200 hover:border-gray-300"
                   }`}
                 onClick={() => setPaymentMethod("cod")}
               >
                 <div className="flex items-center space-x-3">
-                  <RadioGroupItem value="cod" id="cod" />
                   <Label htmlFor="cod" className="cursor-pointer flex-1">
                     Cash on Delivery
                   </Label>
