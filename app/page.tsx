@@ -270,7 +270,7 @@ export default function HomePage() {
             className="flex items-center justify-between mb-6"
           >
             <div>
-              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-green-600 via-lime-400 to-emerald-600 ">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 ">
                 {category.name}
               </PlaywriteStylizedText> <br />
               <PlaywriteStylizedText className="text-gray-600 text-sm">Fresh ingredients for your kitchen</PlaywriteStylizedText>
@@ -332,7 +332,7 @@ export default function HomePage() {
             className="flex items-center justify-between mb-6"
           >
             <div>
-              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-400 to-blue-600 mb-2">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
                 {snacksCategory.name}
               </PlaywriteStylizedText> <br />
               <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
