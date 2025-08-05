@@ -329,7 +329,7 @@ export default function HomePage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.3 }}
-            className="flex items-center justify-between mb-6"
+            className="flex items-center justify-between mb-2"
           >
             <div>
               <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
@@ -383,15 +383,15 @@ export default function HomePage() {
 
       {/* Enhanced Household Essentials Section */}
       {homeCategory && (
-        <section className="container mx-auto px-4 py-4 pb-8">
+        <section className="container mx-auto px-4 py-4 ">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.8 }}
-            className="flex items-center justify-between mb-6"
+            className="flex items-center justify-between mb-2"
           >
             <div>
-              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-400 to-cyan-600 mb-2">
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-sky-400 to-cyan-600 mb-2">
                 {homeCategory.name}
               </PlaywriteStylizedText> <br />
               <PlaywriteStylizedText className="text-gray-600 text-sm">Everything you need for your home</PlaywriteStylizedText>

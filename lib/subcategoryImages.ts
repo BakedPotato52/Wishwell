@@ -325,17 +325,17 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Talc": "https://res.cloudinary.com/wishwell/image/upload/v1754036308/Talc_a07rwm.png?height=64&width=64",
 
     // bath & body subcategories
-    "Soaps": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Soaps_bhzkew.png?height=64&width=64",
-    "Shower Gels & Body Wash": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Shower_Gels_Body_Wash_aqae22.png?height=64&width=64",
-    "Body Lotion": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Body_Lotion_g8gln2.png?height=64&width=64",
-    "Body Scrub": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Body_Scrub_ft7uxo.png?height=64&width=64",
-    "Baby Bathing": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Baby_Bathing_a3t4pu.png?height=64&width=64",
-    "Talcs": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Talcs_ptibmr.png?height=64&width=64",
-    "Hand wash & Sanitizers": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Hand_wash_Sanitizers_iwot0j.png?height=64&width=64",
-    "Face Wash & Scrubs": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Face_Wash_Scrubs_n4vpwq.png?height=64&width=64",
-    "Conditioner & Mask": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Conditioner_Mask_l6avgz.png?height=64&width=64",
-    "Bath Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Bath_Accessories_vvfywq.png?height=64&width=64",
-    "Kits/Gifts": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Kits_Gifts_tv3da2.jpg?height=64&width=64",
+    "Soaps": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Soaps_bhzkew.png",
+    "Shower Gels & Body Wash": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Shower_Gels_Body_Wash_aqae22.png",
+    "Body Lotion": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Body_Lotion_g8gln2.png",
+    "Body Scrub": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Body_Scrub_ft7uxo.png",
+    "Baby Bathing": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Baby_Bathing_a3t4pu.png",
+    "Talcs": "https://res.cloudinary.com/wishwell/image/upload/v1754111447/Talcs_ptibmr.png",
+    "Hand wash & Sanitizers": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Hand_wash_Sanitizers_iwot0j.png",
+    "Face Wash & Scrubs": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Face_Wash_Scrubs_n4vpwq.png",
+    "Conditioner & Mask": "https://res.cloudinary.com/wishwell/image/upload/v1754111444/Conditioner_Mask_l6avgz.png",
+    "Bath Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Bath_Accessories_vvfywq.png",
+    "Kits/Gifts": "https://res.cloudinary.com/wishwell/image/upload/v1754111445/Kits_Gifts_tv3da2.jpg",
 
     "Shampoo": {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1754036118/Shampoo_rswdiz.png?height=64&width=64",
