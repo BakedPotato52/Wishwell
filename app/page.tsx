@@ -16,6 +16,7 @@ import { categories } from "@/lib/categoryData"
 import CategoryCarousel from "@/components/category-carousel"
 import { ParagraphText, PlaywriteStylizedText } from "@/components/elements/animated-text"
 import BeautyCategory from "@/components/beauty-category"
+import { getSubcategoryImage } from "@/lib/subcategoryImages"
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -129,6 +130,7 @@ export default function HomePage() {
   const category = categories.find((c) => c.name === "Grocery & Kitchen")
   const homeCategory = categories.find((c) => c.name === "Household Essentials")
   const snacksCategory = categories.find((c) => c.name === "Snacks & Drinks")
+  const beautyCategory = categories.find((cat) => cat.name === "Beauty & Personal care")
 
   useEffect(() => {
     if (adImages.length <= 1) return
@@ -239,16 +241,6 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      <section className="container mx-auto px-4 py-2">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <BeautyCategory />
-        </motion.div>
-      </section>
-
       {/* Category Carousel Men */}
       <section className="container mx-auto px-4 py-2">
         <motion.div
@@ -260,20 +252,20 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Enhanced Grocery & Kitchen Section */}
-      {category && (
+      {/* Enhanced Beauty Category Section */}
+      {beautyCategory && (
         <section className="container mx-auto px-4 py-4">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex items-center justify-between mb-6"
+            transition={{ delay: 1.3 }}
+            className="flex items-center justify-between mb-2"
           >
             <div>
-              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 ">
-                {category.name}
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
+                {beautyCategory.name}
               </PlaywriteStylizedText> <br />
-              <PlaywriteStylizedText className="text-gray-600 text-sm">Fresh ingredients for your kitchen</PlaywriteStylizedText>
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -281,27 +273,27 @@ export default function HomePage() {
             </Button>
           </motion.div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
-            {category.subcategories?.map((subcategory, index) => {
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {beautyCategory.subcategories?.map((subcategory, index) => {
               const slug = createSlug(subcategory)
+              const imageUrl = getSubcategoryImage(subcategory, beautyCategory.name)
               return (
                 <motion.div
                   key={subcategory}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.05 }}
-                  className="w-16 h-20"
+                  transition={{ delay: 1.4 + index * 0.05 }}
                 >
                   <Link href={`/subcategory/${slug}`}>
                     <motion.div
                       whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className="bg-white rounded-2xl flex flex-col items-center justify-center transition-all duration-300 group"
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
                         <Image
-                          src={category.image || "/placeholder.svg"}
+                          src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
@@ -309,7 +301,66 @@ export default function HomePage() {
                         />
                       </div>
                     </motion.div>
-                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-green-700 transition-colors">
+                    <ParagraphText className="text-center text-base font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
+                      {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
+                    </ParagraphText>
+                  </Link>
+                </motion.div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+      {/* Enhanced Grocery & Kitchen Section */}
+      {category && (
+        <section className="container mx-auto px-4 py-4">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.3 }}
+            className="flex items-center justify-between mb-2"
+          >
+            <div>
+              <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
+                {category.name}
+              </PlaywriteStylizedText> <br />
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
+            </div>
+            <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
+              View All
+              <ArrowRight className="w-4 h-4 ml-1" />
+            </Button>
+          </motion.div>
+
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {category.subcategories?.map((subcategory, index) => {
+              const slug = createSlug(subcategory)
+              const imageUrl = getSubcategoryImage(subcategory, category.name)
+              return (
+                <motion.div
+                  key={subcategory}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.4 + index * 0.05 }}
+                >
+                  <Link href={`/subcategory/${slug}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
+                        <Image
+                          src={imageUrl || "/placeholder.svg"}
+                          alt={subcategory}
+                          width={64}
+                          height={64}
+                          className="object-contain w-16 h-16 group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    </motion.div>
+                    <ParagraphText className="text-center text-base font-medium text-gray-800 leading-snug group-hover:text-green-700 transition-colors">
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </ParagraphText>
                   </Link>
@@ -346,6 +397,7 @@ export default function HomePage() {
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {snacksCategory.subcategories?.map((subcategory, index) => {
               const slug = createSlug(subcategory)
+              const imageUrl = getSubcategoryImage(subcategory, snacksCategory.name)
               return (
                 <motion.div
                   key={subcategory}
@@ -362,7 +414,7 @@ export default function HomePage() {
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
                         <Image
-                          src={snacksCategory.image || "/placeholder.svg"}
+                          src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
@@ -370,7 +422,7 @@ export default function HomePage() {
                         />
                       </div>
                     </motion.div>
-                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
+                    <ParagraphText className="text-center text-base font-medium text-gray-800 leading-snug group-hover:text-purple-700 transition-colors">
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </ParagraphText>
                   </Link>
@@ -405,6 +457,7 @@ export default function HomePage() {
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {homeCategory.subcategories?.map((subcategory, index) => {
               const slug = createSlug(subcategory)
+              const imageUrl = getSubcategoryImage(subcategory, homeCategory.name)
               return (
                 <motion.div
                   key={subcategory}
@@ -421,7 +474,7 @@ export default function HomePage() {
                     >
                       <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl mb-3 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300">
                         <Image
-                          src={homeCategory.image || "/placeholder.svg"}
+                          src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
                           width={64}
                           height={64}
@@ -429,7 +482,7 @@ export default function HomePage() {
                         />
                       </div>
                     </motion.div>
-                    <ParagraphText className="text-center text-sm font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
+                    <ParagraphText className="text-center text-base font-medium text-gray-800 leading-snug group-hover:text-blue-700 transition-colors">
                       {subcategory.length > 20 ? `${subcategory.slice(0, 20)}...` : subcategory}
                     </ParagraphText>
                   </Link>

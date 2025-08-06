@@ -443,8 +443,8 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Nutritional Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754113598/Nutritional_Supplements_ueexsy.webp?height=64&width=64",
 
     // Accessories subcategories
-    "Women's Jewellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885357/Women_s_Jewellery__j2sqsr.png?height=64&width=64",
-    "Men's Jewellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885311/Men_s_Jewellery__ejt2zu.png?height=64&width=64",
+    "Women's Jwellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885357/Women_s_Jewellery__j2sqsr.png?height=64&width=64",
+    "Men's Jwellery": "https://res.cloudinary.com/wishwell/image/upload/v1753885311/Men_s_Jewellery__ejt2zu.png?height=64&width=64",
     "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Men_s_Accessories_m0tdpm.png?height=64&width=64",
     "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885337/Women_s_Accessories_lfvzvl.png?height=64&width=64",
 
@@ -479,7 +479,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Anklets": "https://res.cloudinary.com/wishwell/image/upload/v1753885348/Anklets_ishu4b.png?height=64&width=64",
     "Chains & Charms": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/Chains_Charms_efhypj.png?height=64&width=64",
     "Bangles": "https://res.cloudinary.com/wishwell/image/upload/v1753885350/Bangles_zerq3a.png?height=64&width=64",
-    "Jewellery Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/Jewellery_Set_cjr4l4.png?height=64&width=64",
+    "Jwellery Sets": "https://res.cloudinary.com/wishwell/image/upload/v1753885352/Jewellery_Set_cjr4l4.png?height=64&width=64",
 
     // Sub-subcategories for men's Jwellery
     "Chains & Pendants": "https://res.cloudinary.com/wishwell/image/upload/v1753885309/Chains_Pendants_pior1x.png?height=64&width=64",
@@ -502,7 +502,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Wallets_zoipwz.png?height=64&width=64",
         contexts: {
             "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885291/Wallets_zoipwz.png?height=64&width=64",
-            "Women's Accessories": "/categories/subcategory/womens-wallets.png",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885334/Wallets_rvlvho.png?height=64&width=64",
         }
     },
 
@@ -591,18 +591,266 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     },
 
     // Grocery subcategories
-    "Fresh Vegetables": "/categories/subcategory/vegetables.png",
-    "Fresh Fruits": "/categories/subcategory/fruits.png",
-    "Dairy, Bread & Eggs": "/categories/subcategory/dairy.png",
-    "Cereals & Breakfast": "/categories/subcategory/cereals.png",
-    "Atta, Rice & Dal": "/categories/subcategory/grains.png",
-    "Oils & Ghee": "/categories/subcategory/oils.png",
-    Masalas: "/categories/subcategory/spices.png",
-    "Dry Fruits & Seeds": "/categories/subcategory/dry-fruits.png",
-    "Biscuits & Cakes": "/categories/subcategory/biscuits.png",
-    "Tea, Coffee & Milk Drinks": "/categories/subcategory/beverages.png",
-    "Sauces & Spreads": "/categories/subcategory/sauces.png",
-    "Meat & Seafood": "/categories/subcategory/meat.png",
+    "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Fresh_Vegetables_fbfhho.png?height=64&width=64",
+    "Dairy, Bread & Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754114002/Dairy_Bread_Eggs_ghi789.png?height=64&width=64",
+    "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754114003/Cereals_Breakfast_jkl012.png?height=64&width=64",
+    "Atta, Rice & Dal": "https://res.cloudinary.com/wishwell/image/upload/v1754114004/Atta_Rice_Dal_mno345.png?height=64&width=64",
+    "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754114005/Oils_Ghee_pqr678.png?height=64&width=64",
+    "Masalas": "https://res.cloudinary.com/wishwell/image/upload/v1754114006/Masalas_stu901.png?height=64&width=64",
+    "Dry Fruits & Seeds": "https://res.cloudinary.com/wishwell/image/upload/v1754114007/Dry_Fruits_Seeds_vwx234.png?height=64&width=64",
+    "Biscuits & Cakes": "https://res.cloudinary.com/wishwell/image/upload/v1754114008/Biscuits_Cakes_yza567.png?height=64&width=64",
+    "Tea, Coffee & Milk Drinks": "https://res.cloudinary.com/wishwell/image/upload/v1754114009/Tea_Coffee_Milk_bcd890.png?height=64&width=64",
+    "Sauces & Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754114010/Sauces_Spreads_efg123.png?height=64&width=64",
+    "Meat & Seafood": "https://res.cloudinary.com/wishwell/image/upload/v1754114011/Meat_Seafood_hij456.png?height=64&width=64",
+
+    //Fresh vegetables subsubcategories
+    "Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488021/Vegetables_g3se37.png?height=64&width=64",
+    "Exotic Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Exotic_Vegetables_dsfz1l.png?height=64&width=64",
+
+    "Frozen Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488016/Frozen_Vegetables_lgpw7d.png?height=64&width=64",
+
+    "Fresh Fruits": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114024/Fresh_Fruits_uvx345.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Fresh_Fruits_m6jwky.png?height=64&width=64",
+        }
+    },
+
+    //Fresh fruits subsubcategories
+    "Fruits": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114024/Fresh_Fruits_uvx345.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754114024/Fresh_Fruits_uvx345.png?height=64&width=64",
+        }
+    },
+
+    "Seasonal Fruits": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114015/Seasonal_Fruits_tuv678.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488021/Seasonal_Fruits_e7flpw.png?height=64&width=64",
+        }
+    },
+    "Exotic Fruits": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114021/Exotic_Fruits_lmn456.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Exotic_Fruits_ztlddk.png?height=64&width=64",
+        }
+    },
+    "Cut Fruits & Juices": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114022/Cut_Fruits_Juices_opq789.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Cut_Fruits_Juices_eqbr2a.png?height=64&width=64",
+        }
+    },
+    "Pooja & Festive": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114017/Pooja_Festive_zab234.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488020/Pooja_Festive_uuuqi8.png?height=64&width=64",
+        }
+    },
+    "Bouquet & Plants": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114020/Bouquet_Plants_ijk123.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Bouquet_Plants_gzvqj6.png?height=64&width=64",
+        }
+    },
+    "Combos": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114019/Combos_fgh890.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Combos_w6vimr.png?height=64&width=64",
+        }
+    },
+    "Certified Organics": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114018/Certified_Organics_cde567.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Certified_Organics_ercrv6.png?height=64&width=64",
+        }
+    },
+    "Leafy & Seasonings": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114013/Leafy_Seasonings_nop012.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488016/Leafy_Seasonings_kn9mx4.png?height=64&width=64",
+        }
+    },
+    "Cuts & Sprouts": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754114016/Cuts_Sprouts_wxy901.png?height=64&width=64",
+        contexts: {
+            "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Cuts_Sprouts_zs56qs.png?height=64&width=64",
+        }
+    },
+
+    //Dairy Bread Eggs Subsubcategories
+    "Bread & Buns": "https://res.cloudinary.com/wishwell/image/upload/v1754490000/Bread_Buns_abc123.png?height=64&width=64",
+    "Milk": "https://res.cloudinary.com/wishwell/image/upload/v1754490001/Milk_def456.png?height=64&width=64",
+    "Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754490002/Eggs_ghi789.png?height=64&width=64",
+    "Curd & Yogurts": "https://res.cloudinary.com/wishwell/image/upload/v1754490003/Curd_Yogurts_jkl012.png?height=64&width=64",
+    "Paneer & Cream": "https://res.cloudinary.com/wishwell/image/upload/v1754490004/Paneer_Cream_mno345.png?height=64&width=64",
+    "Cheese": "https://res.cloudinary.com/wishwell/image/upload/v1754490005/Cheese_pqr678.png?height=64&width=64",
+    "Butter": "https://res.cloudinary.com/wishwell/image/upload/v1754490006/Butter_stu901.png?height=64&width=64",
+    "Batters & Chutneys": "https://res.cloudinary.com/wishwell/image/upload/v1754490007/Batters_Chutneys_vwx234.png?height=64&width=64",
+    "Indian Breads": "https://res.cloudinary.com/wishwell/image/upload/v1754490008/Indian_Breads_yza567.png?height=64&width=64",
+    "Dairy Alternatives": "https://res.cloudinary.com/wishwell/image/upload/v1754490009/Dairy_Alternatives_bcd890.png?height=64&width=64",
+    "Lassi & Buttermilk": "https://res.cloudinary.com/wishwell/image/upload/v1754490010/Lassi_Buttermilk_efg123.png?height=64&width=64",
+    "Milkshakes": "https://res.cloudinary.com/wishwell/image/upload/v1754490011/Milkshakes_hij456.png?height=64&width=64",
+    "Bakery": "https://res.cloudinary.com/wishwell/image/upload/v1754490012/Bakery_klm789.png?height=64&width=64",
+
+    // Cereals & Breakfast subsubcategories
+    "Muesli & Granola": "https://res.cloudinary.com/wishwell/image/upload/v1754490013/Muesli_Granola_nop012.png?height=64&width=64",
+    "Oats": "https://res.cloudinary.com/wishwell/image/upload/v1754490014/Oats_qrs345.png?height=64&width=64",
+    "Kids Cereals": "https://res.cloudinary.com/wishwell/image/upload/v1754490015/Kids_Cereals_tuv678.png?height=64&width=64",
+    "Flakes": "https://res.cloudinary.com/wishwell/image/upload/v1754490016/Flakes_wxy901.png?height=64&width=64",
+    "Energy Bars": "https://res.cloudinary.com/wishwell/image/upload/v1754490017/Energy_Bars_zab234.png?height=64&width=64",
+    "Ready Mixes": "https://res.cloudinary.com/wishwell/image/upload/v1754490018/Ready_Mixes_cde567.png?height=64&width=64",
+    "Peanut Butters": "https://res.cloudinary.com/wishwell/image/upload/v1754490020/Peanut_Butters_ijk123.png?height=64&width=64",
+    "Chocolate Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754490021/Chocolate_Spreads_lmn456.png?height=64&width=64",
+    "Instant Oats": "https://res.cloudinary.com/wishwell/image/upload/v1754490023/Instant_Oats_rst012.png?height=64&width=64",
+    "Seeds & Trail Mixes": "https://res.cloudinary.com/wishwell/image/upload/v1754490024/Seeds_Trail_Mixes_uvw345.png?height=64&width=64",
+    "Hot Beverages": "https://res.cloudinary.com/wishwell/image/upload/v1754490025/Hot_Beverages_xyz678.png?height=64&width=64",
+    "Juices & Fruit Drinks": "https://res.cloudinary.com/wishwell/image/upload/v1754490026/Juices_Fruit_Drinks_abc901.png?height=64&width=64",
+    "Batters": "https://res.cloudinary.com/wishwell/image/upload/v1754490028/Batters_ghi567.png?height=64&width=64",
+
+
+    //Atta Rice & Dal subsubcategories
+    "Basmati Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754490030/Basmati_Rice_mno123.png?height=64&width=64",
+    "Atta": "https://res.cloudinary.com/wishwell/image/upload/v1754490031/Atta_pqr456.png?height=64&width=64",
+    "Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754490032/Rice_stu789.png?height=64&width=64",
+    "Besan": "https://res.cloudinary.com/wishwell/image/upload/v1754490033/Besan_vwx012.png?height=64&width=64",
+    "Sooji & Maida": "https://res.cloudinary.com/wishwell/image/upload/v1754490034/Sooji_Maida_yza345.png?height=64&width=64",
+    "Toor/Moong/Urad": "https://res.cloudinary.com/wishwell/image/upload/v1754490036/Toor_Moong_Urad_efg901.png?height=64&width=64",
+    "Rajma/Chola/Others": "https://res.cloudinary.com/wishwell/image/upload/v1754490037/Rajma_Chola_Others_hij234.png?height=64&width=64",
+    "Poha & Puffed Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754490038/Poha_Puffed_Rice_klm567.png?height=64&width=64",
+    "Ready to Cook Flour Mix": "https://res.cloudinary.com/wishwell/image/upload/v1754490039/Ready_Cook_Flour_Mix_nop890.png?height=64&width=64",
+    "Millets & Daliya": "https://res.cloudinary.com/wishwell/image/upload/v1754490040/Millets_Daliya_qrs123.png?height=64&width=64",
+    "Other Flours": "https://res.cloudinary.com/wishwell/image/upload/v1754490041/Other_Flours_tuv456.png?height=64&width=64",
+    "Soya Chunk & Badi": "https://res.cloudinary.com/wishwell/image/upload/v1754490042/Soya_Chunk_Badi_wxy789.png?height=64&width=64",
+
+    //Oils & Ghee subsubcategories
+    "Sunflower Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490043/Sunflower_Oil_zab012.png?height=64&width=64",
+    "Mustard Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490044/Mustard_Oil_cde345.png?height=64&width=64",
+    "Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754490045/Ghee_fgh678.png?height=64&width=64",
+    "Blended Oils": "https://res.cloudinary.com/wishwell/image/upload/v1754490046/Blended_Oils_ijk901.png?height=64&width=64",
+    "Rice Bran Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490048/Rice_Bran_Oil_opq567.png?height=64&width=64",
+    "Olive Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490049/Olive_Oil_rst890.png?height=64&width=64",
+    "Soybean Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490050/Soybean_Oil_uvw123.png?height=64&width=64",
+    "Cold - pressed": "https://res.cloudinary.com/wishwell/image/upload/v1754490051/Cold_Pressed_xyz456.png?height=64&width=64",
+
+    //Masalas subsubcategories
+    "Powdered Spices": "https://res.cloudinary.com/wishwell/image/upload/v1754490052/Powdered_Spices_abc123.png?height=64&width=64",
+    "Salt": "https://res.cloudinary.com/wishwell/image/upload/v1754490053/Salt_def456.png?height=64&width=64",
+    "Sugar & Jaggery": "https://res.cloudinary.com/wishwell/image/upload/v1754490054/Sugar_Jaggery_ghi789.png?height=64&width=64",
+    "Whole Spices": "https://res.cloudinary.com/wishwell/image/upload/v1754490055/Whole_Spices_jkl012.png?height=64&width=64",
+    "Ready Masala": "https://res.cloudinary.com/wishwell/image/upload/v1754490056/Ready_Masala_mno345.png?height=64&width=64",
+    "Paste & Puree": "https://res.cloudinary.com/wishwell/image/upload/v1754490057/Paste_Puree_pqr678.png?height=64&width=64",
+    "Herbs & Seasoning": "https://res.cloudinary.com/wishwell/image/upload/v1754490058/Herbs_Seasoning_stu901.png?height=64&width=64",
+    "Pickles & Chutney": "https://res.cloudinary.com/wishwell/image/upload/v1754490059/Pickles_Chutney_vwx234.png?height=64&width=64",
+    "Papad & Fryums": "https://res.cloudinary.com/wishwell/image/upload/v1754490060/Papad_Fryums_yza567.png?height=64&width=64",
+    "Coconut Milk & Powder": "https://res.cloudinary.com/wishwell/image/upload/v1754490061/Coconut_Milk_Powder_bcd890.png?height=64&width=64",
+
+    //Dry Fruits & Seeds subsubcategories
+    "Mixed Dry Fruits": "https://res.cloudinary.com/wishwell/image/upload/v1754490062/Mixed_Dry_Fruits_efg123.png?height=64&width=64",
+    "Almonds": "https://res.cloudinary.com/wishwell/image/upload/v1754490063/Almonds_hij456.png?height=64&width=64",
+    "Cashews": "https://res.cloudinary.com/wishwell/image/upload/v1754490064/Cashews_klm789.png?height=64&width=64",
+    "Dates": "https://res.cloudinary.com/wishwell/image/upload/v1754490065/Dates_nop012.png?height=64&width=64",
+    "Pista & Walnuts": "https://res.cloudinary.com/wishwell/image/upload/v1754490066/Pista_Walnuts_qrs345.png?height=64&width=64",
+    "Makhana & Seeds": "https://res.cloudinary.com/wishwell/image/upload/v1754490067/Makhana_Seeds_tuv678.png?height=64&width=64",
+    "Dried Fruits": "https://res.cloudinary.com/wishwell/image/upload/v1754490068/Dried_Fruits_wxy901.png?height=64&width=64",
+    "Nuts & Seeds Mix": "https://res.cloudinary.com/wishwell/image/upload/v1754490069/Nuts_Seeds_Mix_zab234.png?height=64&width=64",
+    "Gift Packs": "https://res.cloudinary.com/wishwell/image/upload/v1754490070/Gift_Packs_cde567.png?height=64&width=64",
+
+    //Biscuits & Cakes subsubcategories
+    "Value Packs": "https://res.cloudinary.com/wishwell/image/upload/v1754490071/Value_Packs_fgh890.png?height=64&width=64",
+    "Cakes & Pies": "https://res.cloudinary.com/wishwell/image/upload/v1754490072/Cakes_Pies_ijk123.png?height=64&width=64",
+    "Cream Biscuits": "https://res.cloudinary.com/wishwell/image/upload/v1754490074/Cream_Biscuits_opq789.png?height=64&width=64",
+    "Marie/Digestive": "https://res.cloudinary.com/wishwell/image/upload/v1754490075/Marie_Digestive_rst012.png?height=64&width=64",
+    "Salted/Plain": "https://res.cloudinary.com/wishwell/image/upload/v1754490076/Salted_Plain_uvw345.png?height=64&width=64",
+    "Wafers": "https://res.cloudinary.com/wishwell/image/upload/v1754490077/Wafers_xyz678.png?height=64&width=64",
+    "Rusk": "https://res.cloudinary.com/wishwell/image/upload/v1754490078/Rusk_abc901.png?height=64&width=64",
+    "Dessert Mixes": "https://res.cloudinary.com/wishwell/image/upload/v1754490079/Dessert_Mixes_def234.png?height=64&width=64",
+    "Baking ingredients": "https://res.cloudinary.com/wishwell/image/upload/v1754490080/Baking_Ingredients_ghi567.png?height=64&width=64",
+    "Flavouring": "https://res.cloudinary.com/wishwell/image/upload/v1754490081/Flavouring_jkl890.png?height=64&width=64",
+    "Gift Boxes": "https://res.cloudinary.com/wishwell/image/upload/v1754490083/Gift_Boxes_pqr456.png?height=64&width=64",
+    "Healthy Snacking": "https://res.cloudinary.com/wishwell/image/upload/v1754490084/Healthy_Snacking_stu789.png?height=64&width=64",
+    "Ice Cream Cakes": "https://res.cloudinary.com/wishwell/image/upload/v1754490085/Ice_Cream_Cakes_vwx012.png?height=64&width=64",
+
+    //Tea, Coffee & Milk Drinks subsubcategories
+    "Tea": "https://res.cloudinary.com/wishwell/image/upload/v1754490086/Tea_yza345.png?height=64&width=64",
+    "Instant Coffee": "https://res.cloudinary.com/wishwell/image/upload/v1754490087/Instant_Coffee_bcd678.png?height=64&width=64",
+    "Filter/Ground Coffee": "https://res.cloudinary.com/wishwell/image/upload/v1754490088/Filter_Ground_Coffee_efg901.png?height=64&width=64",
+    "Green/Herbal Tea": "https://res.cloudinary.com/wishwell/image/upload/v1754490089/Green_Herbal_Tea_hij234.png?height=64&width=64",
+    "Cold Coffee": "https://res.cloudinary.com/wishwell/image/upload/v1754490090/Cold_Coffee_klm567.png?height=64&width=64",
+    "Drink Mixes": "https://res.cloudinary.com/wishwell/image/upload/v1754490091/Drink_Mixes_nop890.png?height=64&width=64",
+    "Nutrition": "https://res.cloudinary.com/wishwell/image/upload/v1754490092/Nutrition_qrs123.png?height=64&width=64",
+    "Milkshake & Smoothie": "https://res.cloudinary.com/wishwell/image/upload/v1754490093/Milkshake_Smoothie_tuv456.png?height=64&width=64",
+    "Syrups & Powder": "https://res.cloudinary.com/wishwell/image/upload/v1754490094/Syrups_Powder_wxy789.png?height=64&width=64",
+    "Premixes": "https://res.cloudinary.com/wishwell/image/upload/v1754490095/Premixes_zab012.png?height=64&width=64",
+
+    //Sauces & Spreads subsubcategories
+    "Peanut Butter": "https://res.cloudinary.com/wishwell/image/upload/v1754490100/Peanut_Butter_abc123.png?height=64&width=64",
+    "Chocolate Spread": "https://res.cloudinary.com/wishwell/image/upload/v1754490101/Chocolate_Spread_def456.png?height=64&width=64",
+    "Honey & Cider Vinegar": "https://res.cloudinary.com/wishwell/image/upload/v1754490102/Honey_Cider_Vinegar_ghi789.png?height=64&width=64",
+    "Tomato Ketchup": "https://res.cloudinary.com/wishwell/image/upload/v1754490104/Tomato_Ketchup_mno345.png?height=64&width=64",
+    "Asian Sauces": "https://res.cloudinary.com/wishwell/image/upload/v1754490105/Asian_Sauces_pqr678.png?height=64&width=64",
+    "Cooking Sauces": "https://res.cloudinary.com/wishwell/image/upload/v1754490106/Cooking_Sauces_stu901.png?height=64&width=64",
+    "Dips & Dressing": "https://res.cloudinary.com/wishwell/image/upload/v1754490107/Dips_Dressing_vwx234.png?height=64&width=64",
+
+    //Meat & Seafood subsubcategories
+    "Fresh Chicken": "https://res.cloudinary.com/wishwell/image/upload/v1754490110/Fresh_Chicken_efg123.png?height=64&width=64",
+    "Seafood": "https://res.cloudinary.com/wishwell/image/upload/v1754490111/Seafood_hij456.png?height=64&width=64",
+    "Mutton": "https://res.cloudinary.com/wishwell/image/upload/v1754490112/Mutton_klm789.png?height=64&width=64",
+    "Marinated": "https://res.cloudinary.com/wishwell/image/upload/v1754490113/Marinated_nop012.png?height=64&width=64",
+    "Cold Cuts": "https://res.cloudinary.com/wishwell/image/upload/v1754490114/Cold_Cuts_qrs345.png?height=64&width=64",
+    "Paste & Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754490115/Paste_Spreads_tuv678.png?height=64&width=64",
+    "Frozen Food": "https://res.cloudinary.com/wishwell/image/upload/v1754490116/Frozen_Food_wxy901.png?height=64&width=64",
+    "Plant - Based Meat": "https://res.cloudinary.com/wishwell/image/upload/v1754490117/Plant_Based_Meat_zab234.png?height=64&width=64",
+
+    "Pancake Mixes": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754490118/Pancake_Mixes_cde567.png?height=64&width=64",
+        contexts: {
+            "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754490118/Pancake_Mixes_cde567.png?height=64&width=64",
+            "Biscuits & Cakes": "https://res.cloudinary.com/wishwell/image/upload/v1754490118/Pancake_Mixes_cde567.png?height=64&width=64",
+        }
+    },
+
+    "Cookies": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754490119/Cookies_efg890.png?height=64&width=64",
+        contexts: {
+            "Tea, Coffee & Milk Drinks": "https://res.cloudinary.com/wishwell/image/upload/v1754490119/Cookies_efg890.png?height=64&width=64",
+            "Biscuits & Cakes": "https://res.cloudinary.com/wishwell/image/upload/v1754490119/Cookies_efg890.png?height=64&width=64",
+        }
+    },
+
+    "Gourmet": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754490120/Gourmet_hij123.png?height=64&width=64",
+        contexts: {
+            "Sauces & Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754490120/Gourmet_hij123.png?height=64&width=64",
+            "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754490120/Gourmet_hij123.png?height=64&width=64",
+            "Tea, Coffee & Milk Drinks": "https://res.cloudinary.com/wishwell/image/upload/v1754490120/Gourmet_hij123.png?height=64&width=64",
+        }
+    },
+    "Mayo & Spreads": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754490121/Mayo_Spreads_ijk456.png?height=64&width=64",
+        contexts: {
+            "Sauces & Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754490121/Mayo_Spreads_ijk456.png?height=64&width=64",
+            "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754490121/Mayo_Spreads_ijk456.png?height=64&width=64",
+        }
+    },
+    "Jams": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754490122/Jam_lmn789.png?height=64&width=64",
+        contexts: {
+            "Sauces & Spreads": "https://res.cloudinary.com/wishwell/image/upload/v1754490122/Jam_lmn789.png?height=64&width=64",
+            "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754490122/Jam_lmn789.png?height=64&width=64",
+        }
+    },
+
+    // Snacks subcategories
+    "Cold Drinks and Juices",
+    "Ice Creams and Frozen Desserts",
+    "Chips and Namkeens",
+    "Chocolates",
+    "Noodles, Pasta, Vermicelli",
+    "Frozen Food",
+    "Sweets",
+    "Paan Corner",
 
     // Household subcategories
     "Home & Furnishing": "/categories/subcategory/home-furnishing.png",
@@ -616,15 +864,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Sports & Fitness": "/categories/subcategory/sports.png",
     "Pet Supplies": "/categories/subcategory/pets.png",
 
-    // Snacks subcategories
-    "Cold Drinks and Juices": "/categories/subcategory/cold-drinks.png",
-    "Ice Creams and Frozen Desserts": "/categories/subcategory/ice-cream.png",
-    "Chips and Namkeens": "/categories/subcategory/chips.png",
-    Chocolates: "/categories/subcategory/chocolates.png",
-    "Noodles, Pasta, Vermicelli": "/categories/subcategory/noodles.png",
-    "Frozen Food": "/categories/subcategory/frozen.png",
-    Sweets: "/categories/subcategory/sweets.png",
-    "Paan Corner": "/categories/subcategory/paan.png",
+
 
     //Gifts subcategories
     "Birthday Gifts": "/categories/subcategory/birthday-gifts.png",
