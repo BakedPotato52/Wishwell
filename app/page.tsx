@@ -15,8 +15,8 @@ import { adImages } from "@/lib/data"
 import { categories } from "@/lib/categoryData"
 import CategoryCarousel from "@/components/category-carousel"
 import { ParagraphText, PlaywriteStylizedText } from "@/components/elements/animated-text"
-import BeautyCategory from "@/components/beauty-category"
 import { getSubcategoryImage } from "@/lib/subcategoryImages"
+import AccessoriesCategory from "@/components/accessories-category"
 
 function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false)
@@ -252,6 +252,16 @@ export default function HomePage() {
         </motion.div>
       </section>
 
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <AccessoriesCategory />
+        </motion.div>
+      </section>
+
       {/* Enhanced Beauty Category Section */}
       {beautyCategory && (
         <section className="container mx-auto px-4 py-4">
@@ -311,6 +321,7 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
       {/* Enhanced Grocery & Kitchen Section */}
       {category && (
         <section className="container mx-auto px-4 py-4">
@@ -370,8 +381,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-
 
       {/* Enhanced Snacks & Drinks Section */}
       {snacksCategory && (
