@@ -154,7 +154,7 @@ export const categories: Category[] = [
     {
         id: "XUa310B6lLXC8HgqFgWl",
         name: "Grocery & Kitchen",
-        image: "/categories/grocery.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754562460/Category_Phato_Grocery_Kitchen__rlpzcq.png?height=64&width=64",
         icon: "🍎",
         subcategories: [
             "Fresh Vegetables",
@@ -174,7 +174,7 @@ export const categories: Category[] = [
             "Fresh Vegetables": ["Vegetables", "Leafy & Seasonings", "Exotic Vegetables", "Seasonal Fruits", "Cuts & Sprouts", "Pooja & Festive", "Certified Organics", "Combos", "Bouquet & Plants", "Exotic Fruits", "Cut Fruits & Juices", "Fresh Fruits", "Frozen Vegetables"],
             "Fresh Fruits": ["Fruits", "Seasonal Fruits", "Exotic Fruits", "Cut Fruits & Juices", "Pooja & Festive", "Bouquet & Plants", "Combos", "Certified Organics", "Exotic Vegetables", "Fresh Vegetables", "Leafy & Seasonings", "Cuts & Sprouts"],
             "Dairy, Bread & Eggs": ["Bread & Buns", "Milk", "Eggs", "Curd & Yogurts", "Paneer & Cream", "Cheese", "Butter", "Batters & Chutneys", "Indian Breads", "Dairy Alternatives", "Lassi & Buttermilk", "Milkshakes", "Bakery"],
-            "Cereals & Breakfast": ["Muesli & Granola", "Oats", "Kids Cereals", "Flakes", "Energy Bars", "Ready Mixes", "Pancake Mixes", "Peanut Butters", "Chocolate Spreads", "Mayo & Spreads", "Instant Oats", "Seeds & Trail Mixes", "Hot Beverages", "Juices & Fruit Drinks", "Jams", "Batters", "Gourmet"],
+            "Cereals & Breakfast": ["Muesli & Granola", "Oats", "Kids Cereals", "Flakes", "Energy Bars", "Ready Mixes", "Pancake Mixes", "Peanut Butters", "Chocolate Spreads", "Mayo & Spreads", "Instant Oats", "Seeds & Trail Mixes", "Hot Beverages", "Juices & Fruit Drinks", "Jams", "Batters"],
             "Atta, Rice & Dal": ["Basmati Rice", "Atta", "Rice", "Besan", "Sooji & Maida", "Premium Brands", "Toor/Moong/Urad", "Rajma/Chola/Others", "Poha & Puffed Rice", "Ready to Cook Flour Mix", "Millets & Daliya", "Other Flours", "Soya Chunk & Badi"],
             "Oils & Ghee": ["Sunflower Oil", "Mustard Oil", "Ghee", "Blended Oils", "Premium Brands", "Rice Bran Oil", "Olive Oil", "Soybean Oil", "Cold - pressed"],
             "Masalas": ["Powdered Spices", "Salt", "Sugar & Jaggery", "Whole Spices", "Ready Masala", "Paste & Puree", "Herbs & Seasoning", "Pickles & Chutney", "Papad & Fryums", "Coconut Milk & Powder"],
