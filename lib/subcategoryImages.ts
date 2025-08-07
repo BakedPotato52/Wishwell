@@ -353,6 +353,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
             "Bath & Body": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Premium_Brands_mllwpw.png?height=64&width=64",
             "Chips and Namkeens": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Premium_Brands_1_ggqj3v.png?height=64&width=64",
             "Atta, Rice & Dal": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Premium_Brands_oggenu.png?height=64&width=64",
+            "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Premium_Brands_2_ggqj3v.png?height=64&width=64",
         },
     },
 
