@@ -180,8 +180,8 @@ export const categories: Category[] = [
             "Masalas": ["Powdered Spices", "Salt", "Sugar & Jaggery", "Whole Spices", "Ready Masala", "Paste & Puree", "Herbs & Seasoning", "Pickles & Chutney", "Papad & Fryums", "Coconut Milk & Powder"],
             "Dry Fruits & Seeds": ["Mixed Dry Fruits", "Almonds", "Cashews", "Dates", "Pista & Walnuts", "Makhana & Seeds", "Dried Fruits", "Nuts & Seeds Mix", "Gift Packs"],
             "Biscuits & Cakes": ["Value Packs", "Cakes & Pies", "Cookies", "Cream Biscuits", "Marie/Digestive", "Salted/Plain", "Wafers", "Rusk", "Dessert Mixes", "Baking ingredients", "Flavouring", "Pancake Mixes", "Gift Boxes", "Healthy Snacking", "Ice Cream Cakes"],
-            "Tea, Coffee & Milk Drinks": ["Tea", "Instant Coffee", "Filter/Ground Coffee", "Green/Herbal Tea", "Cold Coffee", "Drink Mixes", "Nutrition", "Milkshake & Smoothie", "Syrups & Powder", "Premixes", "Cookies", "Gourmet"],
-            "Sauces & Spreads": ["Peanut Butter", "Chocolate Spread", "Honey & Cider Vinegar", "Mayo & Spreads", "Tomato Ketchup", "Asian Sauces", "Cooking Sauces", "Dips & Dressing", "Jams", "Gourmet"],
+            "Tea, Coffee & Milk Drinks": ["Tea", "Instant Coffee", "Filter/Ground Coffee", "Green/Herbal Tea", "Cold Coffee", "Drink Mixes", "Nutrition", "Milkshake & Smoothie", "Syrups & Powder", "Premixes", "Cookies"],
+            "Sauces & Spreads": ["Peanut Butter", "Chocolate Spread", "Honey & Cider Vinegar", "Mayo & Spreads", "Tomato Ketchup", "Asian Sauces", "Cooking Sauces", "Dips & Dressing", "Jams"],
             "Meat & Seafood": ["Fresh Chicken", "Seafood", "Mutton", "Marinated", "Cold Cuts", "Eggs", "Paste & Spreads", "Frozen Food", "Leafy & Seasonings", "Masalas", "Plant - Based Meat"]
         }
     },
