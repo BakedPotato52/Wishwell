@@ -353,7 +353,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
             "Bath & Body": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Premium_Brands_mllwpw.png?height=64&width=64",
             "Chips and Namkeens": "https://res.cloudinary.com/wishwell/image/upload/v1754111446/Premium_Brands_1_ggqj3v.png?height=64&width=64",
             "Atta, Rice & Dal": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Premium_Brands_oggenu.png?height=64&width=64",
-            "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Premium_Brands_2_ggqj3v.png?height=64&width=64",
+            "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754562866/Premium_Brands_ovz8or.png?height=64&width=64",
         },
     },
 
@@ -598,7 +598,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Dairy, Bread & Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754562765/Dairy_Bread_Eggs_uzv7g0.png?height=64&width=64",
     "Cereals & Breakfast": "https://res.cloudinary.com/wishwell/image/upload/v1754562708/Cereals_Breakfast_p22h6e.png?height=64&width=64",
     "Atta, Rice & Dal": "https://res.cloudinary.com/wishwell/image/upload/v1754562659/Atta_Rice_Dal_ezxrtg.png?height=64&width=64",
-    "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754114005/Oils_Ghee_pqr678.png?height=64&width=64",
+    "Oils & Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754562862/Oils_Ghee_tzaqog.png?height=64&width=64",
     "Masalas": "https://res.cloudinary.com/wishwell/image/upload/v1754114006/Masalas_stu901.png?height=64&width=64",
     "Dry Fruits & Seeds": "https://res.cloudinary.com/wishwell/image/upload/v1754114007/Dry_Fruits_Seeds_vwx234.png?height=64&width=64",
     "Biscuits & Cakes": "https://res.cloudinary.com/wishwell/image/upload/v1754114008/Biscuits_Cakes_yza567.png?height=64&width=64",
@@ -727,14 +727,14 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Soya Chunk & Badi": "https://res.cloudinary.com/wishwell/image/upload/v1754562665/Soya_Chunk_Badi_akqfyg.png?height=64&width=64",
 
     //Oils & Ghee subsubcategories
-    "Sunflower Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490043/Sunflower_Oil_zab012.png?height=64&width=64",
-    "Mustard Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490044/Mustard_Oil_cde345.png?height=64&width=64",
-    "Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754490045/Ghee_fgh678.png?height=64&width=64",
-    "Blended Oils": "https://res.cloudinary.com/wishwell/image/upload/v1754490046/Blended_Oils_ijk901.png?height=64&width=64",
-    "Rice Bran Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490048/Rice_Bran_Oil_opq567.png?height=64&width=64",
-    "Olive Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490049/Olive_Oil_rst890.png?height=64&width=64",
-    "Soybean Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754490050/Soybean_Oil_uvw123.png?height=64&width=64",
-    "Cold - pressed": "https://res.cloudinary.com/wishwell/image/upload/v1754490051/Cold_Pressed_xyz456.png?height=64&width=64",
+    "Sunflower Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754562871/Sunflower_Oil_phkqli.png?height=64&width=64",
+    "Mustard Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754562861/Mustard_Oil_ecdddm.png?height=64&width=64",
+    "Ghee": "https://res.cloudinary.com/wishwell/image/upload/v1754562859/Ghee_wk3nrq.png?height=64&width=64",
+    "Blended Oils": "https://res.cloudinary.com/wishwell/image/upload/v1754562858/Blended_Oils_xnd6ph.png?height=64&width=64",
+    "Rice Bran Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754562868/Rice_Bran_Oil_fcmfeq.png?height=64&width=64",
+    "Olive Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754562865/Olive_Oil_z5rapo.png?height=64&width=64",
+    "Soybean Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754562869/Soybean_Oil_bt87wn.png?height=64&width=64",
+    "Cold - pressed": "https://res.cloudinary.com/wishwell/image/upload/v1754562858/Cold_-_pressed_qouts0.png?height=64&width=64",
 
     //Masalas subsubcategories
     "Powdered Spices": "https://res.cloudinary.com/wishwell/image/upload/v1754490052/Powdered_Spices_abc123.png?height=64&width=64",
