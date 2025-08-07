@@ -155,7 +155,7 @@ export default function HomePage() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white"
+      className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white select-none"
     >
       {/* PWA Components */}
       <div className="container mx-auto px-4 pt-4">
@@ -301,7 +301,7 @@ export default function HomePage() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center rounded-xl mb-3 transition-all duration-300">
                         <Image
                           src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
@@ -361,7 +361,7 @@ export default function HomePage() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl mb-3 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center rounded-xl mb-3  transition-all duration-300">
                         <Image
                           src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
@@ -421,7 +421,7 @@ export default function HomePage() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300  group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-3 group-hover:from-purple-200 group-hover:to-pink-200 transition-all duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center rounded-xl mb-3  transition-all duration-300">
                         <Image
                           src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
@@ -481,7 +481,7 @@ export default function HomePage() {
                       transition={{ duration: 0.2, ease: "easeInOut" }}
                       className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center transition-all duration-300 group"
                     >
-                      <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl mb-3 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300">
+                      <div className="w-16 h-16 flex items-center justify-center rounded-xl mb-3 transition-all duration-300">
                         <Image
                           src={imageUrl || "/placeholder.svg"}
                           alt={subcategory}
@@ -502,35 +502,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Bottom CTA Section */}
-      <section className="container mx-auto px-4 py-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2 }}
-          className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-2xl p-8 text-center text-white shadow-2xl"
-        >
-          <h3 className="text-2xl font-bold mb-3">Ready to Start Shopping?</h3>
-          <p className="text-lg opacity-90 mb-6">Join thousands of happy customers and discover amazing deals</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100 font-semibold">
-              <ShoppingBag className="w-5 h-5 mr-2" />
-              Browse All Categories
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-purple-600 bg-transparent"
-              onClick={() => {
-                toast.info("To install the app, look for the install prompt or check your browser's menu for 'Install App' option.")
-              }}
-            >
-              Download App
-              <Download className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
-        </motion.div>
-      </section>
+
     </motion.div>
   )
 }

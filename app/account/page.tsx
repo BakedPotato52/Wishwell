@@ -16,6 +16,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { Order } from "@/lib/types"
 import { getUserOrders } from "@/lib/firebase/firestore"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 
 // Animation variants
 const containerVariants = {
@@ -498,87 +499,89 @@ export default function ProfilePage() {
                                       whileHover={{ scale: 1.01 }}
                                       className="bg-gradient-to-r from-white to-gray-50 rounded-lg border border-gray-200 p-4 sm:p-6 transition-all duration-200 hover:shadow-md"
                                     >
-                                      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
-                                        <div className="flex items-start space-x-3">
-                                          <div className="bg-blue-100 p-2 rounded-lg">
-                                            <Package className="h-5 w-5 text-blue-600" />
-                                          </div>
-                                          <div className="min-w-0 flex-1">
-                                            <h3 className="font-semibold text-base sm:text-lg text-gray-900">
-                                              Order {order.id.slice(11, 17)}
-                                            </h3>
-                                            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0 text-sm text-gray-600 mt-1">
-                                              <span className="flex items-center space-x-1">
-                                                <Calendar className="h-4 w-4" />
-                                                <span>
-                                                  {order.createdAt && typeof order.createdAt === 'object' && 'toDate' in order.createdAt
-                                                    ? order.createdAt.toDate().toLocaleDateString()
-                                                    : order.createdAt instanceof Date
-                                                      ? order.createdAt.toLocaleDateString()
-                                                      : typeof order.createdAt === 'string' || typeof order.createdAt === 'number'
-                                                        ? new Date(order.createdAt).toLocaleDateString()
-                                                        : 'N/A'}
+                                      <Link href={`/orders/${order.id}`}>
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
+                                          <div className="flex items-start space-x-3">
+                                            <div className="bg-blue-100 p-2 rounded-lg">
+                                              <Package className="h-5 w-5 text-blue-600" />
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                              <h3 className="font-semibold text-base sm:text-lg text-gray-900">
+                                                Order {order.id.slice(11, 17)}
+                                              </h3>
+                                              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0 text-sm text-gray-600 mt-1">
+                                                <span className="flex items-center space-x-1">
+                                                  <Calendar className="h-4 w-4" />
+                                                  <span>
+                                                    {order.createdAt && typeof order.createdAt === 'object' && 'toDate' in order.createdAt
+                                                      ? order.createdAt.toDate().toLocaleDateString()
+                                                      : order.createdAt instanceof Date
+                                                        ? order.createdAt.toLocaleDateString()
+                                                        : typeof order.createdAt === 'string' || typeof order.createdAt === 'number'
+                                                          ? new Date(order.createdAt).toLocaleDateString()
+                                                          : 'N/A'}
+                                                  </span>
                                                 </span>
-                                              </span>
-                                              <span className="flex items-center space-x-1">
-                                                <CreditCard className="h-4 w-4" />
-                                                <span className="font-semibold">₹{order.total.toFixed(2)}</span>
-                                              </span>
+                                                <span className="flex items-center space-x-1">
+                                                  <CreditCard className="h-4 w-4" />
+                                                  <span className="font-semibold">₹{order.total.toFixed(2)}</span>
+                                                </span>
+                                              </div>
                                             </div>
                                           </div>
-                                        </div>
-                                        <motion.div
-                                          whileHover={{ scale: 1.05 }}
-                                          className="flex items-center space-x-3 self-start sm:self-center"
-                                        >
-                                          <Badge
-                                            className={`${getStatusColor(order.status)} border font-medium px-3 py-1`}
+                                          <motion.div
+                                            whileHover={{ scale: 1.05 }}
+                                            className="flex items-center space-x-3 self-start sm:self-center"
                                           >
-                                            <Truck className="h-3 w-3 mr-1" />
-                                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                                          </Badge>
-                                        </motion.div>
-                                      </div>
-
-                                      <div className="bg-white rounded-lg border border-gray-100 ">
-                                        <h4 className="font-medium mb-3 text-gray-900">Items Ordered:</h4>
-                                        <div className="space-y-3">
-                                          {order.items.map((item, itemIndex) => (
-                                            <motion.div
-                                              key={itemIndex}
-                                              initial={{ opacity: 0, x: -10 }}
-                                              animate={{ opacity: 1, x: 0 }}
-                                              transition={{ delay: index * 0.1 + itemIndex * 0.05 }}
-                                              className="flex justify-between items-center py-2 flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 border-b border-gray-200 last:border-b-0"
+                                            <Badge
+                                              className={`${getStatusColor(order.status)} border font-medium px-3 py-1`}
                                             >
-                                              <div className="flex items-center space-x-3">
-                                                <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-md flex items-center justify-center">
-                                                  {item.product.image ? (
-                                                    <img
-                                                      src={item.product.image}
-                                                      alt={item.product.name}
-                                                      className="w-full h-full object-cover rounded-md"
-                                                    />
-                                                  ) : (
-                                                    <Package className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500" />
-                                                  )}
-                                                </div>
-                                                <div className=" flex-1">
-                                                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">
-                                                    {item.product.name}
-                                                  </p>
-                                                  <p className="text-xs sm:text-sm text-gray-600">
-                                                    Qty: {item.quantity}
-                                                  </p>
-                                                </div>
-                                              </div>
-                                              <p className="font-semibold text-gray-900 text-sm sm:text-base">
-                                                ₹{item.product.price.toFixed(2)}
-                                              </p>
-                                            </motion.div>
-                                          ))}
+                                              <Truck className="h-3 w-3 mr-1" />
+                                              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                                            </Badge>
+                                          </motion.div>
                                         </div>
-                                      </div>
+
+                                        <div className="bg-white rounded-lg border border-gray-100 ">
+                                          <h4 className="font-medium mb-3 text-gray-900">Items Ordered:</h4>
+                                          <div className="space-y-3">
+                                            {order.items.map((item, itemIndex) => (
+                                              <motion.div
+                                                key={itemIndex}
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: index * 0.1 + itemIndex * 0.05 }}
+                                                className="flex justify-between items-center py-2 flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 border-b border-gray-200 last:border-b-0"
+                                              >
+                                                <div className="flex items-center space-x-3">
+                                                  <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-md flex items-center justify-center">
+                                                    {item.product.image ? (
+                                                      <img
+                                                        src={item.product.image}
+                                                        alt={item.product.name}
+                                                        className="w-full h-full object-cover rounded-md"
+                                                      />
+                                                    ) : (
+                                                      <Package className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500" />
+                                                    )}
+                                                  </div>
+                                                  <div className=" flex-1">
+                                                    <p className="font-medium text-gray-900 text-sm sm:text-base truncate">
+                                                      {item.product.name}
+                                                    </p>
+                                                    <p className="text-xs sm:text-sm text-gray-600">
+                                                      Qty: {item.quantity}
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                                <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                                                  ₹{item.product.price.toFixed(2)}
+                                                </p>
+                                              </motion.div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </Link>
                                     </motion.div>
                                     {index < orders.length - 1 && <Separator className="mt-6 bg-gray-200" />}
                                   </motion.div>

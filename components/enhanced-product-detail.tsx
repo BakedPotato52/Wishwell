@@ -316,16 +316,16 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
             {/* Product Details Tabs */}
             <div className="mt-12">
                 <Tabs defaultValue="description" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="description">Description</TabsTrigger>
-                        <TabsTrigger value="specifications">Specifications</TabsTrigger>
-                        <TabsTrigger value="reviews">Reviews</TabsTrigger>
-                        <TabsTrigger value="shipping">Shipping</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+                        <TabsTrigger value="description" className="text-xs sm:text-sm">Description</TabsTrigger>
+                        <TabsTrigger value="specifications" className="text-xs sm:text-sm">Specifications</TabsTrigger>
+                        <TabsTrigger value="reviews" className="text-xs sm:text-sm">Reviews</TabsTrigger>
+                        <TabsTrigger value="shipping" className="text-xs sm:text-sm">Shipping</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="description" className="mt-6">
                         <Card>
-                            <CardContent className="p-6">
+                            <CardContent className="p-4 sm:p-6">
                                 <div className="prose max-w-none">
                                     <p>{product.description}</p>
                                     {/* Add more detailed description content here */}
@@ -336,29 +336,29 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
 
                     <TabsContent value="specifications" className="mt-6">
                         <Card>
-                            <CardContent className="p-6">
+                            <CardContent className="p-4 sm:p-6">
                                 <div className="space-y-4">
                                     {product.attributes.map((attr) => (
-                                        <div key={attr.attributeId} className="flex justify-between py-2 border-b">
-                                            <span className="font-medium">{attr.name}</span>
-                                            <span className="text-muted-foreground">
+                                        <div key={attr.attributeId} className="flex flex-col sm:flex-row sm:justify-between py-2 border-b space-y-1 sm:space-y-0">
+                                            <span className="font-medium text-sm sm:text-base">{attr.name}</span>
+                                            <span className="text-muted-foreground text-sm break-words">
                                                 {Array.isArray(attr.values) ? attr.values.join(", ") : attr.values}
                                             </span>
                                         </div>
                                     ))}
                                     {currentVariant?.dimensions && (
-                                        <div className="flex justify-between py-2 border-b">
-                                            <span className="font-medium">Dimensions</span>
-                                            <span className="text-muted-foreground">
+                                        <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b space-y-1 sm:space-y-0">
+                                            <span className="font-medium text-sm sm:text-base">Dimensions</span>
+                                            <span className="text-muted-foreground text-sm">
                                                 {currentVariant.dimensions.length} × {currentVariant.dimensions.width} ×{" "}
                                                 {currentVariant.dimensions.height} {currentVariant.dimensions.unit}
                                             </span>
                                         </div>
                                     )}
                                     {currentVariant?.weight && (
-                                        <div className="flex justify-between py-2 border-b">
-                                            <span className="font-medium">Weight</span>
-                                            <span className="text-muted-foreground">{currentVariant.weight}g</span>
+                                        <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b space-y-1 sm:space-y-0">
+                                            <span className="font-medium text-sm sm:text-base">Weight</span>
+                                            <span className="text-muted-foreground text-sm">{currentVariant.weight}g</span>
                                         </div>
                                     )}
                                 </div>
@@ -368,7 +368,7 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
 
                     <TabsContent value="reviews" className="mt-6">
                         <Card>
-                            <CardContent className="p-6">
+                            <CardContent className="p-4 sm:p-6">
                                 <div className="text-center py-8">
                                     <p className="text-muted-foreground">Reviews coming soon...</p>
                                 </div>
@@ -378,11 +378,11 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
 
                     <TabsContent value="shipping" className="mt-6">
                         <Card>
-                            <CardContent className="p-6">
+                            <CardContent className="p-4 sm:p-6">
                                 <div className="space-y-4">
                                     <div>
-                                        <h3 className="font-semibold mb-2">Shipping Information</h3>
-                                        <ul className="space-y-1 text-sm text-muted-foreground">
+                                        <h3 className="font-semibold mb-2 text-sm sm:text-base">Shipping Information</h3>
+                                        <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
                                             <li>• Free shipping on orders above ₹499</li>
                                             <li>• Standard delivery: 3-5 business days</li>
                                             <li>• Express delivery: 1-2 business days (additional charges apply)</li>
@@ -391,8 +391,8 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
                                     </div>
                                     <Separator />
                                     <div>
-                                        <h3 className="font-semibold mb-2">Return Policy</h3>
-                                        <ul className="space-y-1 text-sm text-muted-foreground">
+                                        <h3 className="font-semibold mb-2 text-sm sm:text-base">Return Policy</h3>
+                                        <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground">
                                             <li>• 7-day return policy</li>
                                             <li>• Items must be in original condition</li>
                                             <li>• Free return pickup available</li>

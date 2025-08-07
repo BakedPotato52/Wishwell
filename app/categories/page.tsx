@@ -19,7 +19,7 @@ export default function CategoriesPage() {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
             {/* Header */}
-            <div className="bg-white border-b sticky top-0 z-40">
+            {/* <div className="bg-white border-b sticky top-0 z-40">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center space-x-4">
                         <Link href="/">
@@ -30,7 +30,7 @@ export default function CategoriesPage() {
                         </Link>
                     </div>
 
-                    {/* Search */}
+                    
                     <div className="mt-4">
                         <div className="relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -44,7 +44,7 @@ export default function CategoriesPage() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Categories Grid */}
             <section className="py-6">
@@ -65,7 +65,7 @@ export default function CategoriesPage() {
                             >
                                 <Link href={`/category/${category.id}`}>
                                     <div className="flex flex-col items-center p-4 rounded-lg bg-white hover:shadow-md transition-all duration-200 border border-gray-100">
-                                        <div className="w-16 h-16 mb-3 rounded-full overflow-hidden bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm">
+                                        <div className="w-16 h-16 mb-3 rounded-full overflow-hidden bg-gradient-to-br from-blue-100 via-transparent to-sky-200 flex items-center justify-center shadow-sm">
                                             {category.image ? (
                                                 <Image
                                                     src={category.image || "/placeholder.svg"}
