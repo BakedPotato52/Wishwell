@@ -1014,8 +1014,9 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Mobiles & Electronics": "https://res.cloudinary.com/wishwell/image/upload/v1754653450/Mobiles_Electronics_ma5wni.png?height=64&width=64",
     "Books & Stationery": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Books_Stationery_louva9.png?height=64&width=64",
     "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653877/Puja_Items_twq7ez.png?height=64&width=64",
-    "Sports & Fitness": "/categories/subcategory/sports.png",
+    "Sports & Fitness": "https://res.cloudinary.com/wishwell/image/upload/v1754655528/Sports_Fitness_fkm8la.png?height=64&width=64",
     "Pet Supplies": "https://res.cloudinary.com/wishwell/image/upload/v1754653698/Pet_Supplie_cygiof.png?height=64&width=64",
+    "Toys & Games": "https://res.cloudinary.com/wishwell/image/upload/v1754655151/Toys_Games_mqlb1m.png?height=64&width=64",
 
     //Appliances subsubcategories
     "Mixer": "https://res.cloudinary.com/wishwell/image/upload/v1754651341/Mixer_x6it5j.png?height=64&width=64",
@@ -1160,7 +1161,40 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     },
 
     //Toys & Games subsubcategories
+    "Soft Toys": "https://res.cloudinary.com/wishwell/image/upload/v1754655144/Soft_Toys_xmqlrm.png?height=64&width=64",
+    "Board Games": "https://res.cloudinary.com/wishwell/image/upload/v1754655128/Board_Games_ytoh8x.png?height=64&width=64",
+    "STEAM": "https://res.cloudinary.com/wishwell/image/upload/v1754655148/STEAM_o27gij.png?height=64&width=64",
+    "Toy Cars": "https://res.cloudinary.com/wishwell/image/upload/v1754655148/Toy_Cars_onqulx.png?height=64&width=64",
+    "Building Blocks": "https://res.cloudinary.com/wishwell/image/upload/v1754655129/Building_Blocks_qlu73w.png?height=64&width=64",
+    "Newly Added": "https://res.cloudinary.com/wishwell/image/upload/v1754655134/Newly_Added_kedwhq.png?height=64&width=64",
+    "Baby Toys": "https://res.cloudinary.com/wishwell/image/upload/v1754655126/Baby_Toys_cej3jk.png?height=64&width=64",
+    "Pretend Play": "https://res.cloudinary.com/wishwell/image/upload/v1754655140/Pretend_Play_nvu8ck.png?height=64&width=64",
+    "Art & Crafts": "https://res.cloudinary.com/wishwell/image/upload/v1754655125/Art_Crafts_exledv.png?height=64&width=64",
+    "Action Figures": "https://res.cloudinary.com/wishwell/image/upload/v1754655125/Action_Figures_hqmjt3.png?height=64&width=64",
+    "Ride - Ons": "https://res.cloudinary.com/wishwell/image/upload/v1754655143/Ride_-_Ons_qadkpj.jpg?height=64&width=64",
+    "Pool Toys": "https://res.cloudinary.com/wishwell/image/upload/v1754655139/Pool_Toys_zb1fhf.jpg?height=64&width=64",
+    "Musical Toys": "https://res.cloudinary.com/wishwell/image/upload/v1754655133/Musical_Toys_cjlyyk.png?height=64&width=64",
+    "Dough": "https://res.cloudinary.com/wishwell/image/upload/v1754655131/Dough_mihlwb.png?height=64&width=64",
 
+    "Outdoor Toys": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754655141/Outdoor_Toys_ghqj2b.png?height=64&width=64",
+        contexts: {
+            "Toys & Games": "https://res.cloudinary.com/wishwell/image/upload/v1754655136/Outdoor_Toys_sdrbsy.png?height=64&width=64",
+            "Sports & Fitness": "https://res.cloudinary.com/wishwell/image/upload/v1754655522/Outdoor_Toys_qjkuhg.png?height=64&width=64",
+        }
+    },
+
+    //Sports & Fitness subsubcategories
+    "Badminton": "https://res.cloudinary.com/wishwell/image/upload/v1754655513/Badminton_zwdqs6.png?height=64&width=64",
+    "Cricket": "https://res.cloudinary.com/wishwell/image/upload/v1754655515/Cricket_ietqlh.png?height=64&width=64",
+    "Football": "https://res.cloudinary.com/wishwell/image/upload/v1754655518/Football_qikmw1.png?height=64&width=64",
+    "Gym Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754655521/Gym_Accessories_xcrun3.png?height=64&width=64",
+    "Yoga": "https://res.cloudinary.com/wishwell/image/upload/v1754655533/Yoga_djodbw.png?height=64&width=64",
+    "Pain & Wound": "https://res.cloudinary.com/wishwell/image/upload/v1754655524/Pain_Wound_luaf5g.png?height=64&width=64",
+    "Chess": "https://res.cloudinary.com/wishwell/image/upload/v1754655515/Chess_gffh6a.jpg?height=64&width=64",
+    "Table Tennis": "https://res.cloudinary.com/wishwell/image/upload/v1754655529/Table_Tennis_ioniqr.png?height=64&width=64",
+    "Cycling": "https://res.cloudinary.com/wishwell/image/upload/v1754655517/Cycling_wp6xtg.png?height=64&width=64",
+    "PickleBall": "https://res.cloudinary.com/wishwell/image/upload/v1754655528/PickleBall_j3tebw.jpg?height=64&width=64",
 
     //Gifts subcategories
     "Birthday Gifts": "/categories/subcategory/birthday-gifts.png",
