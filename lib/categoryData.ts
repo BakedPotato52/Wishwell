@@ -57,32 +57,32 @@ export const categories: Category[] = [
         }
     },
 
-    {
-        id: "E4pNgzjp1mMFalyRfTjc",
-        name: "Kids",
-        image: "/categories/kids.svg?height=60&width=60",
-        icon: "👶",
-        subcategories: [
-            "Boys Clothing",
-            "Boys Footwear",
-            "Girls Clothing",
-            "Girls Footwear",
-            "Infants",
-            "Bags & Accessories",
-            "Toys",
-            "Shop By Age",
-        ],
-        subsubcategories: {
-            "Boys Clothing": ["T-Shirts", "Shirts", "Jeans & Trousers", "Shorts & Capris", "Clothing Sets", "Innerwear", "Ethnicwear", "Nightwear"],
-            "Boys Footwear": ["Casual Shoes", "Sandals", "Sports Shoes", "Flip Flops & Slippers"],
-            "Girls Clothing": ["Dresses", "Frocks & Jumpsuits", "Tops", "T-Shirts & Shirts", "Skirts & Shorts", "Clothing Sets", "Innerwear", "Ethnicwear", "Nightwear"],
-            "Girls Footwear": ["Flats & Casual Shoes", "Flip Flops", "Sports Shoes"],
-            "Infants": ["Rompers & Onesies", "Clothing Sets", "Tops & T-Shirts", "Bottomwear", "Dresses & Frocks", "Nightwear", "Innerwear"],
-            "Bags & Accessories": ["Bags & Bagpacks", "Watches", "Sunglasses & Frames", "Sports Accessories & Equipment"],
-            "Toys": ["Action Figures", "Dolls", "Puzzles", "Board Games"],
-            "Shop By Age": ["0-2 Years", "2-5 Years", "5-8 Years", "8-12 Years", "12+ Years"]
-        }
-    },
+    // {
+    //     id: "E4pNgzjp1mMFalyRfTjc",
+    //     name: "Kids",
+    //     image: "/categories/kids.svg?height=60&width=60",
+    //     icon: "👶",
+    //     subcategories: [
+    //         "Boys Clothing",
+    //         "Boys Footwear",
+    //         "Girls Clothing",
+    //         "Girls Footwear",
+    //         "Infants",
+    //         "Bags & Accessories",
+    //         "Toys",
+    //         "Shop By Age",
+    //     ],
+    //     subsubcategories: {
+    //         "Boys Clothing": ["T-Shirts", "Shirts", "Jeans & Trousers", "Shorts & Capris", "Clothing Sets", "Innerwear", "Ethnicwear", "Nightwear"],
+    //         "Boys Footwear": ["Casual Shoes", "Sandals", "Sports Shoes", "Flip Flops & Slippers"],
+    //         "Girls Clothing": ["Dresses", "Frocks & Jumpsuits", "Tops", "T-Shirts & Shirts", "Skirts & Shorts", "Clothing Sets", "Innerwear", "Ethnicwear", "Nightwear"],
+    //         "Girls Footwear": ["Flats & Casual Shoes", "Flip Flops", "Sports Shoes"],
+    //         "Infants": ["Rompers & Onesies", "Clothing Sets", "Tops & T-Shirts", "Bottomwear", "Dresses & Frocks", "Nightwear", "Innerwear"],
+    //         "Bags & Accessories": ["Bags & Bagpacks", "Watches", "Sunglasses & Frames", "Sports Accessories & Equipment"],
+    //         "Toys": ["Action Figures", "Dolls", "Puzzles", "Board Games"],
+    //         "Shop By Age": ["0-2 Years", "2-5 Years", "5-8 Years", "8-12 Years", "12+ Years"]
+    //     }
+    // },
 
     {
         id: "TuaQdrS7gWIJpjN4Ycax",
@@ -244,39 +244,39 @@ export const categories: Category[] = [
         },
     },
 
-    {
-        id: "lZ2d1eCsMNTx85RvyXvZ",
-        name: "Gifts",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1753886208/nice-gift-with-red-ribbon-ready-birthday_tomwgc.jpg?height=64&width=64",
-        icon: "📱",
-        subcategories: [
-            "Birthday Gifts",
-            "Anniversary Gifts",
-            "Cakes",
-            "Flowers",
-            "Chocolates",
-            "Toys",
-            "Custom Gifts",
-            "Gift Hampers",
-            "For Him",
-            "For Her",
-            "Home Decor",
-            "Festive Gifts",
-        ],
-        subsubcategories: {
-            "Birthday Gifts": ["Birthday Cakes(Designer, Bento, Photo)", "Birthday Flowers(Roses, Bouquets)", "Greeting Cards", "Balloons / Decor", "Chocolates", "Personalized Gifts(Mugs, Cushions, Photo Frames)", "Hampers", "Candles", "Return Gifts", "Party Essentials"],
-            "Anniversary Gifts": ["Cakes(Heart, Premium, Bento)", "Flowers(Roses, Lilies)", "Decor & Hampers", "Chocolates / Sweets", "Personalized Gifts", "Couple Hampers", "Luxury Perfumes", "Cards & Candles", "Jewelry"],
-            "Cakes": ["Designer", "Bento", "Chocolate", "Black Forest", "Red Velvet", "Fruit Cakes", "Cupcakes", "Jar Cakes", "Theme Cakes", "Eggless", "Sugar - Free", "Premium"],
-            "Flowers": ["Roses", "Lilies/Orchids", "Exotic", "Mixed", "Carnations/Tulips", "Premium Baskets", "Hampers", "Indoor Plants", "Forever Roses"],
-            "Chocolates": ["Dark", "Imported", "Assorted", "Handmade", "Bouquets", "Truffles", "Hampers", "Sugar-Free"],
-            "Toys": ["Soft Toys", "Dolls", "Cars/Bikes", "Action Figures", "Board Games", "Educational", "Kid Sets", "Character Themed"],
-            "Custom Gifts": ["Mugs", "Cushions", "Keychains", "Frames", "Custom Jewelry", "Name Plates", "Custom Phone Cases", "Hampers", "Wall Clocks", "Pens"],
-            "Gift Hampers": ["Chocolate", "Gourmet", "Dry Fruit", "Luxury", "Spa/Beauty", "Festival", "Corporate", "Baby", "Wine/Beverage"],
-            "For Him": ["Wallets & Belts", "Perfumes & Deos", "Watches", "Gadgets", "Grooming Kits", "Eyewear", "Personalized", "Keychains", "Office Gifts", "Choco Combos"],
-            "For Her": ["Jewelry", "Handbags/Wallets", "Perfumes/Body Mists", "Makeup Kits", "Hair Accessories", "Personalized Gifts", "Watches", "Choco/Flower Combos", "Luxury Hampers"],
-            "Home Decor": ["Lamps & Candles", "Frames/Paintings", "Plants & Pots", "Table Decor", "Showpieces", "Diffusers", "Clocks", "Home Gift Sets"],
-            "Festive Gifts": ["Diwali Hampers", "Rakhi & Gifts", "Karwa Chauth", "Eid Hampers", "Holi Hampers", "New Year Hampers", "Christmas", "Pooja Essentials", "Ganesh Gifts"]
-        }
-    }
+    // {
+    //     id: "lZ2d1eCsMNTx85RvyXvZ",
+    //     name: "Gifts",
+    //     image: "https://res.cloudinary.com/wishwell/image/upload/v1753886208/nice-gift-with-red-ribbon-ready-birthday_tomwgc.jpg?height=64&width=64",
+    //     icon: "📱",
+    //     subcategories: [
+    //         "Birthday Gifts",
+    //         "Anniversary Gifts",
+    //         "Cakes",
+    //         "Flowers",
+    //         "Chocolates",
+    //         "Toys",
+    //         "Custom Gifts",
+    //         "Gift Hampers",
+    //         "For Him",
+    //         "For Her",
+    //         "Home Decor",
+    //         "Festive Gifts",
+    //     ],
+    //     subsubcategories: {
+    //         "Birthday Gifts": ["Birthday Cakes(Designer, Bento, Photo)", "Birthday Flowers(Roses, Bouquets)", "Greeting Cards", "Balloons / Decor", "Chocolates", "Personalized Gifts(Mugs, Cushions, Photo Frames)", "Hampers", "Candles", "Return Gifts", "Party Essentials"],
+    //         "Anniversary Gifts": ["Cakes(Heart, Premium, Bento)", "Flowers(Roses, Lilies)", "Decor & Hampers", "Chocolates / Sweets", "Personalized Gifts", "Couple Hampers", "Luxury Perfumes", "Cards & Candles", "Jewelry"],
+    //         "Cakes": ["Designer", "Bento", "Chocolate", "Black Forest", "Red Velvet", "Fruit Cakes", "Cupcakes", "Jar Cakes", "Theme Cakes", "Eggless", "Sugar - Free", "Premium"],
+    //         "Flowers": ["Roses", "Lilies/Orchids", "Exotic", "Mixed", "Carnations/Tulips", "Premium Baskets", "Hampers", "Indoor Plants", "Forever Roses"],
+    //         "Chocolates": ["Dark", "Imported", "Assorted", "Handmade", "Bouquets", "Truffles", "Hampers", "Sugar-Free"],
+    //         "Toys": ["Soft Toys", "Dolls", "Cars/Bikes", "Action Figures", "Board Games", "Educational", "Kid Sets", "Character Themed"],
+    //         "Custom Gifts": ["Mugs", "Cushions", "Keychains", "Frames", "Custom Jewelry", "Name Plates", "Custom Phone Cases", "Hampers", "Wall Clocks", "Pens"],
+    //         "Gift Hampers": ["Chocolate", "Gourmet", "Dry Fruit", "Luxury", "Spa/Beauty", "Festival", "Corporate", "Baby", "Wine/Beverage"],
+    //         "For Him": ["Wallets & Belts", "Perfumes & Deos", "Watches", "Gadgets", "Grooming Kits", "Eyewear", "Personalized", "Keychains", "Office Gifts", "Choco Combos"],
+    //         "For Her": ["Jewelry", "Handbags/Wallets", "Perfumes/Body Mists", "Makeup Kits", "Hair Accessories", "Personalized Gifts", "Watches", "Choco/Flower Combos", "Luxury Hampers"],
+    //         "Home Decor": ["Lamps & Candles", "Frames/Paintings", "Plants & Pots", "Table Decor", "Showpieces", "Diffusers", "Clocks", "Home Gift Sets"],
+    //         "Festive Gifts": ["Diwali Hampers", "Rakhi & Gifts", "Karwa Chauth", "Eid Hampers", "Holi Hampers", "New Year Hampers", "Christmas", "Pooja Essentials", "Ganesh Gifts"]
+    //     }
+    // }
 
 ]
