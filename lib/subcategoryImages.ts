@@ -616,6 +616,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         default: "https://res.cloudinary.com/wishwell/image/upload/v1754562809/Fresh_Fruits_bb4bof.png?height=64&width=64",
         contexts: {
             "Fresh Vegetables": "https://res.cloudinary.com/wishwell/image/upload/v1754488015/Fresh_Fruits_m6jwky.png?height=64&width=64",
+            "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653869/Fresh_Fruits_sjdk2b.png?height=64&width=64",
         }
     },
 
@@ -910,7 +911,6 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Chocolates": "https://res.cloudinary.com/wishwell/image/upload/v1754490126/Chocolates_jkl012.png?height=64&width=64",
     "Noodles, Pasta, Vermicelli": "https://res.cloudinary.com/wishwell/image/upload/v1754490127/Noodles_Pasta_Vermicelli_mno345.png?height=64&width=64",
     // "Frozen Food": "https://res.cloudinary.com/wishwell/image/upload/v1754490128/Frozen_Food_pqr678.png?height=64&width=64",
-    "Sweets": "https://res.cloudinary.com/wishwell/image/upload/v1754490129/Sweets_stu901.png?height=64&width=64",
     "Paan Corner": "https://res.cloudinary.com/wishwell/image/upload/v1754490130/Paan_Corner_vwx234.png?height=64&width=64",
 
     // Cold Drinks and Juices subsubcategories
@@ -1005,18 +1005,161 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
             "Paan Corner": "https://res.cloudinary.com/wishwell/image/upload/v1754490210/Bestseller_Paan_lmn890.png?height=64&width=64",
         }
     },
-    // Household subcategories
-    "Home & Furnishing": "/categories/subcategory/home-furnishing.png",
-    "Kitchen & Dining": "/categories/subcategory/kitchen.png",
-    "Cleaning Essentials": "/categories/subcategory/cleaning.png",
-    Clothing: "/categories/subcategory/clothing.png",
-    "Mobiles & Electronics": "/categories/subcategory/electronics.png",
-    Appliances: "/categories/subcategory/appliances.png",
-    "Books & Stationery": "/categories/subcategory/books.png",
-    "Puja Items": "/categories/subcategory/puja.png",
-    "Sports & Fitness": "/categories/subcategory/sports.png",
-    "Pet Supplies": "/categories/subcategory/pets.png",
 
+    // Household subcategories
+    "Home & Furnishing": "https://res.cloudinary.com/wishwell/image/upload/v1754652418/Home_Furnishing_d97dai.png?height=64&width=64",
+    "Kitchen & Dining": "https://res.cloudinary.com/wishwell/image/upload/v1754653165/Kitchen_Dining_ltrt2c.png?height=64&width=64",
+    "Cleaning Essentials": "https://res.cloudinary.com/wishwell/image/upload/v1754652035/Cleaning_Essentials_wichly.png?height=64&width=64",
+    "Clothing": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Clothing_louva9.png?height=64&width=64",
+    "Mobiles & Electronics": "https://res.cloudinary.com/wishwell/image/upload/v1754653450/Mobiles_Electronics_ma5wni.png?height=64&width=64",
+    "Books & Stationery": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Books_Stationery_louva9.png?height=64&width=64",
+    "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653877/Puja_Items_twq7ez.png?height=64&width=64",
+    "Sports & Fitness": "/categories/subcategory/sports.png",
+    "Pet Supplies": "https://res.cloudinary.com/wishwell/image/upload/v1754653698/Pet_Supplie_cygiof.png?height=64&width=64",
+
+    //Appliances subsubcategories
+    "Mixer": "https://res.cloudinary.com/wishwell/image/upload/v1754651341/Mixer_x6it5j.png?height=64&width=64",
+    "Blenders": "https://res.cloudinary.com/wishwell/image/upload/v1754651339/Blenders_nztkhy.png?height=64&width=64",
+    "Kettles": "https://res.cloudinary.com/wishwell/image/upload/v1754651340/Kettles_jr1in5.png?height=64&width=64",
+    "Choppers": "https://res.cloudinary.com/wishwell/image/upload/v1754651339/Choppers_zjyxnw.png?height=64&width=64",
+    "Toasters": "https://res.cloudinary.com/wishwell/image/upload/v1754651346/Toasters_gpja4b.png?height=64&width=64",
+    "Induction": "https://res.cloudinary.com/wishwell/image/upload/v1754651340/Induction_lghv9u.png?height=64&width=64",
+    "Irons": "https://res.cloudinary.com/wishwell/image/upload/v1754651340/Irons_u3tidx.png?height=64&width=64",
+    "Vacuum": "https://res.cloudinary.com/wishwell/image/upload/v1754651346/Vacuum_wg0irp.png?height=64&width=64",
+    "Fans": "https://res.cloudinary.com/wishwell/image/upload/v1754651339/Fans_asxygn.png?height=64&width=64",
+    "Cameras": "https://res.cloudinary.com/wishwell/image/upload/v1754651339/Cameras_shwrid.png?height=64&width=64",
+    "Others": "https://res.cloudinary.com/wishwell/image/upload/v1754651345/Others_hs58wp.png?height=64&width=64",
+
+    // Books & Stationery subsubcategories
+    "Pens/Pencils/Highlighters": "https://res.cloudinary.com/wishwell/image/upload/v1754651824/Pens_Pencils_Highlighters_vvqbph.png?height=64&width=64",
+    "Notebooks": "https://res.cloudinary.com/wishwell/image/upload/v1754651826/Notebooks_o7j6py.jpg?height=64&width=64",
+    "Diaries": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Diaries_ails0y.png?height=64&width=64",
+
+    "School Supplies": "https://res.cloudinary.com/wishwell/image/upload/v1754651828/School_Supplies_rn1dog.png?height=64&width=64",
+    "Colouring": "https://res.cloudinary.com/wishwell/image/upload/v1754651824/Colouring_pqgqrz.png?height=64&width=64",
+    "Craft": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Craft_mn8imm.png?height=64&width=64",
+    "Bags": "https://res.cloudinary.com/wishwell/image/upload/v1754651824/Bags_i5jsjz.jpg?height=64&width=64",
+    "Tiffins": "https://res.cloudinary.com/wishwell/image/upload/v1754651831/Tiffins_vxqys8.png?height=64&width=64",
+    "Bottles": "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Bottles_ru0z1u.png?height=64&width=64",
+
+    // Cleaning Essentials subsubcategories
+    "Detergents": "https://res.cloudinary.com/wishwell/image/upload/v1754652036/Detergents_zjnpkd.png?height=64&width=64",
+    "Fabric Softeners": "https://res.cloudinary.com/wishwell/image/upload/v1754652038/Fabric_Softeners_dqwweq.png?height=64&width=64",
+    "Brooms & Mops": "https://res.cloudinary.com/wishwell/image/upload/v1754652035/Brooms_Mops_b1psoe.png?height=64&width=64",
+    "Floor Cleaner": "https://res.cloudinary.com/wishwell/image/upload/v1754652039/Floor_Cleaner_uypcvo.png?height=64&width=64",
+    "Utensil Cleaner": "https://res.cloudinary.com/wishwell/image/upload/v1754652045/Utensil_Cleaner_ohboxa.png?height=64&width=64",
+    "Kitchen Cleaning": "https://res.cloudinary.com/wishwell/image/upload/v1754652041/Kitchen_Cleaning_owtnkw.png?height=64&width=64",
+    "Dustbins": "https://res.cloudinary.com/wishwell/image/upload/v1754652036/Dustbins_szmrns.png?height=64&width=64",
+    "Disinfectant": "https://res.cloudinary.com/wishwell/image/upload/v1754652036/Disinfectant_hydpha.png?height=64&width=64",
+    "Toilet Cleaner": "https://res.cloudinary.com/wishwell/image/upload/v1754652043/Toilet_Cleaner_pyncnu.png?height=64&width=64",
+    "Bathroom Cleaning": "https://res.cloudinary.com/wishwell/image/upload/v1754652034/Bathroom_Cleaning_c72lzz.png?height=64&width=64",
+    "Wipers": "https://res.cloudinary.com/wishwell/image/upload/v1754652048/Wipers_fegbql.png?height=64&width=64",
+    "Glass Cleaner": "https://res.cloudinary.com/wishwell/image/upload/v1754652040/Glass_Cleaner_hg7app.png?height=64&width=64",
+    "Sink Brush": "https://res.cloudinary.com/wishwell/image/upload/v1754652042/Sink_Brush_yk4ly5.png?height=64&width=64",
+    "Toxin Free": "https://res.cloudinary.com/wishwell/image/upload/v1754652044/Toxin_Free_yawhqu.png?height=64&width=64",
+
+    //Home & Furnishing subsubcategories
+    "Bedsheets": "https://res.cloudinary.com/wishwell/image/upload/v1754652413/Bedsheets_sqgxet.png?height=64&width=64",
+    "Storage": "https://res.cloudinary.com/wishwell/image/upload/v1754652571/Storage_uluqfp.png?height=64&width=64",
+    "Tissues": "https://res.cloudinary.com/wishwell/image/upload/v1754652572/Tissues_mhcd5n.png?height=64&width=64",
+    "Cleaning Tools": "https://res.cloudinary.com/wishwell/image/upload/v1754652414/Cleaning_Tools_fsv9nm.png?height=64&width=64",
+    "Party Decor": "https://res.cloudinary.com/wishwell/image/upload/v1754652425/Party_Decor_cctttm.png?height=64&width=64",
+    "Air Freshners": "https://res.cloudinary.com/wishwell/image/upload/v1754652413/Air_Freshners_cj1wyl.png?height=64&width=64",
+    "Gardening": "https://res.cloudinary.com/wishwell/image/upload/v1754652417/Gardening_kbdqgf.png?height=64&width=64",
+    "Bathware": "https://res.cloudinary.com/wishwell/image/upload/v1754652413/Bathware_njuwgp.png?height=64&width=64",
+    "Utility": "https://res.cloudinary.com/wishwell/image/upload/v1754652577/Utility_r40wtf.png?height=64&width=64",
+    "Pooja Needs": "https://res.cloudinary.com/wishwell/image/upload/v1754652426/Pooja_Needs_rjzxzq.png?height=64&width=64",
+    "Repellants": "https://res.cloudinary.com/wishwell/image/upload/v1754652571/Repellants_kflpox.png?height=64&width=64",
+    "Sports & Gym": "https://res.cloudinary.com/wishwell/image/upload/v1754652571/Sports_Gym_oeqbnh.png?height=64&width=64",
+
+    "Appliances": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754651339/Appliances_yxl2h8.png?height=64&width=64",
+        contexts: {
+            "Home & Furnishing": "https://res.cloudinary.com/wishwell/image/upload/v1754652413/Appliances_byzhk1.png?height=64&width=64",
+        }
+    },
+
+    "Stationery": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Stationery_abc123.png?height=64&width=64",
+        contexts: {
+            "Books & Stationery": "https://res.cloudinary.com/wishwell/image/upload/v1754651829/Stationery_r7qmnv.png?height=64&width=64",
+            "Home & Furnishing": "https://res.cloudinary.com/wishwell/image/upload/v1754652571/Stationery_stacpt.png?height=64&width=64",
+        }
+    },
+
+    // Kitchen & Dining subsubcategories
+    "Cookware": "https://res.cloudinary.com/wishwell/image/upload/v1754653161/Cookware_dekjfr.png?height=64&width=64",
+    "Plates": "https://res.cloudinary.com/wishwell/image/upload/v1754653171/Plates_r787dn.png?height=64&width=64",
+    "Bowls": "https://res.cloudinary.com/wishwell/image/upload/v1754653159/Bowls_c5wnyc.png?height=64&width=64",
+    "Crockery": "https://res.cloudinary.com/wishwell/image/upload/v1754653163/Crockery_j8i9wz.png?height=64&width=64",
+    "Cutlery": "https://res.cloudinary.com/wishwell/image/upload/v1754653163/Cutlery_ambi4c.png?height=64&width=64",
+    "Jars/Containers": "https://res.cloudinary.com/wishwell/image/upload/v1754653164/Jars_Containers_exzhok.png?height=64&width=64",
+    "Bottles/Flasks/Tiffins": "https://res.cloudinary.com/wishwell/image/upload/v1754653157/Bottles_Flasks_Tiffins_rbyrkq.png?height=64&width=64",
+    "Barware": "https://res.cloudinary.com/wishwell/image/upload/v1754653157/Barware_yrarcd.png?height=64&width=64",
+    "Bakeware/BBQ": "https://res.cloudinary.com/wishwell/image/upload/v1754653157/Bakeware_BBQ_gnc0fn.png?height=64&width=64",
+    "Chopping Tools": "https://res.cloudinary.com/wishwell/image/upload/v1754653160/Chopping_Tools_mfjr7j.png?height=64&width=64",
+    "Kitchen Tools": "https://res.cloudinary.com/wishwell/image/upload/v1754653169/Kitchen_Tools_lt9yay.png?height=64&width=64",
+    "Kitchen Appliances": "https://res.cloudinary.com/wishwell/image/upload/v1754653167/Kitchen_Appliances_tj4bh7.png?height=64&width=64",
+
+    //Mobiles & Electronics subsubcategories
+    "Mobiles": "https://res.cloudinary.com/wishwell/image/upload/v1754653451/Mobiles_ibnl1j.png?height=64&width=64",
+    "Earbuds": "https://res.cloudinary.com/wishwell/image/upload/v1754653444/Earbuds_yeox0e.png?height=64&width=64",
+    "Speakers": "https://res.cloudinary.com/wishwell/image/upload/v1754653459/Speakers_gipkgc.png?height=64&width=64",
+    "Smart Watches": "https://res.cloudinary.com/wishwell/image/upload/v1754653457/Smart_Watches_gxoqmt.png?height=64&width=64",
+    "Kitchen/Home Appliances": "https://res.cloudinary.com/wishwell/image/upload/v1754653449/Kitchen_Home_Appliances_gkhkpx.png?height=64&width=64",
+    "Personal Care": "https://res.cloudinary.com/wishwell/image/upload/v1754653454/Personal_Care_eluvt2.png?height=64&width=64",
+    "Health Care": "https://res.cloudinary.com/wishwell/image/upload/v1754653445/Health_Care_edzk6j.png?height=64&width=64",
+    "Powerbanks/Chargers": "https://res.cloudinary.com/wishwell/image/upload/v1754653455/Powerbanks_Chargers_dt4d4o.png?height=64&width=64",
+    "Streaming Devices": "https://res.cloudinary.com/wishwell/image/upload/v1754653461/Streaming_Devices_vwf9p0.jpg?height=64&width=64",
+    "Lights": "https://res.cloudinary.com/wishwell/image/upload/v1754653449/Lights_aycc7u.png?height=64&width=64",
+    "Batteries": "https://res.cloudinary.com/wishwell/image/upload/v1754653444/Batteries_w3smfl.png?height=64&width=64",
+    "Computer Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754653444/Computer_Accessories_qsgzrx.png?height=64&width=64",
+
+    // Pet Supplies subsubcategories
+    "Cat Food": "https://res.cloudinary.com/wishwell/image/upload/v1754653697/Cat_Food_eiwnba.png?height=64&width=64",
+    "Dog Food": "https://res.cloudinary.com/wishwell/image/upload/v1754653697/Dog_Food_nzhii7.png?height=64&width=64",
+    "Pet Treats": "https://res.cloudinary.com/wishwell/image/upload/v1754653701/Pet_Treats_cdlyi0.png?height=64&width=64",
+    "Accessories/Toys": "https://res.cloudinary.com/wishwell/image/upload/v1754653695/Accessories_Toys_aeywiw.png?height=64&width=64",
+    "Grooming & Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754653698/Grooming_Supplements_pgmyuy.png?height=64&width=64",
+
+    //Puja Items subsubcategories
+    "Idols/Books": "https://res.cloudinary.com/wishwell/image/upload/v1754653875/Idols_Books_hr2efp.png?height=64&width=64",
+    "Diya/Baati": "https://res.cloudinary.com/wishwell/image/upload/v1754653864/Diya_Baati_hzfwuw.png?height=64&width=64",
+    "Agarbatti": "https://res.cloudinary.com/wishwell/image/upload/v1754653859/Agarbatti_pt5e1s.png?height=64&width=64",
+    "Dhoop": "https://res.cloudinary.com/wishwell/image/upload/v1754653862/Dhoop_qgkqdi.png?height=64&width=64",
+    "Hawan": "https://res.cloudinary.com/wishwell/image/upload/v1754653874/Hawan_yi2lfs.png?height=64&width=64",
+    "Tika/Mala": "https://res.cloudinary.com/wishwell/image/upload/v1754653884/Tika_Mala_njh3mw.png?height=64&width=64",
+    "Kalash/Gangajal": "https://res.cloudinary.com/wishwell/image/upload/v1754653875/Kalash_Gangajal_zskxma.png?height=64&width=64",
+    "Camphor": "https://res.cloudinary.com/wishwell/image/upload/v1754653859/Camphor_fc4pnn.png?height=64&width=64",
+    "Sambrani": "https://res.cloudinary.com/wishwell/image/upload/v1754653879/Sambrani_cezvvr.png?height=64&width=64",
+    "Flowers/Leaves": "https://res.cloudinary.com/wishwell/image/upload/v1754653867/Flowers_Leaves_fl3yfp.png?height=64&width=64",
+    "Ghee/Oil": "https://res.cloudinary.com/wishwell/image/upload/v1754653871/Ghee_Oil_tcybdu.png?height=64&width=64",
+    "Dry Fruits": "https://res.cloudinary.com/wishwell/image/upload/v1754653866/Dry_Fruits_i2mhey.png?height=64&width=64",
+
+    "Cloth": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754651823/Cloth_louva9.png?height=64&width=64",
+        contexts: {
+            "Cleaning Essentials": "https://res.cloudinary.com/wishwell/image/upload/v1754652035/Cloth_ykjjzw.png?height=64&width=64",
+            "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653860/Cloth_j6u79m.png?height=64&width=64",
+        }
+    },
+
+    "Decor": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754652416/Decor_geveed.png?height=64&width=64",
+        contexts: {
+            "Home & Furnishing": "https://res.cloudinary.com/wishwell/image/upload/v1754652416/Decor_geveed.png?height=64&width=64",
+            "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653861/Decor_tpqt44.png?height=64&width=64",
+        }
+    },
+    "Sweets": {
+        default: "https://res.cloudinary.com/wishwell/image/upload/v1754650204/Sweets_tuv012.png?height=64&width=64",
+        contexts: {
+            "Puja Items": "https://res.cloudinary.com/wishwell/image/upload/v1754653880/Sweets_tfkfe9.png?height=64&width=64",
+            "Snacks & Drinks": "https://res.cloudinary.com/wishwell/image/upload/v1754490129/Sweets_stu901.png?height=64&width=64",
+        }
+    },
+
+    //Toys & Games subsubcategories
 
 
     //Gifts subcategories

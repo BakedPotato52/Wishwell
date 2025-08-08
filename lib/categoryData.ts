@@ -231,13 +231,13 @@ export const categories: Category[] = [
             "Pet Supplies"
         ],
         subsubcategories: {
-            "Home & Furnishing": ["Bedsheets", "Towels", "Furnishing", "Decor", "Storage", "Tissues", "Cleaning Tools", "Party Decor", "Air Freshners", "Gardening", "Bathware", "Utility", "Pooja Needs", "Appliances", "Repellants", "Sports & Gym", "Stationery"],
+            "Home & Furnishing": ["Bedsheets", "Decor", "Storage", "Tissues", "Cleaning Tools", "Party Decor", "Air Freshners", "Gardening", "Bathware", "Utility", "Pooja Needs", "Appliances", "Repellants", "Sports & Gym", "Stationery"],
             "Kitchen & Dining": ["Cookware", "Plates", "Bowls", "Crockery", "Cutlery", "Jars/Containers", "Bottles/Flasks/Tiffins", "Barware", "Bakeware/BBQ", "Chopping Tools", "Kitchen Tools", "Kitchen Appliances", "Kitchen Cleaning"],
             "Cleaning Essentials": ["Detergents", "Fabric Softeners", "Brooms & Mops", "Floor Cleaner", "Utensil Cleaner", "Kitchen Cleaning", "Dustbins", "Cloth", "Disinfectant", "Toilet Cleaner", "Bathroom Cleaning", "Wipers", "Glass Cleaner", "Sink Brush", "Toxin Free"],
             "Mobiles & Electronics": ["Mobiles", "Earbuds", "Speakers", "Smart Watches", "Kitchen/Home Appliances", "Personal Care", "Health Care", "Powerbanks/Chargers", "Streaming Devices", "Lights", "Batteries", "Computer Accessories"],
-            "Appliances": ["Mixer", "Blenders", "Kettles", "Choppers", "Toasters", "AirFryers", "Induction", "Irons", "Heaters", "Vacuum", "Fans", "Cameras", "Networking", "Others"],
+            "Appliances": ["Mixer", "Blenders", "Kettles", "Choppers", "Toasters", "Induction", "Irons", "Vacuum", "Fans", "Cameras", "Others"],
             "Books & Stationery": ["Pens/Pencils/Highlighters", "Notebooks", "Diaries", "Stationery", "School Supplies", "Colouring", "Craft", "Bags", "Tiffins", "Bottles"],
-            "Puja Items": ["Idols/Books", "Diya/Baati", "Agarbatti", "Dhoop", "Hawan", "Tika/Mala", "Kalash/Gangajal", "Camphor", "Sambrani", "Flowers/Leaves", "Ghee/Oil", "Puja Thali", "Cloth", "Decor", "Fresh Fruits", "Dry Fruits", "Sweets"],
+            "Puja Items": ["Idols/Books", "Diya/Baati", "Agarbatti", "Dhoop", "Hawan", "Tika/Mala", "Kalash/Gangajal", "Camphor", "Sambrani", "Flowers/Leaves", "Ghee/Oil", "Cloth", "Decor", "Fresh Fruits", "Dry Fruits", "Sweets"],
             "Toys & Games": ["Soft Toys", "Board Games", "STEAM", "Toy Cars", "Building Blocks", "Newly Added", "Baby Toys", "Pretend Play", "Art & Crafts", "Action Figures", "Outdoor Toys", "Ride - Ons", "Pool Toys", "Musical Toys", "Dough"],
             "Sports & Fitness": ["Badminton", "Cricket", "Football", "Gym Accessories", "Yoga", "Pain & Wound", "Outdoor Toys", "Chess", "Table Tennis", "Cycling", "PickleBall"],
             "Pet Supplies": ["Cat Food", "Dog Food", "Pet Treats", "Accessories/Toys", "Grooming & Supplements"]
