@@ -1,29 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { ArrowLeft, MapPin, X, CreditCard, Loader2 } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { ArrowLeft, MapPin, CreditCard, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { RadioGroup } from "@/components/ui/radio-group"
 import { useToast } from "@/hooks/use-toast"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { createOrder } from "@/lib/firebase/firestore"
-
-
+import {
+  clearCheckoutOverride,
+  computeSubtotal,
+  getCheckoutOverride,
+  convertToCartItems,
+  type CheckoutOverride,
+} from "@/lib/checkout-override"
 
 export default function CheckoutPage() {
   const { state: cartState, dispatch: cartDispatch } = useCart()
   const { state: authState } = useAuth()
   const { toast } = useToast()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [step, setStep] = useState(1)
   const [deliveryAddress, setDeliveryAddress] = useState("")
@@ -38,18 +44,45 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
 
+  // Buy Now override handling
+  const [override, setOverride] = useState<CheckoutOverride | null>(null)
+  const isBuyNowMode = searchParams.get("mode") === "buy-now"
+
+  useEffect(() => {
+    if (isBuyNowMode) {
+      try {
+        const ov = getCheckoutOverride()
+        setOverride(ov)
+      } catch {
+        setOverride(null)
+      }
+    } else {
+      setOverride(null)
+    }
+  }, [isBuyNowMode])
+
+  const selectedItems = useMemo(() => {
+    return override?.items ?? cartState.items
+  }, [override?.items, cartState.items])
+
+  const subtotal = useMemo(() => {
+    return override ? computeSubtotal(override.items) : cartState.total
+  }, [override, cartState.total])
 
   const additionalFees = 50
-  const orderTotal = cartState.total + additionalFees
+  const orderTotal = subtotal + additionalFees
+
+  const backLink = override?.returnTo || "/cart"
+  const backLabel = override?.returnTo ? "Back" : "Review Your order"
 
   const getAddressFromCoordinates = async (latitude: number, longitude: number): Promise<string> => {
     try {
       const response = await fetch(
-        `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${process.env.NEXT_PUBLIC_GEOCODE_API_KEY}`
+        `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${process.env.NEXT_PUBLIC_GEOCODE_API_KEY}`,
       )
 
       if (!response.ok) {
-        throw new Error('Geocoding failed')
+        throw new Error("Geocoding failed")
       }
 
       const data = await response.json()
@@ -58,16 +91,16 @@ export default function CheckoutPage() {
         return data.results[0].formatted
       }
 
-      throw new Error('No address found')
+      throw new Error("No address found")
     } catch (error) {
-      // Fallback: try with a free service (less accurate)
+      // Fallback service
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
         )
 
         if (!response.ok) {
-          throw new Error('Fallback geocoding failed')
+          throw new Error("Fallback geocoding failed")
         }
 
         const data = await response.json()
@@ -76,9 +109,9 @@ export default function CheckoutPage() {
           return data.display_name
         }
 
-        throw new Error('No address found in fallback')
-      } catch (fallbackError) {
-        throw new Error('Unable to get address from location')
+        throw new Error("No address found in fallback")
+      } catch {
+        throw new Error("Unable to get address from location")
       }
     }
   }
@@ -98,9 +131,9 @@ export default function CheckoutPage() {
           const { latitude, longitude } = position.coords
           const address = await getAddressFromCoordinates(latitude, longitude)
 
-          setNewAddress(prev => ({
+          setNewAddress((prev) => ({
             ...prev,
-            address: address
+            address: address,
           }))
         } catch (error) {
           setError("Unable to get address from your location. Please enter manually.")
@@ -128,8 +161,8 @@ export default function CheckoutPage() {
       {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 60000
-      }
+        maximumAge: 60000,
+      },
     )
   }
 
@@ -149,19 +182,28 @@ export default function CheckoutPage() {
       return
     }
 
+    if (selectedItems.length === 0) {
+      toast({
+        title: "No items to checkout",
+        description: "Please add items or select Buy Now again.",
+        variant: "destructive",
+      })
+      return
+    }
+
     setIsProcessing(true)
 
     try {
       const orderData = {
         userId: authState.user.uid,
-        items: cartState.items,
+        items: override ? convertToCartItems(override.items) : selectedItems,
         deliveryAddress,
         paymentMethod,
         total: orderTotal,
-        subtotal: cartState.total,
+        subtotal,
         additionalFees,
         status: "confirmed" as const,
-        estimatedDelivery: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+        estimatedDelivery: new Date(Date.now() + 24 * 60 * 60 * 1000),
         trackingSteps: [
           {
             status: "confirmed" as const,
@@ -175,15 +217,20 @@ export default function CheckoutPage() {
 
       const orderId = await createOrder(authState.user.uid, orderData)
 
-      // Clear cart after successful order
-      cartDispatch({ type: "CLEAR_CART" })
+      // Cart behavior:
+      // - Full-cart checkout: clear full cart
+      // - Buy-now checkout: leave cart intact
+      if (!override) {
+        cartDispatch({ type: "CLEAR_CART" })
+      }
+
+      clearCheckoutOverride()
 
       toast({
         title: "Order Placed Successfully!",
         description: `Your order #${orderId.slice(-8)} has been confirmed.`,
       })
 
-      // Redirect to order tracking page
       router.push(`/orders/${orderId}`)
     } catch (error) {
       console.error("Error placing order:", error)
@@ -197,13 +244,16 @@ export default function CheckoutPage() {
     }
   }
 
-  if (cartState.items.length === 0) {
+  if (selectedItems.length === 0) {
+    const emptyTitle = isBuyNowMode ? "No item selected for Buy Now" : "No items to checkout"
+    const emptyCtaHref = isBuyNowMode ? override?.returnTo || "/" : "/"
+    const emptyCtaLabel = isBuyNowMode ? "Go Back" : "Continue Shopping"
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">No items to checkout</h1>
-          <Link href="/">
-            <Button>Continue Shopping</Button>
+          <h1 className="text-2xl font-bold mb-4">{emptyTitle}</h1>
+          <Link href={emptyCtaHref}>
+            <Button>{emptyCtaLabel}</Button>
           </Link>
         </div>
       </div>
@@ -213,10 +263,10 @@ export default function CheckoutPage() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container mx-auto px-4 py-6">
       <div className="flex items-center mb-6">
-        <Link href="/cart">
+        <Link href={override?.returnTo || "/cart"}>
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Review Your order
+            {override?.returnTo ? "Back" : "Review Your order"}
           </Button>
         </Link>
       </div>
@@ -246,10 +296,10 @@ export default function CheckoutPage() {
           <CardTitle>Order Items</CardTitle>
         </CardHeader>
         <CardContent>
-          {cartState.items.map((item) => (
+          {selectedItems.map((item) => (
             <div key={item.id} className="flex items-center space-x-4 mb-4 last:mb-0">
               <Image
-                src={item.product.image || "/placeholder.svg?height=60&width=60"}
+                src={item.product.image || "/placeholder.svg?height=60&width=60&query=product-thumbnail"}
                 alt={item.product.name}
                 width={60}
                 height={60}
@@ -306,8 +356,6 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-
-
               <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="w-full">
@@ -316,10 +364,7 @@ export default function CheckoutPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle className="flex items-center justify-between">
-                      Select Delivery Address
-
-                    </DialogTitle>
+                    <DialogTitle className="flex items-center justify-between">Select Delivery Address</DialogTitle>
                   </DialogHeader>
 
                   <div className="space-y-4">
@@ -351,7 +396,7 @@ export default function CheckoutPage() {
                             size="sm"
                             onClick={getCurrentLocation}
                             disabled={isGettingLocation}
-                            className="px-3"
+                            className="px-3 bg-transparent"
                             title="Get current location"
                           >
                             {isGettingLocation ? (
@@ -361,9 +406,7 @@ export default function CheckoutPage() {
                             )}
                           </Button>
                         </div>
-                        {isGettingLocation && (
-                          <p className="text-xs text-blue-600 mt-1">Getting your location...</p>
-                        )}
+                        {isGettingLocation && <p className="text-xs text-blue-600 mt-1">Getting your location...</p>}
                       </div>
 
                       <div>
@@ -399,11 +442,8 @@ export default function CheckoutPage() {
           </CardHeader>
           <CardContent>
             <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-
               <div
-                className={`p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === "cod"
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-200 hover:border-gray-300"
+                className={`p-4 border rounded-lg cursor-pointer transition-colors ${paymentMethod === "cod" ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300"
                   }`}
                 onClick={() => setPaymentMethod("cod")}
               >
@@ -427,7 +467,7 @@ export default function CheckoutPage() {
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>Total Product Price</span>
-              <span>₹{cartState.total}</span>
+              <span>₹{subtotal}</span>
             </div>
             <div className="flex justify-between">
               <span>Additional Fees</span>

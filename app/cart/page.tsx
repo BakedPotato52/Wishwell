@@ -10,6 +10,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useCart } from "@/contexts/cart-context"
 import { useAuth } from "@/contexts/auth-context"
 import { auth } from "@/lib/firebase/config"
+import { setCheckoutOverride } from "@/lib/checkout-override"
+import { useRouter } from "next/navigation"
 
 export default function CartPage() {
   const { items, total, loading, updateQuantity, removeFromCart } = useCart()
@@ -17,6 +19,7 @@ export default function CartPage() {
   const { state: authState } = useAuth()
   const [updatingItems, setUpdatingItems] = useState<Set<string>>(new Set())
   const [deliveryAddress, setDeliveryAddress] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     setDeliveryAddress(authState?.user?.address || "123 Main St, City, Country")
@@ -50,6 +53,31 @@ export default function CartPage() {
         return newSet
       })
     }
+  }
+
+  // Buy Now: only checkout this single item
+  const handleBuyNow = (item: {
+    id: string
+    product: { id: string; name: string; price: number; image?: string }
+    quantity: number
+  }) => {
+    setCheckoutOverride({
+      items: [
+        {
+          id: item.id,
+          product: {
+            id: item.product.id,
+            name: item.product.name,
+            price: item.product.price,
+            image: item.product.image,
+          },
+          quantity: item.quantity,
+        },
+      ],
+      returnTo: "/cart",
+      createdAt: Date.now(),
+    })
+    router.push("/checkout?mode=buy-now")
   }
 
   if (!firebaseUser) {
@@ -180,11 +208,9 @@ export default function CartPage() {
                     )}
                     Remove
                   </Button>
-                  <Link href="/checkout">
-                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                      Buy Now
-                    </Button>
-                  </Link>
+                  <Button size="sm" onClick={() => handleBuyNow(item)} className="bg-blue-600 hover:bg-blue-700">
+                    Buy Now
+                  </Button>
                 </div>
               </CardContent>
             </Card>
