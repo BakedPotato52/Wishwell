@@ -4,10 +4,8 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { categories } from "@/lib/categoryData"
+import { PlaywriteStylizedText, OleoScriptText } from "@/components/elements/animated-text"
 
 export default function CategoriesPage() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -18,39 +16,13 @@ export default function CategoriesPage() {
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
-            {/* Header */}
-            {/* <div className="bg-white border-b sticky top-0 z-40">
-                <div className="container mx-auto px-4 py-4">
-                    <div className="flex items-center space-x-4">
-                        <Link href="/">
-                            <Button variant="ghost" size="sm">
-                                <ArrowLeft className="h-4 w-4 mr-2" />
-                                Categories
-                            </Button>
-                        </Link>
-                    </div>
 
-                    
-                    <div className="mt-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                            <Input
-                                type="text"
-                                placeholder="Search categories..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10 pr-4 py-2 w-full"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
             {/* Categories Grid */}
             <section className="py-6">
                 <div className="container mx-auto px-4">
                     <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-6">
-                        All Categories
+                        <OleoScriptText className="bg-gradient-to-r from-blue-500 to-purple-500 ">All Categories</OleoScriptText>
                     </motion.h2>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">

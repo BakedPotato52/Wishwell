@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { Pacifico } from "next/font/google"
 import { Michroma } from "next/font/google"
 import { Zain } from "next/font/google"
+import { Oleo_Script } from "next/font/google"
 
 const pacifico = Pacifico({
     subsets: ["latin"],
@@ -24,6 +25,12 @@ const zain = Zain({
     subsets: ["latin"],
     weight: ["400"],
     variable: "--font-zain",
+})
+
+const oleoScript = Oleo_Script({
+    subsets: ["latin"],
+    weight: ["400"],
+    variable: "--font-oleo-script",
 })
 
 export const fadeUpVariants = {
@@ -137,5 +144,25 @@ export function ParagraphText({
         <p className={cn("text-base text-white/60", zain.className, className)}>
             {children}
         </p>
+    )
+}
+
+export function OleoScriptText({
+    children,
+    className,
+}: {
+    children: React.ReactNode
+    className?: string
+}) {
+    return (
+        <span
+            className={cn(
+                "bg-clip-text text-transparent ",
+                oleoScript.className,
+                className,
+            )}
+        >
+            {children}
+        </span>
     )
 }

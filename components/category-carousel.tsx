@@ -36,61 +36,55 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
 
             {/* Category Carousel */}
             {category && (
-                <Carousel
-                    className="w-full"
-                    opts={{
-                        align: "start",
-
-                    }}
-                >
-                    <CarouselContent className="-ml-2 md:-ml-4">
+                <div className="relative">
+                    <div className="flex flex-row overflow-x-scroll scrollbar-hide gap-3 md:gap-6 pb-2">
                         {category.subcategories?.map((subcategory, index) => {
-                            // const contextualSlug = createContextualSlug(category.name, subcategory, (category.subsubcategories?.[subcategory] || []).join('-'))
                             const slug = createSlug(subcategory)
-
                             const imageUrl = getSubcategoryImage(subcategory, category.name)
 
                             return (
-                                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                                    <Card className="h-full overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu">
-                                        <CardContent className="p-0 h-full">
-                                            <div className="relative h-80 overflow-hidden">
-                                                {/* Category Image */}
-                                                <Image
-                                                    src={imageUrl || subcategoryImages[subcategory]?.toString() || "/placeholder.png"}
-                                                    alt={subcategory}
-                                                    fill
-                                                    className="object-cover transition-transform duration-700 group-hover:scale-110 z-10"
-                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                                    priority={index < 3} // Prioritize first 3 images
-                                                />
+                                <Card
+                                    key={index}
+                                    className="flex-shrink-0 w-80 md:w-96 overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:scale-105 transform-gpu"
+                                >
+                                    <CardContent className="p-0 h-full">
+                                        <div className="relative h-80 overflow-hidden">
+                                            {/* Category Image */}
+                                            <Image
+                                                src={imageUrl || "/placeholder.png"}
+                                                alt={subcategory}
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-110 z-10"
+                                                sizes="400px"
+                                                priority={index < 4}
+                                            />
 
-                                                {/* Overlay for better text readability */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-rose-400 via-blue-200 to-transparent transition-opacity duration-300 group-hover:from-rose-500 group-hover:via-sky-300 group-hover:to-transparent"></div>
+                                            {/* Overlay for better text readability */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-rose-400 via-blue-200 to-transparent transition-opacity duration-300 group-hover:from-rose-500 group-hover:via-sky-300 group-hover:to-transparent"></div>
 
-                                                {/* Category Title */}
-                                                <div className="absolute top-4 left-4 transform transition-transform duration-300 group-hover:translate-y-[-2px]">
-                                                    <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-zinc-800 to-stone-800 text-xl font-bold drop-shadow-lg">{subcategory}</h3>
-                                                </div>
-
-                                                {/* Shop Now Button */}
-                                                <Link href={`/subcategory/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
-                                                    <Button className="w-full bg-black/80 hover:bg-black text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:bg-black group-hover:shadow-lg transform group-hover:translate-y-[-2px]">
-                                                        SHOP NOW
-                                                        <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                                                    </Button>
-                                                </Link>
+                                            {/* Category Title */}
+                                            <div className="absolute top-4 left-4 transform transition-transform duration-300 group-hover:translate-y-[-2px]">
+                                                <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-zinc-800 to-stone-800 text-xl font-bold drop-shadow-lg">{subcategory}</h3>
                                             </div>
-                                        </CardContent>
-                                    </Card>
-                                </CarouselItem>
+
+                                            {/* Shop Now Button */}
+                                            <Link href={`/subcategory/${slug}`} className="absolute bottom-4 left-4 right-4 z-20">
+                                                <Button className="w-full bg-black/80 hover:bg-black text-white font-bold py-3 rounded-lg transition-all duration-300 group-hover:bg-black group-hover:shadow-lg transform group-hover:translate-y-[-2px]">
+                                                    SHOP NOW
+                                                    <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             )
                         })}
-                    </CarouselContent>
+                    </div>
 
-                    {/* Navigation Buttons */}
-
-                </Carousel>
+                    {/* Scroll indicators */}
+                    <div className="absolute top-1/2 -translate-y-1/2 left-0 w-8 h-full bg-gradient-to-r from-white to-transparent pointer-events-none opacity-50"></div>
+                    <div className="absolute top-1/2 -translate-y-1/2 right-0 w-8 h-full bg-gradient-to-l from-white to-transparent pointer-events-none opacity-50"></div>
+                </div>
             )}
         </div>
     )

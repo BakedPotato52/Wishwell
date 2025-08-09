@@ -148,7 +148,7 @@ export default function OrderTrackingPage() {
                     <div className="flex items-center justify-between">
                         <div>
                             <CardTitle className="text-2xl">Order #{order.id.slice(-8)}</CardTitle>
-                            <p className="text-gray-600 mt-1">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
+                            <p className="text-gray-600 mt-1">Placed on {order.createdAt.toLocaleDateString()}</p>
                         </div>
                         <Badge className={`${statusConfig[order.status]?.color} text-white`}>
                             <StatusIcon className="h-4 w-4 mr-1" />
