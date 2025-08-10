@@ -18,6 +18,7 @@ import { isEnhancedProduct, getCurrentPrice, getStockStatus, getCurrentVariant }
 import { AddToCartButton } from "@/components/add-to-cart-button"
 import { setCheckoutOverride } from "@/lib/checkout-override"
 import { useRouter } from "next/navigation"
+import { WishlistButton } from "./wishlist-button"
 
 interface UnifiedProductDetailProps {
     product: UnifiedProduct
@@ -430,10 +431,11 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
                                 />
 
                                 <div className="grid grid-cols-2 gap-3">
-                                    <Button variant="outline" size="lg">
-                                        <Heart className="h-5 w-5 mr-2" />
-                                        Wishlist
-                                    </Button>
+                                    <WishlistButton
+                                        product={product}
+                                        selectedAttributes={selectedAttributes}
+                                        variantId={currentVariant?.id}
+                                    />
                                     <Button
                                         onClick={() => handleBuyNow({
                                             id: currentVariant?.id || product.id,

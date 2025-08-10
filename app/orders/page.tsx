@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/contexts/auth-context"
 import { getUserOrders } from "@/lib/firebase/firestore"
-import { type Order } from "@/lib/types"
+import type { Order } from "@/lib/types"
 
 const statusConfig = {
     pending: { label: "Pending", color: "bg-gray-500", icon: Clock },
@@ -21,6 +21,38 @@ const statusConfig = {
     delivered: { label: "Delivered", color: "bg-green-500", icon: CheckCircle },
     cancelled: { label: "Cancelled", color: "bg-red-500", icon: Clock },
 }
+
+export function convertTimestampToDate(timestamp: any): Date | null {
+    // If it's already a Date object, return it
+    if (timestamp instanceof Date) {
+        return timestamp
+    }
+
+    // If it's a Firebase Timestamp, convert it
+    if (timestamp && typeof timestamp.toDate === "function") {
+        return timestamp.toDate()
+    }
+
+    // If it's a number (Unix timestamp), convert it
+    if (typeof timestamp === "number") {
+        return new Date(timestamp)
+    }
+
+    // If it's a string, try to parse it
+    if (typeof timestamp === "string") {
+        const date = new Date(timestamp)
+        return isNaN(date.getTime()) ? null : date
+    }
+
+    // Return null for any other case (including FieldValue)
+    return null
+}
+
+export function formatTimestamp(timestamp: any): string {
+    const date = convertTimestampToDate(timestamp)
+    return date ? date.toLocaleString() : "N/A"
+}
+
 
 export default function OrdersPage() {
     const { state: authState } = useAuth()
@@ -112,9 +144,7 @@ export default function OrdersPage() {
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <CardTitle className="text-lg">Order #{order.id.slice(-8)}</CardTitle>
-                                                <p className="text-gray-600 text-sm">
-                                                    Placed on {order.createdAt instanceof Date ? order.createdAt.toLocaleString() : (order.createdAt as any)?.toDate ? new Date((order.createdAt as any).toDate()).toLocaleString() : 'Unknown'}
-                                                </p>
+                                                <p className="text-gray-600 text-sm">Placed on {formatTimestamp(order.createdAt)}</p>
                                             </div>
                                             <Badge className={`${statusConfig[order.status]?.color} text-white`}>
                                                 <StatusIcon className="h-4 w-4 mr-1" />
@@ -153,7 +183,8 @@ export default function OrdersPage() {
                                             <div className="mt-4 pt-4 border-t">
                                                 <div className="flex items-center text-sm text-gray-600">
                                                     <Clock className="h-4 w-4 mr-2" />
-                                                    Expected delivery: {order.estimatedDelivery ? (order.estimatedDelivery instanceof Date ? order.estimatedDelivery.toLocaleDateString() : (order.estimatedDelivery as any).toDate ? new Date((order.estimatedDelivery as any).toDate()).toLocaleDateString() : 'TBD') : 'TBD'}
+                                                    Expected delivery:{" "}
+                                                    {formatTimestamp(order.estimatedDelivery)}
                                                 </div>
                                             </div>
                                         )}
