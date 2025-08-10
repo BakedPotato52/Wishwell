@@ -10,26 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/contexts/auth-context"
 import { getUserOrders } from "@/lib/firebase/firestore"
-
-interface Order {
-    id: string
-    items: Array<{
-        id: string
-        product: {
-            id: string
-            name: string
-            price: number
-            image?: string
-        }
-        quantity: number
-    }>
-    total: number
-    status: "confirmed" | "preparing" | "shipped" | "out_for_delivery" | "delivered" | "cancelled"
-    createdAt: Date
-    estimatedDelivery: Date
-}
+import { type Order } from "@/lib/types"
 
 const statusConfig = {
+    pending: { label: "Pending", color: "bg-gray-500", icon: Clock },
     confirmed: { label: "Order Confirmed", color: "bg-blue-500", icon: CheckCircle },
     preparing: { label: "Preparing", color: "bg-yellow-500", icon: Package },
     shipped: { label: "Shipped", color: "bg-purple-500", icon: Truck },
@@ -129,7 +113,7 @@ export default function OrdersPage() {
                                             <div>
                                                 <CardTitle className="text-lg">Order #{order.id.slice(-8)}</CardTitle>
                                                 <p className="text-gray-600 text-sm">
-                                                    Placed on {new Date(order.createdAt).toLocaleDateString()}
+                                                    Placed on {order.createdAt instanceof Date ? order.createdAt.toLocaleDateString() : (order.createdAt as any)?.toDate ? new Date((order.createdAt as any).toDate()).toLocaleDateString() : 'Unknown'}
                                                 </p>
                                             </div>
                                             <Badge className={`${statusConfig[order.status]?.color} text-white`}>
@@ -169,7 +153,7 @@ export default function OrdersPage() {
                                             <div className="mt-4 pt-4 border-t">
                                                 <div className="flex items-center text-sm text-gray-600">
                                                     <Clock className="h-4 w-4 mr-2" />
-                                                    Expected delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
+                                                    Expected delivery: {order.estimatedDelivery ? (order.estimatedDelivery instanceof Date ? order.estimatedDelivery.toLocaleDateString() : (order.estimatedDelivery as any).toDate ? new Date((order.estimatedDelivery as any).toDate()).toLocaleDateString() : 'TBD') : 'TBD'}
                                                 </div>
                                             </div>
                                         )}

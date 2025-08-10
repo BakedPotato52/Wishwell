@@ -275,7 +275,7 @@ export default function HomePage() {
               <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
                 {beautyCategory.name}
               </PlaywriteStylizedText> <br />
-              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Enhance your natural beauty</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -335,7 +335,7 @@ export default function HomePage() {
               <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
                 {category.name}
               </PlaywriteStylizedText> <br />
-              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Fresh ingredients for every meal</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
@@ -395,7 +395,7 @@ export default function HomePage() {
               <PlaywriteStylizedText className="text-2xl md:text-3xl font-bold bg-gradient-to-r  from-blue-600 via-sky-400 to-cyan-600 mb-2">
                 {snacksCategory.name}
               </PlaywriteStylizedText> <br />
-              <PlaywriteStylizedText className="text-gray-600 text-sm">Satisfy your cravings anytime</PlaywriteStylizedText>
+              <PlaywriteStylizedText className="text-gray-600 text-sm">Delicious snacks and refreshing drinks</PlaywriteStylizedText>
             </div>
             <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
               View All
