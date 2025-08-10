@@ -129,7 +129,8 @@ export default function OrdersPage() {
             <div className="space-y-6">
                 {orders.map((order) => {
                     const StatusIcon = statusConfig[order.status]?.icon || Clock
-
+                    console.log(order.createdAt)
+                    console.log(order.estimatedDelivery)
                     return (
                         <motion.div
                             key={order.id}
@@ -144,7 +145,7 @@ export default function OrdersPage() {
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <CardTitle className="text-lg">Order #{order.id.slice(-8)}</CardTitle>
-                                                <p className="text-gray-600 text-sm">Placed on {formatTimestamp(order.createdAt)}</p>
+                                                <span className="text-gray-600 text-sm">Placed on {formatTimestamp(order.createdAt)}</span>
                                             </div>
                                             <Badge className={`${statusConfig[order.status]?.color} text-white`}>
                                                 <StatusIcon className="h-4 w-4 mr-1" />

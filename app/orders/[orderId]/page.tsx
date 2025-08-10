@@ -14,6 +14,8 @@ import { Progress } from "@/components/ui/progress"
 import { useToast } from "@/hooks/use-toast"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from "@/lib/firebase/config"
+import { useRouter } from "next/navigation"
+import { formatTimestamp } from "../page"
 
 interface TrackingStep {
     status: string
@@ -59,6 +61,7 @@ export default function OrderTrackingPage() {
     const params = useParams()
     const orderId = params.orderId as string
     const { toast } = useToast()
+    const router = useRouter()
 
     const [order, setOrder] = useState<Order | null>(null)
     const [loading, setLoading] = useState(true)
@@ -148,7 +151,7 @@ export default function OrderTrackingPage() {
                     <div className="flex items-center justify-between">
                         <div>
                             <CardTitle className="text-2xl">Order #{order.id.slice(-8)}</CardTitle>
-                            <p className="text-gray-600 mt-1">Placed on {order.createdAt.toLocaleDateString()}</p>
+                            <p className="text-gray-600 mt-1">Placed on {formatTimestamp(order.createdAt)}</p>
                         </div>
                         <Badge className={`${statusConfig[order.status]?.color} text-white`}>
                             <StatusIcon className="h-4 w-4 mr-1" />
@@ -169,7 +172,7 @@ export default function OrderTrackingPage() {
                         {order.status !== "delivered" && order.status !== "cancelled" && (
                             <div className="flex items-center text-sm text-gray-600">
                                 <Clock className="h-4 w-4 mr-2" />
-                                Estimated delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
+                                Estimated delivery: {formatTimestamp(order.estimatedDelivery)}
                             </div>
                         )}
                     </div>
@@ -270,7 +273,7 @@ export default function OrderTrackingPage() {
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between">
                                         <h4 className="font-semibold capitalize">{step.status.replace("_", " ")}</h4>
-                                        <span className="text-sm text-gray-600">{new Date(step.timestamp).toLocaleString()}</span>
+                                        <span className="text-sm text-gray-600">{formatTimestamp(step.timestamp)}</span>
                                     </div>
                                     <p className="text-gray-600 text-sm mt-1">{step.description}</p>
                                     {step.location && <p className="text-gray-500 text-xs mt-1">📍 {step.location}</p>}
@@ -282,14 +285,14 @@ export default function OrderTrackingPage() {
             </Card>
 
             {/* Action Buttons */}
-            <div className="mt-6 flex gap-4">
+            <div className="mt-6 flex justify-center gap-4">
                 {order.status === "delivered" && <Button variant="outline">Rate & Review</Button>}
                 {order.status !== "delivered" && order.status !== "cancelled" && (
                     <Button variant="outline" className="text-red-600 border-red-600 hover:bg-red-50 bg-transparent">
                         Cancel Order
                     </Button>
                 )}
-                <Button variant="outline">Contact Support</Button>
+                <Button onClick={() => router.push('/help')} variant="outline">Contact Support</Button>
             </div>
         </motion.div>
     )
