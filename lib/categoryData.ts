@@ -121,7 +121,7 @@ export const categories: Category[] = [
     {
         id: "kCxJLwMwO86hlBK6gvrV",
         name: "Accessories",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1753884416/Accessories_Category_Photo__vzshsx.png?height=64&width=64",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754802226/Accessories_category__u9bgru.png?height=64&width=64",
         icon: "👜",
         subcategories: [
             "Women's Jwellery",
@@ -154,7 +154,7 @@ export const categories: Category[] = [
     {
         id: "XUa310B6lLXC8HgqFgWl",
         name: "Grocery & Kitchen",
-        image: "https://res.cloudinary.com/wishwell/image/upload/v1754562460/Category_Phato_Grocery_Kitchen__rlpzcq.png?height=64&width=64",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754802182/Grocery_Kitchen_Category__vegip0.png?height=64&width=64",
         icon: "🍎",
         subcategories: [
             "Fresh Vegetables",
@@ -189,7 +189,7 @@ export const categories: Category[] = [
     {
         id: "QWGn1RFPXrVGtNmOouDT",
         name: "Snacks & Drinks",
-        image: "/categories/snacks.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754801975/Snacks_Drinks_Category__silo24.png?height=64&width=64",
         icon: "🍿",
         subcategories: [
             "Cold Drinks and Juices",
@@ -216,7 +216,7 @@ export const categories: Category[] = [
     {
         id: "J5ipSdkpu2xUG0TkUApS",
         name: "Household Essentials",
-        image: "/categories/households.svg?height=60&width=60",
+        image: "https://res.cloudinary.com/wishwell/image/upload/v1754802047/Household_Essentials_Category__sgxgbl.png?height=64&width=64",
         icon: "🏠",
         subcategories: [
             "Home & Furnishing",

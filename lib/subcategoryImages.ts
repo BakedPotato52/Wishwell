@@ -21,7 +21,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Formal Shirts":
         "https://res.cloudinary.com/wishwell/image/upload/v1753591718/Formals_Shirts_wclfcs.jpg?height=64&width=64",
     "Formal Pants":
-        "https://res.cloudinary.com/wishwell/image/upload/v1753592133/Formals_Pants_weagmj.jpg?height=64&width=64",
+        "https://res.cloudinary.com/wishwell/image/upload/v1754802459/Formal_Pants_mjptom.png?height=64&width=64",
     "Ethnic & Fusion Wear":
         "https://res.cloudinary.com/wishwell/image/upload/v1753592625/Ethnic_fusion_wear_tuphzl.png?height=64&width=64",
     "Sherwanis": "https://res.cloudinary.com/wishwell/image/upload/v1753592631/Sherwani_kqy8tl.png?height=64&width=64",
@@ -283,10 +283,10 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Hair Care": "https://res.cloudinary.com/wishwell/image/upload/v1754036111/Hair_Care_ammmrt.png?height=64&width=64",
     "Fragrances": "https://res.cloudinary.com/wishwell/image/upload/v1754036306/Fragrances_fn4ne9.png?height=64&width=64",
     "Bath & Body": "https://res.cloudinary.com/wishwell/image/upload/v1754111443/Bath_Body_txafhp.png?height=64&width=64",
-    "Oral Care": "https://res.cloudinary.com/wishwell/image/upload/v1754112290/Oral_Care_Accessories_cxswl5.png?height=64&width=64",
+    "Oral Care": "https://res.cloudinary.com/wishwell/image/upload/v1754802861/Oral_Care_Subcategory__xvost7.png?height=64&width=64",
     "Grooming": "https://res.cloudinary.com/wishwell/image/upload/v1754112426/Grooming_zgbbqw.png?height=64&width=64",
     "Baby Care": "https://res.cloudinary.com/wishwell/image/upload/v1754112815/Baby_Care_rnnv9c.png?height=64&width=64",
-    "Protein & Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754113169/Sleep_Supplements_svg92v.jpg?height=64&width=64",
+    "Protein & Supplements": "https://res.cloudinary.com/wishwell/image/upload/v1754802929/Protein_Supplements_Subcategory__b33jz6.png?height=64&width=64",
     "Feminine Hygiene": "https://res.cloudinary.com/wishwell/image/upload/v1754113380/Feminine_Hygiene_lddf2t.png?height=64&width=64",
     "Sexual Wellness": "https://res.cloudinary.com/wishwell/image/upload/v1754113542/Sexual_Wellness_mdzxck.png?height=64&width=64",
     "Health & Pharma": "https://res.cloudinary.com/wishwell/image/upload/v1754113591/Health_Pharma_lwlaz0.png?height=64&width=64",
@@ -361,7 +361,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Toothpaste": "https://res.cloudinary.com/wishwell/image/upload/v1754112292/Toothpaste_mp76db.png?height=64&width=64",
     "Toothbrushes": "https://res.cloudinary.com/wishwell/image/upload/v1754112292/Toothbrushes_xhxh3k.png?height=64&width=64",
     "Mouthwash": "https://res.cloudinary.com/wishwell/image/upload/v1754112290/Mouthwash_kvifqs.png?height=64&width=64",
-    "Oral Care Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754112290/Oral_Care_pnsbyi.png?height=64&width=64",
+    "Oral Care Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754802862/Oral_Care_Accessories_under_subcategory__nvtguw.png?height=64&width=64",
     "Kids Toothbrush": "https://res.cloudinary.com/wishwell/image/upload/v1754112290/Kids_Toothbrush_wk2c3s.png?height=64&width=64",
     "Kids Toothpaste": "https://res.cloudinary.com/wishwell/image/upload/v1754112290/Kids_Toothpaste_wbuppk.png?height=64&width=64",
 
@@ -397,8 +397,8 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Clothes / Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754112818/Clothes___Accessories_q09uw8.jpg?height=64&width=64",
 
     // Protein & Supplements subsubcategories
-    "Protein & Nutrition": "https://res.cloudinary.com/wishwell/image/upload/v1754113169/Sleep_Supplements_svg92v.jpg?height=64&width=64",
-    "Immunity & Energy Boosters": "https://res.cloudinary.com/wishwell/image/upload/v1754113169/Sleep_Supplements_svg92v.jpg?height=64&width=64",
+    "Protein & Nutrition": "https://res.cloudinary.com/wishwell/image/upload/v1754802928/Protein_Nutrition_Under_Subcategory__fmjndm.png?height=64&width=64",
+    "Immunity & Energy Boosters": "https://res.cloudinary.com/wishwell/image/upload/v1754802928/Immunity_Energy_Boosters_Under_Subcategory__ctv0il.png?height=64&width=64",
     "Multivitamins": "https://res.cloudinary.com/wishwell/image/upload/v1754113165/Multivitamins_qxrrgw.jpg?height=64&width=64",
     "Ayurvedic": "https://res.cloudinary.com/wishwell/image/upload/v1754113159/Ayurvedic_vglskh.png?height=64&width=64",
     "Gummies": "https://res.cloudinary.com/wishwell/image/upload/v1754113160/Gummies_brg1rm.png?height=64&width=64",
@@ -513,7 +513,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Belts_brbvil.png?height=64&width=64",
         contexts: {
             "Men's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885289/Belts_brbvil.png?height=64&width=64",
-            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1753885334/Wallets_rvlvho.png?height=64&width=64",
+            "Women's Accessories": "https://res.cloudinary.com/wishwell/image/upload/v1754802281/Belts_vcklcj.png?height=64&width=64",
         }
     },
 
@@ -567,7 +567,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
         contexts: {
             "women-jumpsuits": "https://res.cloudinary.com/wishwell/image/upload/v1753778119/Ethnic_Jumpsuits_mmyive.png?height=64&width=64",
-            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Ethnic_wtf1x8.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1754802360/Ethnic_zvxz5r.png?height=64&width=64",
         }
     },
 
@@ -575,7 +575,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
         default: "https://res.cloudinary.com/wishwell/image/upload/v1753939745/Flats_Sandals_v795uz.png?height=64&width=64",
         contexts: {
             "women-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939745/Flats_Sandals_v795uz.png?height=64&width=64",
-            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1753939864/Flats_Sandals_mn7szj.png?height=64&width=64",
+            "men-footwear": "https://res.cloudinary.com/wishwell/image/upload/v1754802360/Flats_Sandals_w2xsn2.png?height=64&width=64",
         }
     },
     "Flip Flops": {
@@ -685,11 +685,11 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
 
     //Dairy Bread Eggs Subsubcategories
     "Bread & Buns": "https://res.cloudinary.com/wishwell/image/upload/v1754562759/Bread_Buns_m8qdkw.png?height=64&width=64",
-    "Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754562765/Eggs_wpnle4.png?height=64&width=64",
+    "Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754802663/Eggs_a8kv6o.webp?height=64&width=64",
     "Curd & Yogurts": "https://res.cloudinary.com/wishwell/image/upload/v1754562763/Curd_Yogurts_evvd1q.png?height=64&width=64",
-    "Paneer & Cream": "https://res.cloudinary.com/wishwell/image/upload/v1754562770/Paneer_Cream_ncnzxs.png?height=64&width=64",
+    "Paneer & Cream": "https://res.cloudinary.com/wishwell/image/upload/v1754802669/Paneer_Cream_o2veur.png?height=64&width=64",
     "Cheese": "https://res.cloudinary.com/wishwell/image/upload/v1754562761/Cheese_bwfxab.png?height=64&width=64",
-    "Butter": "https://res.cloudinary.com/wishwell/image/upload/v1754562760/Butter_eaiipq.png?height=64&width=64",
+    "Butter": "https://res.cloudinary.com/wishwell/image/upload/v1754802662/Butter_w6oaik.webp?height=64&width=64",
     "Batters & Chutneys": "https://res.cloudinary.com/wishwell/image/upload/v1754562758/Batters_Chutneys_g3gpyq.png?height=64&width=64",
     "Indian Breads": "https://res.cloudinary.com/wishwell/image/upload/v1754562767/Indian_Breads_jav2sq.png?height=64&width=64",
     "Dairy Alternatives": "https://res.cloudinary.com/wishwell/image/upload/v1754562764/Dairy_Alternatives_se5fn7.png?height=64&width=64",
@@ -715,16 +715,16 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
 
     //Atta Rice & Dal subsubcategories
     "Basmati Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754562659/Basmati_Rice_utaatg.png?height=64&width=64",
-    "Atta": "https://res.cloudinary.com/wishwell/image/upload/v1754562659/Atta_gjzd1m.png?height=64&width=64",
-    "Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754562665/Rice_tlp6di.png?height=64&width=64",
+    "Atta": "https://res.cloudinary.com/wishwell/image/upload/v1754802518/Atta_ch0gfw.png?height=64&width=64",
+    "Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754802534/Rice_iuo5mn.png?height=64&width=64",
     "Besan": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Besan_h3xlt0.png?height=64&width=64",
     "Sooji & Maida": "https://res.cloudinary.com/wishwell/image/upload/v1754562667/Sooji_Maida_rao8bm.png?height=64&width=64",
     "Toor/Moong/Urad": "https://res.cloudinary.com/wishwell/image/upload/v1754562665/Toor_Moong_Urad_d5yznx.png?height=64&width=64",
-    "Rajma/Chola/Others": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Rajma_Chola_Others_bqmq8f.png?height=64&width=64",
+    "Rajma/Chola/Others": "https://res.cloudinary.com/wishwell/image/upload/v1754802526/Rajma_Chola_Others_qvwj4j.png?height=64&width=64",
     "Poha & Puffed Rice": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Poha_Puffed_Rice_zuf7th.png?height=64&width=64",
-    "Ready to Cook Flour Mix": "https://res.cloudinary.com/wishwell/image/upload/v1754562661/Ready_to_Cook_Flour_Mix_a03imh.png?height=64&width=64",
+    "Ready to Cook Flour Mix": "https://res.cloudinary.com/wishwell/image/upload/v1754802535/Ready_to_Cook_Flour_Mix_sytmct.png?height=64&width=64",
     "Millets & Daliya": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Millets_Daliya_a1gr2g.png?height=64&width=64",
-    "Other Flours": "https://res.cloudinary.com/wishwell/image/upload/v1754562660/Other_Flours_y1xpw0.png?height=64&width=64",
+    "Other Flours": "https://res.cloudinary.com/wishwell/image/upload/v1754802518/Other_Flours_tqr5nj.png?height=64&width=64",
     "Soya Chunk & Badi": "https://res.cloudinary.com/wishwell/image/upload/v1754562665/Soya_Chunk_Badi_akqfyg.png?height=64&width=64",
 
     //Oils & Ghee subsubcategories
@@ -888,7 +888,7 @@ export const subcategoryImages: Record<string, string | SubcategoryImageConfig> 
     "Milk": {
         default: "https://res.cloudinary.com/wishwell/image/upload/v1754562769/Milk_fyaw7w.png?height=64&width=64",
         contexts: {
-            "Dairy, Bread & Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754562769/Milk_fyaw7w.png?height=64&width=64",
+            "Dairy, Bread & Eggs": "https://res.cloudinary.com/wishwell/image/upload/v1754802664/Milk_xgts4p.png?height=64&width=64",
             "Chocolates": "https://res.cloudinary.com/wishwell/image/upload/v1754656064/Milk__nm7x9q.png?height=64&width=64",
         }
     },
