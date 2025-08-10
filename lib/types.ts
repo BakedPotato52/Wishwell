@@ -162,6 +162,28 @@ export interface Order {
   }>
 }
 
+export interface WishlistItem {
+  id: string
+  userId: string
+  product: UnifiedProduct
+  addedAt: any
+  selectedAttributes?: Record<string, string>
+  variantId?: string
+  notes?: string
+}
+
+export interface SharedWishlist {
+  id: string
+  userId: string
+  name: string
+  description?: string
+  items: WishlistItem[]
+  isPublic: boolean
+  shareToken: string
+  createdAt: any
+  updatedAt: any
+}
+
 export interface Category {
   id: string
   name: string

@@ -113,7 +113,7 @@ export default function OrdersPage() {
                                             <div>
                                                 <CardTitle className="text-lg">Order #{order.id.slice(-8)}</CardTitle>
                                                 <p className="text-gray-600 text-sm">
-                                                    Placed on {order.createdAt instanceof Date ? order.createdAt.toLocaleDateString() : (order.createdAt as any)?.toDate ? new Date((order.createdAt as any).toDate()).toLocaleDateString() : 'Unknown'}
+                                                    Placed on {order.createdAt instanceof Date ? order.createdAt.toLocaleString() : (order.createdAt as any)?.toDate ? new Date((order.createdAt as any).toDate()).toLocaleString() : 'Unknown'}
                                                 </p>
                                             </div>
                                             <Badge className={`${statusConfig[order.status]?.color} text-white`}>

@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Star, Minus, Plus, Heart, Truck, Shield, RotateCcw } from "lucide-react"
+import { ArrowLeft, Star, Minus, Plus, Heart, Truck, Shield, RotateCcw } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -16,6 +16,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { UnifiedProduct } from "@/lib/types"
 import { isEnhancedProduct, getCurrentPrice, getStockStatus, getCurrentVariant } from "@/utils/product-migration"
 import { AddToCartButton } from "@/components/add-to-cart-button"
+import { setCheckoutOverride } from "@/lib/checkout-override"
+import { useRouter } from "next/navigation"
 
 interface UnifiedProductDetailProps {
     product: UnifiedProduct
@@ -33,6 +35,8 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
         }
         return null
     }, [product, selectedAttributes])
+
+    const router = useRouter()
 
     // Get product images
     const productImages = useMemo(() => {
@@ -244,6 +248,30 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
         )
     }
 
+    const handleBuyNow = (item: {
+        id: string
+        product: { id: string; name: string; price: number; image?: string }
+        quantity: number
+    }) => {
+        setCheckoutOverride({
+            items: [
+                {
+                    id: item.id,
+                    product: {
+                        id: item.product.id,
+                        name: item.product.name,
+                        price: item.product.price,
+                        image: item.product.image,
+                    },
+                    quantity: item.quantity,
+                },
+            ],
+            returnTo: "/cart",
+            createdAt: Date.now(),
+        })
+        router.push("/checkout?mode=buy-now")
+    }
+
     return (
         <div className="container mx-auto px-4 py-6">
             {/* Breadcrumb */}
@@ -406,7 +434,21 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
                                         <Heart className="h-5 w-5 mr-2" />
                                         Wishlist
                                     </Button>
-                                    <Button variant="outline" size="lg">
+                                    <Button
+                                        onClick={() => handleBuyNow({
+                                            id: currentVariant?.id || product.id,
+                                            product: {
+                                                id: product.id,
+                                                name: product.name,
+                                                price: currentPrice,
+                                                image: productImages[0],
+                                            },
+                                            quantity: quantity,
+                                        })}
+                                        variant="outline"
+                                        size="lg"
+                                        disabled={!stockStatus.inStock}
+                                    >
                                         Buy Now
                                     </Button>
                                 </div>

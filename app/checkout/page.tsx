@@ -43,7 +43,7 @@ export default function CheckoutPage() {
   })
   const [error, setError] = useState<string | null>(null)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
-
+  console.log(error)
   // Buy Now override handling
   const [override, setOverride] = useState<CheckoutOverride | null>(null)
   const isBuyNowMode = searchParams.get("mode") === "buy-now"

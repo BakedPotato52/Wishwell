@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Star, Minus, Plus, ShoppingCart, Heart, Truck, Shield, RotateCcw } from "lucide-react"
+import { ArrowLeft, Star, Minus, Plus, ShoppingCart, Heart, Truck, Shield, RotateCcw } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,6 +14,8 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { EnhancedProduct, AttributeOption } from "@/types/product-attributes"
+import { setCheckoutOverride } from "@/lib/checkout-override"
+import { useRouter } from "next/navigation"
 
 interface EnhancedProductDetailProps {
     product: EnhancedProduct
@@ -23,6 +25,7 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({})
     const [quantity, setQuantity] = useState(1)
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+    const router = useRouter()
 
     // Find the current variant based on selected attributes
     const currentVariant = useMemo(() => {
@@ -133,6 +136,30 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
             default:
                 return null
         }
+    }
+
+    const handleBuyNow = (item: {
+        id: string
+        product: { id: string; name: string; price: number; image?: string }
+        quantity: number
+    }) => {
+        setCheckoutOverride({
+            items: [
+                {
+                    id: item.id,
+                    product: {
+                        id: item.product.id,
+                        name: item.product.name,
+                        price: item.product.price,
+                        image: item.product.image,
+                    },
+                    quantity: item.quantity,
+                },
+            ],
+            returnTo: "/cart",
+            createdAt: Date.now(),
+        })
+        router.push("/checkout?mode=buy-now")
     }
 
     return (
@@ -280,7 +307,21 @@ export default function EnhancedProductDetail({ product }: EnhancedProductDetail
                                         <Heart className="h-5 w-5 mr-2" />
                                         Wishlist
                                     </Button>
-                                    <Button variant="outline" size="lg">
+                                    <Button
+                                        onClick={() => handleBuyNow({
+                                            id: currentVariant?.id || product.id,
+                                            product: {
+                                                id: product.id,
+                                                name: product.name,
+                                                price: currentPrice,
+                                                image: product.images[0],
+                                            },
+                                            quantity: quantity,
+                                        })}
+                                        variant="outline"
+                                        size="lg"
+                                        disabled={!currentVariant?.inventory.quantity}
+                                    >
                                         Buy Now
                                     </Button>
                                 </div>
