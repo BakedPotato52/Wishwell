@@ -67,7 +67,16 @@ export function WishlistButton({
         }
     }
 
-    if (!firebaseUser?.uid) return null // Don't show button if user is not authenticated
+    if (!firebaseUser?.uid) return (
+        <Button
+            variant="outline"
+            size={size}
+            disabled
+            className={cn("transition-colors", isInWishlist && "bg-rose-500 hover:bg-rose-700 text-white", className)}
+        >
+            <Heart className={cn("h-4 w-4", showText && "mr-2", isInWishlist && "fill-current")} />
+        </Button>
+    )
 
     return (
         <Button
