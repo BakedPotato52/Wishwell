@@ -80,14 +80,11 @@ export function Carousel() {
       style={{ x }}
     >
       {bannerImages.map((slide, index) => (
-        <motion.div
+        <div
           key={slide.id}
           className={`absolute ${background} inset-0 transition-all duration-500 ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
             }`}
-          animate={{
-            x: `${(index - currentSlide) * 100}%`,
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+
         >
           <Image
             src={slide.image || "/placeholder.svg"}
@@ -97,7 +94,7 @@ export function Carousel() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-        </motion.div>
+        </div>
       ))}
 
       {bannerImages.length > 1 && (
@@ -105,7 +102,7 @@ export function Carousel() {
           {bannerImages.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 pointer-events-auto ${index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
+              className={`w-2 h-2 rounded-full transition-all duration-300 pointer-events-auto ${index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
                 }`}
               onClick={() => goToSlide(index)}
             />

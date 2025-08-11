@@ -197,7 +197,7 @@ export default function HomePage() {
               {adImages.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
                     }`}
                   onClick={() => setCurrentSlide(index)}
                 />
@@ -259,6 +259,23 @@ export default function HomePage() {
           transition={{ delay: 0.7 }}
         >
           <AccessoriesCategory />
+        </motion.div>
+      </section>
+
+      <section className="container mx-auto px-4 py-2">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Image
+            src="https://res.cloudinary.com/wishwell/image/upload/v1754914310/Call_karna_Mujhe_Main_bataunga_gif_yah_wala_kidhar_upload_karna_hai_juptpp.gif?height=500&width=1200"
+            alt="Beauty"
+            width={1200}
+            height={500}
+            className="object-cover rounded-lg"
+            unoptimized
+          />
         </motion.div>
       </section>
 
