@@ -275,15 +275,6 @@ export default function UnifiedProductDetail({ product }: UnifiedProductDetailPr
 
     return (
         <div className="container mx-auto px-4 py-6">
-            {/* Breadcrumb */}
-            <div className="flex items-center mb-6">
-                <Link href="/">
-                    <Button variant="ghost" size="sm">
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Back to Products
-                    </Button>
-                </Link>
-            </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
                 {/* Product Images */}

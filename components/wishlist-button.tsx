@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useWishlist } from "@/contexts/wishlist-context"
+import { useAuth } from "@/contexts/auth-context" // You'll need this for userId
 import { cn } from "@/lib/utils"
 import type { UnifiedProduct } from "@/lib/types"
 
@@ -14,6 +15,7 @@ interface WishlistButtonProps {
     className?: string
     size?: "sm" | "default" | "lg"
     showText?: boolean
+    notes?: string
 }
 
 export function WishlistButton({
@@ -23,21 +25,27 @@ export function WishlistButton({
     className,
     size = "default",
     showText = false,
+    notes,
 }: WishlistButtonProps) {
     const { addItem, removeItem, checkIsInWishlist } = useWishlist()
+    const { firebaseUser } = useAuth() // Get current user
     const [isInWishlist, setIsInWishlist] = useState(false)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const checkWishlistStatus = async () => {
-            const inWishlist = await checkIsInWishlist(product.id, variantId)
-            setIsInWishlist(inWishlist)
+            if (firebaseUser?.uid) {
+                const inWishlist = await checkIsInWishlist(product.id, variantId)
+                setIsInWishlist(inWishlist)
+            }
         }
 
         checkWishlistStatus()
-    }, [product.id, variantId, checkIsInWishlist])
+    }, [product.id, variantId, checkIsInWishlist, firebaseUser?.uid])
 
     const handleToggleWishlist = async () => {
+        if (!firebaseUser?.uid) return
+
         setLoading(true)
         try {
             if (isInWishlist) {
@@ -45,7 +53,11 @@ export function WishlistButton({
                 await removeItem(itemId)
                 setIsInWishlist(false)
             } else {
-                await addItem(product, { selectedAttributes, variantId })
+                await addItem(product, {
+                    selectedAttributes,
+                    variantId,
+                    ...(notes && { notes })
+                })
                 setIsInWishlist(true)
             }
         } catch (error) {
@@ -55,13 +67,15 @@ export function WishlistButton({
         }
     }
 
+    if (!firebaseUser?.uid) return null // Don't show button if user is not authenticated
+
     return (
         <Button
             variant={isInWishlist ? "default" : "outline"}
             size={size}
             onClick={handleToggleWishlist}
             disabled={loading}
-            className={cn("transition-colors", isInWishlist && "bg-red-500 hover:bg-red-600 text-white", className)}
+            className={cn("transition-colors", isInWishlist && "bg-rose-500 hover:bg-rose-700 text-white", className)}
         >
             <Heart className={cn("h-4 w-4", showText && "mr-2", isInWishlist && "fill-current")} />
             {showText && (isInWishlist ? "Remove from Wishlist" : "Add to Wishlist")}

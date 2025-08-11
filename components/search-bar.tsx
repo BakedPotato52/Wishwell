@@ -4,17 +4,17 @@ import type React from "react"
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, X, Filter, Clock, TrendingUp } from "lucide-react"
+import { Search, X, Filter, Clock, TrendingUp, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Link from "next/link"
 import { categories } from "@/lib/categoryData"
 import type { Product, Category } from "@/lib/types"
 import { useProductContext } from "@/hooks/use-product-context"
+import { useRouter } from "next/navigation"
 
 interface SearchResult {
     type: "product" | "category"
@@ -39,6 +39,7 @@ export function SearchBar({ onSearchSubmit, className = "" }: SearchBarProps) {
     const searchRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
     const { products } = useProductContext()
+    const router = useRouter()
 
 
     // Load recent searches from localStorage
@@ -193,27 +194,10 @@ export function SearchBar({ onSearchSubmit, className = "" }: SearchBarProps) {
                         </Button>
                     )}
 
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="h-7 w-7 p-0 hover:bg-gray-100">
-                                <Filter className="h-3 w-3" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => setSelectedFilter("all")}>
-                                All Results
-                                {selectedFilter === "all" && <Badge className="ml-2 h-4 w-4 p-0" />}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setSelectedFilter("products")}>
-                                Products Only
-                                {selectedFilter === "products" && <Badge className="ml-2 h-4 w-4 p-0" />}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setSelectedFilter("categories")}>
-                                Categories Only
-                                {selectedFilter === "categories" && <Badge className="ml-2 h-4 w-4 p-0" />}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Button onClick={() => { router.push(`/wishlist`) }} variant="ghost" size="sm" className="h-7 w-7 p-0 ">
+                        <Heart className="h-3 w-3 text-rose-500 hover:text-rose-700" />
+                    </Button>
+
                 </div>
             </div>
 

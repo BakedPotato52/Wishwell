@@ -36,9 +36,9 @@ export const addToWishlist = async (
             userId,
             product,
             addedAt: serverTimestamp(),
-            selectedAttributes: options?.selectedAttributes,
-            variantId: options?.variantId,
-            notes: options?.notes,
+            ...(options?.selectedAttributes && { selectedAttributes: options.selectedAttributes }),
+            ...(options?.variantId && { variantId: options.variantId }),
+            ...(options?.notes && { notes: options.notes }),
         }
 
         await setDoc(wishlistItemRef, wishlistItem)
