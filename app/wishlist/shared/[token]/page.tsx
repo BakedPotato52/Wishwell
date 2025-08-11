@@ -180,7 +180,7 @@ export default function SharedWishlistPage() {
 
                                             {/* Action Button */}
                                             <Button size="sm" disabled={!stockStatus.inStock} asChild>
-                                                <Link href={`/products/${item.product.id}`}>
+                                                <Link href={`/product/${item.product.id}`}>
                                                     <ShoppingCart className="h-3 w-3 mr-1" />
                                                     View Product
                                                 </Link>
