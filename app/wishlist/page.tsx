@@ -77,7 +77,7 @@ export default function WishlistPage() {
                 </div>
 
                 {itemCount > 0 && (
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2">
                         <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button variant="outline">
