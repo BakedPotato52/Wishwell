@@ -72,7 +72,7 @@ export function Carousel() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl border-4 border-white cursor-grab active:cursor-grabbing"
+      className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing"
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       onDragStart={handleDragStart}

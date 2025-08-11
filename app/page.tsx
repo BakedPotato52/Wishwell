@@ -180,7 +180,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="relative w-full h-32 md:h-36 lg:h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
+          className="relative w-full h-32 md:h-36 lg:h-40 rounded-2xl overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing"
         >
           {adImages.map((slide, index) => (
             <div
