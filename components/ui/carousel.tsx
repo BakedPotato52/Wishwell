@@ -56,7 +56,7 @@ export function Carousel() {
 
     setTimeout(() => {
       startAutoPlay()
-    }, 500)
+    }, 1000)
   }
 
   const goToSlide = (index: number) => {
@@ -64,7 +64,7 @@ export function Carousel() {
     stopAutoPlay()
     setTimeout(() => {
       startAutoPlay()
-    }, 500)
+    }, 1000)
   }
 
   return (
