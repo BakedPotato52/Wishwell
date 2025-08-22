@@ -76,13 +76,13 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <a href="mailto:customerservicewishwell@gmail.com" className="text-gray-400 hover:text-white">
-                  customerservicewishwell@gmail.com
+                <a href="mailto:contact@wishwell.in" className="text-gray-400 hover:text-white">
+                  contact@wishwell.in
                 </a>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span className="text-gray-400">+91 93661 55112</span>
+                <span className="text-gray-400">+91 87983 48426</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
