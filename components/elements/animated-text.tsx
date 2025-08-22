@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -8,6 +8,7 @@ import { Pacifico } from "next/font/google"
 import { Michroma } from "next/font/google"
 import { Zain } from "next/font/google"
 import { Oleo_Script } from "next/font/google"
+import { Italianno } from "next/font/google"
 
 const pacifico = Pacifico({
     subsets: ["latin"],
@@ -31,6 +32,12 @@ const oleoScript = Oleo_Script({
     subsets: ["latin"],
     weight: ["400"],
     variable: "--font-oleo-script",
+})
+
+const italianno = Italianno({
+    subsets: ["latin"],
+    weight: ["400"],
+    variable: "--font-italianno",
 })
 
 export const fadeUpVariants = {
@@ -100,6 +107,19 @@ export function StylizedText({
     children: React.ReactNode
     className?: string
 }) {
+    const capitalizeFirstLetter = (text: string) => {
+        return text.charAt(0).toUpperCase() + text.slice(1)
+    }
+
+    console.log(children);
+
+    const processChildren = (child: React.ReactNode): React.ReactNode => {
+        if (typeof child === 'string') {
+            return capitalizeFirstLetter(child)
+        }
+        return child
+    }
+
     return (
         <span
             className={cn(
@@ -108,7 +128,7 @@ export function StylizedText({
                 className,
             )}
         >
-            {children}
+            {React.Children.map(children, processChildren)}
         </span>
     )
 }

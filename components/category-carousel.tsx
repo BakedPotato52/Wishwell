@@ -10,7 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { getSubcategoryImage, subcategoryImages } from "@/lib/subcategoryImages"
 import type { Category } from "@/lib/types"
-import { StylizedText } from "./elements/animated-text"
+import { PlaywriteStylizedText, StylizedText } from "./elements/animated-text"
 
 export default function CategoryCarousel({ category }: { category?: Category }) {
     // Create slug from subcategory name
@@ -31,7 +31,9 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                     <span className="text-black">SHOP BY</span> <span className="italic text-black">Category</span>
                 </h1>
                 <p className="text-gray-600 text-lg">Trending categories on WishWell:</p>
-                <StylizedText className="text-4xl md:text-5xl lg:text-6xl">{category?.name}</StylizedText>
+                <StylizedText className="text-4xl md:text-5xl lg:text-6xl">
+                    {category?.name}
+                </StylizedText>
             </div>
 
             {/* Category Carousel */}
@@ -84,7 +86,12 @@ export default function CategoryCarousel({ category }: { category?: Category }) 
                     {/* Scroll indicators */}
                     <div className="absolute top-1/2 -translate-y-1/2 left-0 w-8 h-full bg-gradient-to-r from-white to-transparent pointer-events-none opacity-50"></div>
                     <div className="absolute top-1/2 -translate-y-1/2 right-0 w-8 h-full bg-gradient-to-l from-white to-transparent pointer-events-none opacity-50"></div>
+                    {/* Scroll hint for mobile */}
+                    <div className="text-center mt-2 md:hidden">
+                        <PlaywriteStylizedText className="text-sm text-gray-500">← Swipe to explore more categories →</PlaywriteStylizedText>
+                    </div>
                 </div>
+
             )}
         </div>
     )

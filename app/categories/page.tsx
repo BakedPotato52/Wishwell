@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { categories } from "@/lib/categoryData"
-import { PlaywriteStylizedText, OleoScriptText } from "@/components/elements/animated-text"
+import { OleoScriptText } from "@/components/elements/animated-text"
 
 export default function CategoriesPage() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -15,14 +15,14 @@ export default function CategoriesPage() {
     )
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen bg-gray-50">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-h-screen bg-gray-50">
 
 
             {/* Categories Grid */}
             <section className="py-6">
                 <div className="container mx-auto px-4">
-                    <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl font-bold mb-6">
-                        <OleoScriptText className="bg-gradient-to-r from-blue-500 to-purple-500 ">All Categories</OleoScriptText>
+                    <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl text-center font-bold mb-6">
+                        All Categories
                     </motion.h2>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -53,9 +53,7 @@ export default function CategoriesPage() {
                                             )}
                                         </div>
                                         <span className="text-sm text-center font-medium text-gray-800 line-clamp-2">{category.name}</span>
-                                        {category.subcategories && (
-                                            <span className="text-xs text-gray-500 mt-1">{category.subcategories.length} items</span>
-                                        )}
+
                                     </div>
                                 </Link>
                             </motion.div>
